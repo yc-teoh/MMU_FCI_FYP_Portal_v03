@@ -14,12 +14,17 @@
 
   <div class="field">
     <span>Full Name (as per government-issued ID)</span><br />
-    <%= f.text_field :user_name, autofocus: true, autocomplete: "user_name" %>
+    <%= f.text_field :user_name, autocomplete: "user_name" %>
+  </div>
+
+  <div class="field">
+    <span>Government-issued ID (MyKad, Passport, etc.) Number</span><br />
+    <%= f.text_field :user_gov_id, autocomplete: "user_gov_id" %>
   </div>
 
   <div class="field">
     <span>Email Address</span><br />
-    <%= f.email_field :user_email_address, autocomplete: "user_email_address" %>
+    <%= f.email_field :email, autocomplete: "email" %>
   </div>
 
   <div class="field">

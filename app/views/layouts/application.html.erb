@@ -13,8 +13,16 @@
   <body>
     <nav>
       <ul>
-        <li><a href="/users/sign_up">Sign Up</a></li>
-        <li><a href="/users/sign_in">Log In</a></li>
+<!--        <li><a href="/signup">Sign Up</a></li>-->
+<!--        <li><a href="/login">Log In</a></li>-->
+        <li><a href="/">INDEX</a></li>
+        <% if user_signed_in? %>
+          <li>Hello <b><%= current_user.user_name %> (<%= current_user.user_id %>)</b>.</li>
+          <li><%= link_to "Sign Out", destroy_user_session_path, data: {turbo_method: :delete} %></li>
+        <% else %>
+          <li><%= link_to "Sign Up" , new_user_registration_path %></li>
+          <li><%= link_to "Log In", new_user_session_path %></li>
+        <% end %>
       </ul>
       <hr>
     </nav>
