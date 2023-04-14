@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_07_043633) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_14_035837) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "announcements", primary_key: "announcement_id", id: :string, default: -> { "nextval('announcements_id_seq'::regclass)" }, force: :cascade do |t|
+    t.string "announcement_title", null: false
+    t.text "announcement_body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "author_id", null: false
+    t.string "announcement_file_path"
+  end
 
   create_table "users", primary_key: "user_id", id: :string, default: -> { "nextval('users_id_seq'::regclass)" }, force: :cascade do |t|
     t.string "email", default: "", null: false

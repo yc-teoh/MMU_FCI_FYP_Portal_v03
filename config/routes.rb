@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   # root "articles#index"
   # root "articles#index"
   root to: "home#index"
+
+  get "/announcements", to: "announcements#index"
 end

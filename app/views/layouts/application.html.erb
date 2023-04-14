@@ -17,7 +17,7 @@
 <!--        <li><a href="/login">Log In</a></li>-->
         <li><a href="/">INDEX</a></li>
         <% if user_signed_in? %>
-          <li>Hello <b><%= current_user.user_name %> (<%= current_user.user_id %>)</b>.</li>
+          <li>Hello <b><%= current_user.user_name %> (<%= current_user.user_id %>)</b>. Your role is <b><%= current_user.user_role %></b>.</li>
 
           <!--- SHARED (MANAGER & COORDINATOR) --->
           <% if current_user.user_role == "Manager" || current_user.user_role == "Coordinator" %>
