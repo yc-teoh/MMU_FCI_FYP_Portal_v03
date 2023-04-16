@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   get "/announcements", to: "announcements#index"
+  get "/announcements/:announcement_id", to: "announcements#show"
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_14_035837) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_16_134244) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_14_035837) do
     t.datetime "updated_at", null: false
     t.string "author_id", null: false
     t.string "announcement_file_path"
+    t.string "announcement_status", default: "ACT", null: false
   end
 
   create_table "users", primary_key: "user_id", id: :string, default: -> { "nextval('users_id_seq'::regclass)" }, force: :cascade do |t|
@@ -47,4 +48,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_14_035837) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "announcements", "users", column: "author_id", primary_key: "user_id"
 end

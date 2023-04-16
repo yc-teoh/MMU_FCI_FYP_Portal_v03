@@ -1,7 +1,20 @@
-<h1>Announcements#index</h1>
+<h1>Announcements</h1>
 
 <% if user_signed_in? %>
   <p>Find me in app/views/announcements/index.html.erb</p>
+
+  <ul>
+    <% @announcements.each do |announcement| %>
+      <% if announcement.announcement_status == "ACT" %>
+        <li>
+          <a href="/announcements/<%= announcement.announcement_id %>">
+            <%= announcement.announcement_title %>
+          </a>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+
 <% else %>
   <p>Sorry but you must log in before continue.</p>
 <% end %>
