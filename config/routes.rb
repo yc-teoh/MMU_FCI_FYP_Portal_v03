@@ -9,5 +9,11 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   get "/announcements", to: "announcements#index"
+  get "/announcements/new", to: "announcements#new"
+
+  # These routes goes last whenever possible to avoid `new` controllers getting override.
   get "/announcements/:announcement_id", to: "announcements#show"
+
+  resources :announcements
+
 end

@@ -1,5 +1,20 @@
-<div><p><a href="./"><- Back</a></p></div>
+<% created_date = @announcement.created_at %>
+<% updated_date = @announcement.updated_at %>
+
+<div>
+  <p><a href="./"><- Back</a></p>
+</div>
 
 <h1><%= @announcement.announcement_title %></h1>
-<p><%= @user.user_name %></p>
-<p><%= @announcement.announcement_body %></p>
+
+<p>Date/Time: <%= created_date.strftime('%Y-%m-%d %H:%M')  %>
+  <% if updated_date != created_date %>
+    <i>(Updated at: <%= updated_date.strftime('%Y-%m-%d %H:%M') %>)</i>
+  <% end %>
+</p>
+
+<p>Posted by: <%= @user.user_name %></p>
+
+<p>------------------------------------------------------------------------</p>
+
+<p><%= @announcement.announcement_body.gsub(/\n/, '<br/>').html_safe %></p>
