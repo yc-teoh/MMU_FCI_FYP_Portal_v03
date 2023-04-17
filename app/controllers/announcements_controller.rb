@@ -12,6 +12,7 @@ class AnnouncementsController < ApplicationController
   def new
     @announcement = Announcement.new
     @current_user_id = current_user.user_id
+    @button_text = "Create"
 
     # Generate new `announcement_id` for each new post (1/3).
     current_date = Date.today.to_s.gsub('-','')
@@ -54,6 +55,24 @@ class AnnouncementsController < ApplicationController
       else
         render :new, status: :unprocessable_entity
       end
+    end
+  end
+
+  def edit
+    @announcement = Announcement.find(params[:announcement_id])
+
+    @new_announcement_id = @announcement.announcement_id
+    @current_user_id = @announcement.author_id
+    @button_text = "Edit"
+  end
+
+  def update
+    @announcement = Announcement.find(params[:announcement_id])
+
+    if @announcement.update(announcement_params)
+      redirect_to @announcement
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 

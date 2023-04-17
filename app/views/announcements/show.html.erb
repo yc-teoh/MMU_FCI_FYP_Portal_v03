@@ -2,7 +2,7 @@
 <% updated_date = @announcement.updated_at %>
 
 <div>
-  <p><a href="./"><- Back</a></p>
+  <p><%= link_to "<- Back", announcements_path() %></p>
 </div>
 
 <h1><%= @announcement.announcement_title %></h1>
@@ -18,3 +18,5 @@
 <p>------------------------------------------------------------------------</p>
 
 <p><%= @announcement.announcement_body.gsub(/\n/, '<br/>').html_safe %></p>
+
+<p><%= link_to "Edit", edit_announcement_path(@announcement) %></p>

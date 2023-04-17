@@ -1,0 +1,13 @@
+<style>
+    .field {padding-bottom: 1em;}
+</style>
+
+<div>
+  <p><a href="./"><- Back</a></p>
+</div>
+
+<h1>Edit Announcements</h1>
+
+<%= render "form", announcement: @announcement, new_announcement_id: @new_announcement_id,
+           current_user_id: @current_user_id, button_text: @button_text
+%>

@@ -1,0 +1,37 @@
+<%= form_with model: announcement do |form| %>
+
+  <div class="field">
+    <span>Title:</span><br>
+    <%= form.text_field :announcement_title %>
+
+    <% announcement.errors.full_messages_for(:announcement_title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span>Body:</span><br>
+    <%= form.text_area :announcement_body %>
+    <% announcement.errors.full_messages_for(:announcement_body).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span>Status</span><br>
+    <%= form.select :announcement_status, announcement_status_options %>
+    <% announcement.errors.full_messages_for(:announcement_status).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span>Announcement ID: <%= new_announcement_id %></span>
+    <%= form.hidden_field :announcement_id, value: new_announcement_id, readonly: true %><br>
+    <%= form.hidden_field :author_id, value: current_user_id, readonly: true %>
+  </div>
+
+  <div>
+    <%= form.submit button_text %>
+  </div>
+<% end %>

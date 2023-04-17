@@ -13,7 +13,8 @@ Rails.application.routes.draw do
 
   # These routes goes last whenever possible to avoid `new` controllers getting override.
   get "/announcements/:announcement_id", to: "announcements#show"
+  get "/announcements/:announcement_id/edit", to: "announcements#edit"
 
-  resources :announcements
+  resources :announcements, param: :announcement_id
 
 end
