@@ -1,0 +1,10 @@
+<% announcements_guest.each do |announcement| %>
+  <tr>
+    <td><b><%= announcement.created_at.strftime('%d/%m/%Y %H:%M') %></b></td>
+    <td>
+      <a href="/announcements/<%= announcement.announcement_id %>">
+        <%= announcement.announcement_title %>
+      </a>
+    </td>
+  </tr>
+<% end %>

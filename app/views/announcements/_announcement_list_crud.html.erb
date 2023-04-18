@@ -1,0 +1,29 @@
+<% announcements.each do |announcement| %>
+  <tr>
+    <% if announcement.announcement_status == "INACT" %>
+      <td>
+        <b><strike><%= announcement.created_at.strftime('%d/%m/%Y %H:%M') %></strike></b>
+      </td>
+    <% else %>
+      <td>
+        <b><%= announcement.created_at.strftime('%d/%m/%Y %H:%M') %></b>
+      </td>
+    <% end %>
+
+    <% if announcement.announcement_status == "INACT" %>
+      <td>
+        <strike><a href="/announcements/<%= announcement.announcement_id %>">
+          <%= announcement.announcement_title %>
+        </a></strike>
+      </td>
+    <% else %>
+      <td>
+        <a href="/announcements/<%= announcement.announcement_id %>">
+          <%= announcement.announcement_title %>
+        </a>
+      </td>
+    <% end %>
+
+    <td><a href="/announcements/<%= announcement.announcement_id %>/edit">Edit</a></td>
+  </tr>
+<% end %>

@@ -1,22 +1,25 @@
+<style>
+    table, td {border: 1px solid black;}
+</style>
+
 <h1>Announcements</h1>
 
-<% if user_signed_in? %>
-  <p>Find me in app/views/announcements/index.html.erb</p>
-
-  <ul>
-    <% @announcements.each do |announcement| %>
-      <% if announcement.announcement_status == "ACT" %>
-        <li>
-          <a href="/announcements/<%= announcement.announcement_id %>">
-            <%= announcement.announcement_title %>
-          </a>
-        </li>
+<div>
+  <table>
+    <% if user_signed_in? %>
+      <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+        <%= render "announcement_list_crud", announcements: @announcements %>
+      <% else %>
+        <%= render "announcement_list_guest", announcements_guest: @announcements_guest %>
       <% end %>
+    <% else %>
+      <%= render "announcement_list_guest", announcements_guest: @announcements_guest %>
     <% end %>
-  </ul>
+  </table>
+</div>
 
-  <p><a href="/announcements/new">New</a></p>
-
-<% else %>
-  <p>Sorry but you must log in before continue.</p>
+<% if user_signed_in? %>
+  <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+    <p><a href="/announcements/new">New</a></p>
+  <% end %>
 <% end %>

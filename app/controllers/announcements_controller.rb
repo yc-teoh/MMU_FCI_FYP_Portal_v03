@@ -1,7 +1,10 @@
 class AnnouncementsController < ApplicationController
 
   def index
-    @announcements = Announcement.all
+    @announcements = Announcement.all.order(announcement_id: :desc)
+
+    # Not showing the announcements with status of "INACT"
+    @announcements_guest = Announcement.announcement_guests.order(announcement_id: :desc)
   end
 
   def show
