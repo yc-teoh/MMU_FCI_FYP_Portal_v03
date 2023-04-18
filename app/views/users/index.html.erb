@@ -5,16 +5,37 @@
 <h1>User Management</h1>
 
 <div>
-  <table>
-    <tr>
-      <th>Name</th>
-    </tr>
 
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.user_name %></td>
-      </tr>
+  <% if user_signed_in? %>
+    <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+      <table>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Specification</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Batch</th>
+          <th>Details</th>
+        </tr>
+
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.user_id %></td>
+            <td><%= user.user_name %></td>
+            <td><%= user.student_specialisation %></td>
+            <td><%= user.user_role %></td>
+            <td><%= user.user_status %></td>
+            <td><%= user.student_batch %></td>
+            <td>View | Edit</td>
+          </tr>
+        <% end %>
+
+      </table>
+    <% else %>
+      <p><%= errmsg_no_permission_to_access %></p>
     <% end %>
-
-  </table>
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
 </div>
