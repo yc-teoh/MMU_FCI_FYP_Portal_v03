@@ -1,0 +1,20 @@
+<style>
+    table, td {border: 1px solid black;}
+</style>
+
+<h1>User Management</h1>
+
+<div>
+  <table>
+    <tr>
+      <th>Name</th>
+    </tr>
+
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.user_name %></td>
+      </tr>
+    <% end %>
+
+  </table>
+</div>

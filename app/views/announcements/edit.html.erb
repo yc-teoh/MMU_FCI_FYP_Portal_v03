@@ -8,6 +8,14 @@
 
 <h1>Edit Announcements</h1>
 
-<%= render "form", announcement: @announcement, new_announcement_id: @new_announcement_id,
+<% if user_signed_in? %>
+  <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+    <%= render "form", announcement: @announcement, new_announcement_id: @new_announcement_id,
            current_user_id: @current_user_id, button_text: @button_text
-%>
+    %>
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+<% else %>
+  <p><%= errmsg_no_permission_to_access %></p>
+<% end %>
