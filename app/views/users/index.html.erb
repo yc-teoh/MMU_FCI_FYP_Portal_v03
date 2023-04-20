@@ -6,8 +6,8 @@
 
 <div>
   <%= form_tag "/usermgmt", method: :get do %>
-    <span>Search by ID: </span>
-    <%= text_field_tag :search_by_id, params[:search_by_id] %>
+    <span>Search Keyword: </span>
+    <%= text_field_tag :search_keyword, params[:search_keyword] %>
     <%= submit_tag "Search" %>
   <% end %>
   <br>
