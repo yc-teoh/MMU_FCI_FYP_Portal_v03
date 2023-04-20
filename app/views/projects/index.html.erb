@@ -1,2 +1,46 @@
-<h1>Projects#index</h1>
-<p>Find me in app/views/projects/index.html.erb</p>
+<style>
+    table, td {border: 1px solid black;}
+</style>
+
+<h1>Projects</h1>
+
+<div>
+  <% if user_signed_in? %>
+    <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+      <table>
+        <tr>
+          <th>Project ID</th>
+          <th>Project Title</th>
+          <th>Lecturer</th>
+          <th>Specialisation</th>
+          <th>Project Details</th>
+        </tr>
+
+        <% @projects.each do |project| %>
+          <% # Find out the name of lecturer/supervisor. Temporary variable. %>
+          <% lecturer = @users.find(project.supervisor_id) %>
+
+          <tr>
+            <td><%= project.project_id %></td>
+            <td><%= project.project_title %></td>
+
+            <% # Check if local variable `lecturer` is empty. %>
+            <% unless lecturer.nil? || lecturer == ""  %>
+              <td><%= lecturer.user_name %></td>
+            <% else %>
+              <td><%= project.supervisor_id %></td>
+            <% end %>
+
+            <td><%= project.project_specialisation %></td>
+            <td><%= link_to "View", project %> | Edit</td>
+          </tr>
+        <% end %>
+
+      </table>
+    <% else %>
+      <p><%= errmsg_no_permission_to_access %></p>
+    <% end %>
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+</div>

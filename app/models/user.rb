@@ -11,4 +11,5 @@ class User < ApplicationRecord
   validates :email, length: { minimum: 5, maximum: 128}, presence: true, uniqueness: true
 
   has_many :announcements
+  has_many :projects, class_name: "Project", foreign_key: :supervisor_id
 end

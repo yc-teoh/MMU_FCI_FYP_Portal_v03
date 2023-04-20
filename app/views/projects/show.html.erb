@@ -1,0 +1,88 @@
+<style>
+    table, td {border: 1px solid black;}
+    .thead_vertical {font-weight: bold;}
+</style>
+
+<div>
+  <p><%= link_to "<- Back", projects_path() %></p>
+</div>
+
+<h1>Projects</h1>
+
+<% if user_signed_in? %>
+  <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+
+    <h2><%= @project.project_title %></h2>
+
+    <table>
+      <tr>
+        <td class="thead_vertical">Project ID</td>
+        <td><%= @project.project_id %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Project Title</td>
+        <td><%= @project.project_title %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Supervisor</td>
+        <td><%= @supervisor.user_name %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Co-supervisor</td>
+        <td><%= @co_supervisor %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Project Type</td>
+        <td><%= @project.project_type %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Specialisation</td>
+        <td><%= @project.project_specialisation %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Project Category</td>
+        <td><%= @project.project_category %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Focus</td>
+        <td><%= @project.project_focus %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Other Specialisation</td>
+        <td><%= @other_specialisation %></td>
+      </tr>
+    </table>
+
+    <br>
+
+    <table>
+      <tr>
+        <td class="thead_vertical">Project Description</td>
+        <td><%= @project.project_description.gsub(/\n/, '<br/>').html_safe %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Project Objectives</td>
+        <td><%= @project.project_objective.gsub(/\n/, '<br/>').html_safe %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Project Scope</td>
+        <td><%= @project.project_scope.gsub(/\n/, '<br/>').html_safe %></td>
+      </tr>
+    </table>
+
+<!--    <p><%#= link_to "Edit", edit_announcement_path(@announcement) %></p>-->
+
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+<% end %>

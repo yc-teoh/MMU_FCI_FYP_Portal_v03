@@ -16,8 +16,12 @@ Rails.application.routes.draw do
   get "/announcements/:announcement_id", to: "announcements#show"
   get "/announcements/:announcement_id/edit", to: "announcements#edit"
 
+  get "/projects", to: "projects#index"
+  get "/projects/:project_id", to: "projects#show"
+
   get "/usermgmt", to: "users#index"
 
   resources :announcements, param: :announcement_id
+  resources :projects, param: :project_id
 
 end
