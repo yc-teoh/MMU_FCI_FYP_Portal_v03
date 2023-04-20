@@ -5,6 +5,15 @@
 <h1>User Management</h1>
 
 <div>
+  <%= form_tag "/usermgmt", method: :get do %>
+    <span>Search by ID: </span>
+    <%= text_field_tag :search_by_id, params[:search_by_id] %>
+    <%= submit_tag "Search" %>
+  <% end %>
+  <br>
+</div>
+
+<div>
 
   <% if user_signed_in? %>
     <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
