@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_16_134244) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_20_082247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,49 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_16_134244) do
     t.string "author_id", null: false
     t.string "announcement_file_path"
     t.string "announcement_status", default: "ACT", null: false
+  end
+
+  create_table "batches", primary_key: "batch_id", id: :string, default: -> { "nextval('batches_id_seq'::regclass)" }, force: :cascade do |t|
+    t.string "batch_name", null: false
+    t.string "batch_status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "projects", primary_key: "project_id", id: :string, default: -> { "nextval('projects_id_seq'::regclass)" }, force: :cascade do |t|
+    t.string "project_title", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "project_approval_status", null: false
+    t.string "project_proposal_party", null: false
+    t.string "project_type", null: false
+    t.string "project_category", null: false
+    t.string "project_focus", null: false
+    t.date "project_date"
+    t.string "project_other_specialisations"
+    t.string "project_description", null: false
+    t.string "project_objective", null: false
+    t.string "project_scope", null: false
+    t.string "project_status", null: false
+    t.string "project_specialisation", null: false
+    t.string "project_background", null: false
+    t.string "project_outcomes", null: false
+    t.string "project_doc_id"
+    t.string "supervisor_id", null: false
+    t.string "co_supervisor_id"
+    t.string "moderator_id"
+    t.string "reviewed_by"
+    t.string "student_one_user_id"
+    t.string "student_one_subtitle"
+    t.string "student_one_work_distribution"
+    t.string "student_two_user_id"
+    t.string "student_two_subtitle"
+    t.string "student_two_work_distribution"
+    t.string "is_industry_collab", null: false
+    t.string "industry_collab_details"
+    t.string "batch_id", null: false
+    t.string "remarks_project"
+    t.string "remarks_supervisor"
   end
 
   create_table "users", primary_key: "user_id", id: :string, default: -> { "nextval('users_id_seq'::regclass)" }, force: :cascade do |t|
