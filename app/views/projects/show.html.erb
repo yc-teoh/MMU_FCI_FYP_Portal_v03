@@ -37,7 +37,7 @@
 
       <tr>
         <td class="thead_vertical">Project Type</td>
-        <td><%= @project.project_type %></td>
+        <td><%= project_type_options.each{|k,v| break k if v.include?(Project.find(params[:project_id]).project_type) } %></td>
       </tr>
 
       <tr>
@@ -77,6 +77,69 @@
       <tr>
         <td class="thead_vertical">Project Scope</td>
         <td><%= @project.project_scope.gsub(/\n/, '<br/>').html_safe %></td>
+      </tr>
+    </table>
+
+    <br>
+
+    <table>
+      <tr>
+        <td class="thead_vertical">Number of Students</td>
+        <td><%= "qwertyuiop" %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Student 1 Name</td>
+        <td><%= @student_one_user_name %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Student 1 Subtitle</td>
+        <td><%= @student_one_subtitle %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Student 1 Work Distribution</td>
+        <td><%= @student_one_work_distribution %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Student 2 Name</td>
+        <td><%= @student_two_user_name %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Student 2 Subtitle</td>
+        <td><%= @student_two_subtitle %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Student 2 Work Distribution</td>
+        <td><%= @student_two_work_distribution %></td>
+      </tr>
+    </table>
+
+    <br>
+
+    <table>
+      <tr>
+        <td class="thead_vertical">Industry Collaboration</td>
+        <td><%= yes_no_options.each{|k,v| break k if v.include?(Project.find(params[:project_id]).is_industry_collab) } %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Company</td>
+        <td><%= @industry_collab_company %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Contact Name</td>
+        <td><%= @industry_collab_contact_name %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Contact Number</td>
+        <td><%= @industry_collab_contact_number %></td>
       </tr>
     </table>
 

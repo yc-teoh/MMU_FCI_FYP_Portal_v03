@@ -7,6 +7,16 @@
 <div>
   <% if user_signed_in? %>
     <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+
+      <div>
+        <%= form_tag "/projects", method: :get do %>
+          <span>Search Keyword: </span>
+          <%= text_field_tag :search_keyword, params[:search_keyword] %>
+          <%= submit_tag "Search" %>
+        <% end %>
+        <br>
+      </div>
+
       <table>
         <tr>
           <th>Project ID</th>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_20_100251) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_21_072854) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,10 +61,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_100251) do
     t.string "student_two_subtitle"
     t.string "student_two_work_distribution"
     t.string "is_industry_collab", null: false
-    t.string "industry_collab_details"
+    t.string "industry_collab_company"
     t.string "batch_id", null: false
     t.string "remarks_project"
     t.string "remarks_supervisor"
+    t.string "industry_collab_contact_name"
+    t.string "industry_collab_contact_number"
   end
 
   create_table "users", primary_key: "user_id", id: :string, default: -> { "nextval('users_id_seq'::regclass)" }, force: :cascade do |t|
