@@ -42,7 +42,12 @@
             <% end %>
 
             <td><%= project.project_specialisation %></td>
-            <td><%= link_to "View", project %> | Edit</td>
+            <td>
+              <%= link_to "View", project %>
+              <% if current_user.user_role == "Coordinator" %>
+                <span> | <%= link_to "View2", project %>></span>
+              <% end %>
+            </td>
           </tr>
         <% end %>
 

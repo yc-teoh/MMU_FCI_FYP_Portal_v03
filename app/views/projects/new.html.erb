@@ -1,0 +1,101 @@
+<style>
+      .field {padding-bottom: 1em;}
+      .req {color: red}
+</style>
+
+<h1>New Project</h1>
+
+<% if user_signed_in? %>
+  <% if current_user.user_role == "Coordinator" %>
+  <% # ------------------------------------------------------------------------------------------ # %>
+
+    <%= form_with model: @project do |form| %>
+
+      <div class="field">
+        <span class="req">* </span>
+        <span>Project ID:</span><br>
+        <%= form.text_field :project_id %>
+
+        <% @project.errors.full_messages_for(:project_id).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <span class="req">* </span>
+        <span>Project Title:</span><br>
+        <%= form.text_field :project_title %>
+
+        <% @project.errors.full_messages_for(:project_title).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <span class="req">* </span>
+        <span>Supervisor ID:</span><br>
+        <%= form.text_field :supervisor_id %>
+
+        <% @project.errors.full_messages_for(:supervisor_id).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <span>Co-supervisor ID:</span><br>
+        <%= form.text_field :co_supervisor_id, required: true %>
+
+        <% @project.errors.full_messages_for(:co_supervisor_id).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <span class="req">* </span>
+        <span>Project Status:</span><br>
+        <%= form.select :project_status, project_status_options %>
+
+        <% @project.errors.full_messages_for(:project_status).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <span class="req">* </span>
+        <span>Project Type:</span><br>
+        <%= form.select :project_type, project_type_options %>
+
+        <% @project.errors.full_messages_for(:project_type).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <span class="req">* </span>
+        <span>Specialisation:</span><br>
+        <%= form.select :project_specialisation, specialisation_options %>
+
+        <% @project.errors.full_messages_for(:project_specialisation).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <%= form.hidden_field :project_approval_status, value: "Pending", readonly: true %>
+      </div>
+
+    <% end %>
+
+
+    <% # specialisation | proj category | focus | other specialisation  %>
+    <% # proj desc | proj obj | proj scope  %>
+    <% # num of students | stud 1 name | stud 1 subtitle | stud 1 work dis | stud2++  %>
+    <% # is industry collab? | company | contact name | contact no  %>
+
+  <% # ------------------------------------------------------------------------------------------ # %>
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+<% else %>
+  <p><%= errmsg_no_permission_to_access %></p>
+<% end %>

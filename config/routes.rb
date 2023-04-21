@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get "/announcements/:announcement_id/edit", to: "announcements#edit"
 
   get "/projects", to: "projects#index"
+  get "/projects/new", to: "projects#new"
   get "/projects/:project_id", to: "projects#show"
 
   get "/usermgmt", to: "users#index"
