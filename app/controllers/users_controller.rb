@@ -19,4 +19,12 @@ class UsersController < ApplicationController
 
     end
   end
+
+  def show
+    curr_usr_role = current_user.user_role    # The role of current user.
+
+    if curr_usr_role == "Manager" || curr_usr_role == "Coordinator"
+      @user = User.find(params[:user_id])
+    end
+  end
 end

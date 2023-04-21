@@ -1,0 +1,78 @@
+<style>
+    table, td {border: 1px solid black;}
+    .thead_vertical {font-weight: bold;}
+</style>
+
+<div>
+  <p><%= link_to "<- Back", usermgmt_path() %></p>
+</div>
+
+<h1>User Management</h1>
+
+<% if user_signed_in? %>
+  <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+
+    <table>
+      <tr>
+        <td class="thead_vertical">User ID</td>
+        <td><%= @user.user_id %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">User Role</td>
+        <td><%= @user.user_role %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Name</td>
+        <td><%= @user.user_name %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">User Status</td>
+        <td><%= @user.user_status %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Gender</td>
+        <td><%= user_gender_options.each{|k,v| break k if v.include?(User.find(params[:user_id]).user_gender) } %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Gov. ID No.</td>
+        <td><%= @user.user_gov_id %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Batch</td>
+        <td><%= "qwertyuiop" %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Batch Status</td>
+        <td><%= "qwertyuiop" %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Specialisation</td>
+        <td><%= @user.student_specialisation %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Email Address</td>
+        <td><%= @user.email %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Contact Number</td>
+        <td><%= @user.user_contact_no %></td>
+      </tr>
+
+    </table>
+
+    <!--    <p><%#= link_to "Edit", edit_announcement_path(@announcement) %></p>-->
+
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+<% end %>

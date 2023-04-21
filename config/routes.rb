@@ -20,8 +20,10 @@ Rails.application.routes.draw do
   get "/projects/:project_id", to: "projects#show"
 
   get "/usermgmt", to: "users#index"
+  get "/usermgmt/:user_id", to: "users#show"
 
   resources :announcements, param: :announcement_id
   resources :projects, param: :project_id
+  resources :users, param: :user_id
 
 end

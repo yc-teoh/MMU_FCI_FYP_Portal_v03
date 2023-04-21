@@ -21,7 +21,7 @@
         <tr>
           <th>User ID</th>
           <th>Name</th>
-          <th>Specification</th>
+          <th>Specialisation</th>
           <th>Role</th>
           <th>Status</th>
           <th>Batch</th>
@@ -36,7 +36,7 @@
             <td><%= user.user_role %></td>
             <td><%= user.user_status %></td>
             <td><%= user.student_batch %></td>
-            <td>View | Edit</td>
+            <td><%= link_to "View", user %> | Edit</td>
           </tr>
         <% end %>
 
