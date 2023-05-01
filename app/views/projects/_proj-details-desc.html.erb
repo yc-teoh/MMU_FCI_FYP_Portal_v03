@@ -1,0 +1,33 @@
+<%= form_with model: project do |form| %>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Project Description:</span><br>
+    <%= form.text_area :project_description %>
+
+    <% @project.errors.full_messages_for(:project_description).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Project Objectives:</span><br>
+    <%= form.text_area :project_objective %>
+
+    <% @project.errors.full_messages_for(:project_objective).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Project Scope:</span><br>
+    <%= form.text_area :project_scope %>
+
+    <% @project.errors.full_messages_for(:project_scope).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+<% end %>

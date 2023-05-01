@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def project_status_options
-    ["Ongoing", "Vacant", "Completed", "Cancelled"]
+    ["Active", "Vacant", "Completed", "Cancelled"]
   end
 
   def project_approval_options

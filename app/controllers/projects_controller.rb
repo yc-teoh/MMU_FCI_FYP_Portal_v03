@@ -79,6 +79,8 @@ class ProjectsController < ApplicationController
       curr_usr_role = current_user.user_role
       if curr_usr_role == "Manager" || curr_usr_role == "Coordinator"
         @project = Project.new
+        @batches = Batch.pluck(:batch_name, :batch_id)
+        @supervisors = User.where(:user_role =>  "Coordinator").pluck(:user_name, :user_id)
       end
     end
   end

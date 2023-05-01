@@ -34,7 +34,7 @@
       <div class="field">
         <span class="req">* </span>
         <span>Supervisor ID:</span><br>
-        <%= form.text_field :supervisor_id %>
+        <%= form.select :supervisor_id, @supervisors %>
 
         <% @project.errors.full_messages_for(:supervisor_id).each do |message| %>
           <div><%= message %></div>
@@ -42,8 +42,8 @@
       </div>
 
       <div class="field">
-        <span>Co-supervisor ID:</span><br>
-        <%= form.text_field :co_supervisor_id, required: true %>
+        <span>Co-supervisor:</span><br>
+        <%= form.select :co_supervisor_id, @supervisors %>
 
         <% @project.errors.full_messages_for(:co_supervisor_id).each do |message| %>
           <div><%= message %></div>
@@ -56,6 +56,16 @@
         <%= form.select :project_status, project_status_options %>
 
         <% @project.errors.full_messages_for(:project_status).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <span class="req">* </span>
+        <span>Project Batch:</span><br>
+        <%= form.select :batch_id, @batches %>
+
+        <% @project.errors.full_messages_for(:batch_id).each do |message| %>
           <div><%= message %></div>
         <% end %>
       </div>
@@ -79,6 +89,48 @@
           <div><%= message %></div>
         <% end %>
       </div>
+
+      <div class="field">
+        <span class="req">* </span>
+        <span>Project Category:</span><br>
+        <%= form.text_field :project_category %>
+
+        <% @project.errors.full_messages_for(:project_category).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <span class="req">* </span>
+        <span>Focus:</span><br>
+        <%= form.text_field :project_focus %>
+
+        <% @project.errors.full_messages_for(:project_focus).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <span class="req">* </span>
+        <span>Other Specialisation:</span><br>
+        <%= form.text_field :project_other_specialisation %>
+
+        <% @project.errors.full_messages_for(:project_other_specialisation).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <hr>
+      <%= render "proj-details-desc", project: @project %>
+
+      <hr>
+      <%= render "industry-collab", project: @project %>
+
+      <hr>
+      <%= render "student-info", project: @project %>
+
+
+
 
       <div class="field">
         <%= form.hidden_field :project_approval_status, value: "Pending", readonly: true %>

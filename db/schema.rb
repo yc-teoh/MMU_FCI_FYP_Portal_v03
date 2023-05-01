@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_21_072854) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_01_042544) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,7 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_072854) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "project_approval_status", null: false
-    t.string "project_proposal_party", null: false
+    t.string "project_proposal_party"
     t.string "project_type", null: false
     t.string "project_category", null: false
     t.string "project_focus", null: false
@@ -47,8 +47,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_072854) do
     t.string "project_scope", null: false
     t.string "project_status", null: false
     t.string "project_specialisation", null: false
-    t.string "project_background", null: false
-    t.string "project_outcomes", null: false
+    t.string "project_background"
+    t.string "project_outcomes"
     t.string "project_doc_id"
     t.string "supervisor_id", null: false
     t.string "co_supervisor_id"
