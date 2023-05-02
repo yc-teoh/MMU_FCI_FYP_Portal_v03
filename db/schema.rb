@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_01_042544) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_01_091926) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,9 +95,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_01_042544) do
 
   add_foreign_key "announcements", "users", column: "author_id", primary_key: "user_id"
   add_foreign_key "projects", "batches", primary_key: "batch_id"
-  add_foreign_key "projects", "users", column: "co_supervisor_id", primary_key: "user_id"
   add_foreign_key "projects", "users", column: "moderator_id", primary_key: "user_id"
-  add_foreign_key "projects", "users", column: "student_one_user_id", primary_key: "user_id"
-  add_foreign_key "projects", "users", column: "student_two_user_id", primary_key: "user_id"
   add_foreign_key "projects", "users", column: "supervisor_id", primary_key: "user_id"
 end

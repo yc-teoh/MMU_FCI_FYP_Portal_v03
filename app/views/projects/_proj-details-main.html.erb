@@ -1,0 +1,112 @@
+<%#= form_with model: project do |form| %>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Project ID:</span><br>
+    <%= @form.text_field :project_id %>
+
+    <% @project.errors.full_messages_for(:project_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Project Title:</span><br>
+    <%= @form.text_field :project_title %>
+
+    <% @project.errors.full_messages_for(:project_title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Supervisor ID:</span><br>
+    <%= form.select :supervisor_id, @supervisors %>
+
+    <% project.errors.full_messages_for(:supervisor_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span>Co-supervisor:</span><br>
+    <%= @form.select :co_supervisor_id, @co_supervisors %>
+
+    <% @project.errors.full_messages_for(:co_supervisor_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Project Status:</span><br>
+    <%= @form.select :project_status, project_status_options %>
+
+    <% @project.errors.full_messages_for(:project_status).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Project Batch:</span><br>
+    <%= @form.select :batch_id, @batches %>
+
+    <% @project.errors.full_messages_for(:batch_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Project Type:</span><br>
+    <%= @form.select :project_type, project_type_options %>
+
+    <% @project.errors.full_messages_for(:project_type).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Specialisation:</span><br>
+    <%= @form.select :project_specialisation, specialisation_options %>
+
+    <% @project.errors.full_messages_for(:project_specialisation).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Project Category:</span><br>
+    <%= @form.text_field :project_category %>
+
+    <% @project.errors.full_messages_for(:project_category).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Focus:</span><br>
+    <%= @form.text_field :project_focus %>
+
+    <% @project.errors.full_messages_for(:project_focus).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="req">* </span>
+    <span>Other Specialisation:</span><br>
+    <%= @form.text_field :project_other_specialisation %>
+
+    <% @project.errors.full_messages_for(:project_other_specialisation).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+<%# end %>

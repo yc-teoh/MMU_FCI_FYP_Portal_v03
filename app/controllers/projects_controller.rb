@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
         @project = Project.find(params[:project_id])
         @supervisor = User.find(@project.supervisor_id)
 
-        if @project.co_supervisor_id.nil?
+        if @project.co_supervisor_id.nil? || @project.co_supervisor_id == ""
           @co_supervisor = "-"
         else
           @co_supervisor = User.find(@project.co_supervisor_id)
@@ -81,6 +81,8 @@ class ProjectsController < ApplicationController
         @project = Project.new
         @batches = Batch.pluck(:batch_name, :batch_id)
         @supervisors = User.where(:user_role =>  "Coordinator").pluck(:user_name, :user_id)
+        @current_uid = current_user.user_id
+        @button_text = "Create"
       end
     end
   end
@@ -94,6 +96,8 @@ class ProjectsController < ApplicationController
         if @project.save
           redirect_to @project
         else
+          @project.errors.each {|err| puts err }
+          puts "error is #{@project.errors}"
           render :new, status: :unprocessable_entity
         end
       end
@@ -102,6 +106,14 @@ class ProjectsController < ApplicationController
 
   private
   def project_params
-    params.require(:project).permit(:project_title, :project_id, :project_type, :supervisor_id, :co_supervisor_id)
+    params.require(:project).permit(
+      :project_title, :project_id, :project_title, :project_approval_status, :project_proposal_party,    #5
+      :project_type, :project_category, :project_focus, :project_date, :project_other_specialisations,     #5
+      :project_description, :project_objective, :project_scope, :project_status, :project_specialisation,     #5
+      :project_background, :project_outcomes, :project_doc_id, :supervisor_id, :co_supervisor_id, :moderator_id,    #6
+      :reviewed_by, :student_one_user_id, :student_one_subtitle, :student_one_work_distribution, :student_two_user_id,    #5
+      :student_two_subtitle, :student_two_work_distribution, :is_industry_collab, :industry_collab_company,    #4
+      :batch_id, :remarks_project, :remarks_supervisor, :industry_collab_contact_name, :industry_collab_contact_number    #5
+    )
   end
 end
