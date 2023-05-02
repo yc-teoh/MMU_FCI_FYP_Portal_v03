@@ -25,12 +25,21 @@ class ProjectsController < ApplicationController
         @project = Project.find(params[:project_id])
         @supervisor = User.find(@project.supervisor_id)
 
-        if @project.co_supervisor_id.nil? || @project.co_supervisor_id == ""
+        # ------ Co-supervisor's Name------
+        if @project.co_supervisor_id.nil? || @project.co_supervisor_id == "-"
           @co_supervisor = "-"
         else
-          @co_supervisor = User.find(@project.co_supervisor_id)
+          @co_supervisor = User.find(@project.co_supervisor_id).user_name
         end
 
+        # ------ Moderator's Name ------
+        if @project.moderator_id.nil? || @project.moderator_id == "-"
+          @moderator = "-"
+        else
+          @moderator = User.find(@project.moderator_id).user_name
+        end
+
+        # ------ List out other specialisations ------
         if @project.project_other_specialisations.nil?
           @other_specialisation = "-"
         else

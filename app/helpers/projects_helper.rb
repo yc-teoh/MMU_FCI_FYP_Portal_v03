@@ -5,7 +5,7 @@ module ProjectsHelper
   end
 
   def co_supervisor_options
-    cs = User.where(:user_role =>  "Coordinator").pluck(:user_name, :user_id).append(["-", nil])
+    cs = User.where(:user_role =>  "Coordinator").pluck(:user_name, :user_id).append(["-"])
     return cs
   end
 end
