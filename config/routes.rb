@@ -11,7 +11,6 @@ Rails.application.routes.draw do
 
   get "/announcements", to: "announcements#index"
   get "/announcements/new", to: "announcements#new"
-
   # These routes goes last whenever possible to avoid `new` controllers getting override.
   get "/announcements/:announcement_id", to: "announcements#show"
   get "/announcements/:announcement_id/edit", to: "announcements#edit"
@@ -19,6 +18,8 @@ Rails.application.routes.draw do
   get "/projects", to: "projects#index"
   get "/projects/new", to: "projects#new"
   get "/projects/:project_id", to: "projects#show"
+  get "/projects/:project_id/edit", to: "projects#edit"
+  get "/projects/:project_id/edit_review", to: "projects#edit_review", as: :edit_review
 
   get "/usermgmt", to: "users#index"
   get "/usermgmt/:user_id", to: "users#show"

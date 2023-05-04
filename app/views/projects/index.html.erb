@@ -45,7 +45,7 @@
             <td>
               <%= link_to "View", project %>
               <% if current_user.user_role == "Coordinator" %>
-                <span> | <%= link_to "Edit", project %></span>
+                <span> | <a href="/projects/<%= project.project_id %>/edit">Edit</a></span>
               <% end %>
             </td>
           </tr>

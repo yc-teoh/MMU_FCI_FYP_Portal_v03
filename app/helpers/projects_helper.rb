@@ -8,4 +8,8 @@ module ProjectsHelper
     cs = User.where(:user_role =>  "Coordinator").pluck(:user_name, :user_id).append(["-"])
     return cs
   end
+
+  def supervisor_options
+    sp = User.where(:user_role =>  "Coordinator").pluck(:user_name, :user_id)
+  end
 end

@@ -1,28 +1,22 @@
 <style>
-      .field {padding-bottom: 1em;}
-      .req {color: red}
+    .field {padding-bottom: 1em;}
+    .req {color: red}
 </style>
 
 <div>
   <p><%= link_to "<- Back", projects_path() %></p>
 </div>
 
-<h1>New Project</h1>
+<h1>Edit Project</h1>
 
 <% if user_signed_in? %>
-  <% if current_user.user_role == "Coordinator" %>
-  <% # ------------------------------------------------------------------------------------------ # %>
-
+  <% if current_user.user_role == "Coordinator"  %>
     <%= form_with model: @project do |form| %>
 
       <% # ------ Project ID ----- # %>
       <div class="field">
-        <span class="req">* </span>
-        <span>Project ID:</span><br>
-        <%= form.text_field :project_id %>
-        <% @project.errors.full_messages_for(:project_id).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
+        <span>Project ID: <%= @project.project_id %></span>
+        <%= form.hidden_field :project_id, value: @project.project_id, readonly: true %><br>
       </div>
 
       <% # ------ Project Title ----- # %>
@@ -35,15 +29,15 @@
         <% end %>
       </div>
 
-      <%# # ------ Supervisor ID ----- # %>
-<!--      <div class="field">-->
-<!--        <span class="req">* </span>-->
-<!--        <span>Supervisor ID:</span><br>-->
-        <%#= form.select :supervisor_id, @supervisors %>
-        <%# @project.errors.full_messages_for(:supervisor_id).each do |message| %>
-<!--          <div><%#= message %></div>-->
-        <%# end %>
-<!--      </div>-->
+      <% # ------ Supervisor ID ----- # %>
+      <div class="field">
+        <span class="req">* </span>
+        <span>Supervisor ID:</span><br>
+        <%= form.select :supervisor_id, supervisor_options %>
+        <% @project.errors.full_messages_for(:supervisor_id).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
 
       <% # ------ Co-supervisor ID ----- # %>
       <div class="field">
@@ -54,15 +48,15 @@
         <% end %>
       </div>
 
-      <%# # ------ Project Status ----- # %>
-<!--      <div class="field">-->
-<!--        <span class="req">* </span>-->
-<!--        <span>Project Status:</span><br>-->
-        <%#= form.select :project_status, project_status_options %>
-        <%# @project.errors.full_messages_for(:project_status).each do |message| %>
-<!--          <div><%#= message %></div>-->
-        <%# end %>
-<!--      </div>-->
+      <% # ------ Project Status ----- # %>
+      <div class="field">
+        <span class="req">* </span>
+        <span>Project Status:</span><br>
+        <%= form.select :project_status, project_status_options %>
+        <% @project.errors.full_messages_for(:project_status).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
 
       <% # ------ Project Batch ----- # %>
       <div class="field">
@@ -162,22 +156,6 @@
       <% # ================================================================================================== %>
       <% # ================================================================================================== %>
 
-      <div class="field">
-        <%= form.hidden_field :project_approval_status, value: "Pending", readonly: true %>
-        <%= form.hidden_field :supervisor_id, value: @current_uid, readonly: true %>
-        <%= form.hidden_field :project_status, value: "Vacant", readonly: true %>
-
-        <% # TEMP PARAMS # %>
-        <%= form.hidden_field :is_industry_collab, value: "N", readonly: true %>
-        <%#= form.hidden_field :student_one_user_id, value: nil, readonly: true %>
-        <%#= form.hidden_field :student_two_user_id, value: nil, readonly: true %>
-
-        <% # TEMP PARAMS - DISABLED! # %>
-        <%#= form.hidden_field :project_description, value: "N/A", readonly: true %>
-        <%#= form.hidden_field :project_objective, value: "N/A", readonly: true %>
-        <%#= form.hidden_field :project_scope, value: "N/A", readonly: true %>
-
-      </div>
 
       <hr>
       <div>
@@ -185,18 +163,6 @@
       </div>
     <% end %>
 
-
-    <% # specialisation | proj category | focus | other specialisation  %>
-    <% # proj desc | proj obj | proj scope  %>
-    <% # num of students | stud 1 name | stud 1 subtitle | stud 1 work dis | stud2++  %>
-    <% # is industry collab? | company | contact name | contact no  %>
-
-    <% # NOT NULL # %>
-    <% # [X] project_id | [X] project_title | [A] created_at | [A] updated_at | [V] project_approval_status | [X] project_type %>
-    <% # [X] project_category | [X] project_focus | [V] project_description | [V] project_objective | [V] project_scope %>
-    <% # [X] project_status | [X] project_specialisation | [X] SUPERVISOR_ID | is_industry_collab | [X] BATCH_ID %>
-
-  <% # ------------------------------------------------------------------------------------------ # %>
   <% else %>
     <p><%= errmsg_no_permission_to_access %></p>
   <% end %>

@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
       curr_usr_role = current_user.user_role    # The role of current user.
 
       if curr_usr_role == "Manager" || curr_usr_role == "Coordinator"
-        @projects = Project.all
+        @projects = Project.all.order(created_at: :asc)
         @users = User.all
 
         if params[:search_keyword] && params[:search_keyword] != ""
@@ -111,6 +111,24 @@ class ProjectsController < ApplicationController
         end
       end
     end
+  end
+
+  def edit
+    @project = Project.find(params[:project_id])
+  end
+
+  def update
+    @project = Project.find(params[:project_id])
+
+    if @project.update(project_params)
+      redirect_to @project
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def edit_review
+    @project = Project.find(params[:project_id])
   end
 
   private

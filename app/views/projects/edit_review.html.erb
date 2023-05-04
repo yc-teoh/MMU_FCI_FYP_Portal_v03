@@ -1,0 +1,50 @@
+<style>
+    table, td {border: 1px solid black;}
+    .thead_vertical {font-weight: bold;}
+</style>
+
+<h1>Review Project</h1>
+
+<% if user_signed_in? %>
+  <% if current_user.user_role == "Coordinator" %>
+    <% # ------------------------------------------------------------------------------------------ # %>
+
+    <%= form_with model: @project do |form| %>
+
+      <div>
+        <table>
+          <tr>
+            <td class="thead_vertical">Project ID</td>
+            <td><%= @project.project_id %></td>
+          </tr>
+
+          <tr>
+            <td class="thead_vertical">Project Title</td>
+            <td><%= @project.project_title %></td>
+          </tr>
+        </table>
+      </div>
+      <br>
+
+      <% # ------ Project Status ----- # %>
+      <div class="field">
+        <span>Project Status:</span>
+        <%= form.select :project_status, project_status_options %>
+        <% @project.errors.full_messages_for(:project_status).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <hr>
+      <div>
+        <%= form.submit @button_text %>
+      </div>
+
+    <% end %>
+    <% # ------------------------------------------------------------------------------------------ # %>
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+<% else %>
+  <p><%= errmsg_no_permission_to_access %></p>
+<% end %>

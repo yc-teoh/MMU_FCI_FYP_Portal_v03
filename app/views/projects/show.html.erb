@@ -14,6 +14,9 @@
 
     <h2><%= @project.project_title %></h2>
 
+    <%= render "proj-details-summary" %>
+    <%= link_to "REVIEW (TEST)", edit_review_path() %>
+
     <table>
       <tr>
         <td class="thead_vertical">Project ID</td>
