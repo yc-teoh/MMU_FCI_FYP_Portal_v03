@@ -1,0 +1,72 @@
+<style>
+    table, td {border: 1px solid black;}
+    .thead_vertical {font-weight: bold;}
+    .field {padding-bottom: 1em;}
+    .req {color: red}
+</style>
+
+<div>
+  <p><%= link_to "<- Back", project_path %></p>
+</div>
+
+<h1>Industry Collaboration Details</h1>
+
+<% if user_signed_in? %>
+  <% if current_user.user_role == "Coordinator" %>
+    <% # ------------------------------------------------------------------------------------------ # %>
+
+    <%= form_with model: @project do |form| %>
+
+      <%= render "proj-details-summary" %>
+      <br>
+
+      <% # ------ Is Industry Collaboration? ----- # %>
+      <div class="field">
+        <span class="req">* </span>
+        <span>Is Industry Collaboration?:</span><br>
+        <%= form.select :is_industry_collab, yes_no_options %>
+        <% @project.errors.full_messages_for(:is_industry_collab).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <% # ------ Company Name ----- # %>
+      <div class="field">
+        <span>Company Name:</span><br>
+        <%= form.text_field :industry_collab_company %>
+        <% @project.errors.full_messages_for(:industry_collab_company).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <% # ------ Company PIC Name ----- # %>
+      <div class="field">
+        <span>Contact Name:</span><br>
+        <%= form.text_field :industry_collab_contact_name %>
+        <% @project.errors.full_messages_for(:industry_collab_contact_name).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <% # ------ Company PIC Phone Number ----- # %>
+      <div class="field">
+        <span>Contact Number:</span><br>
+        <%= form.text_field :industry_collab_contact_number %>
+        <% @project.errors.full_messages_for(:industry_collab_contact_number).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <hr>
+      <div>
+        <%= form.submit @button_text %>
+      </div>
+
+    <% end %>
+    <% # ------------------------------------------------------------------------------------------ # %>
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+<% else %>
+  <p><%= errmsg_no_permission_to_access %></p>
+<% end %>

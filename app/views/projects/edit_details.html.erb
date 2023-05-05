@@ -1,0 +1,65 @@
+<style>
+    table, td {border: 1px solid black;}
+    .thead_vertical {font-weight: bold;}
+    .field {padding-bottom: 1em;}
+    .req {color: red}
+</style>
+
+<div>
+  <p><%= link_to "<- Back", project_path %></p>
+</div>
+
+<h1>Project Details</h1>
+
+<% if user_signed_in? %>
+  <% if current_user.user_role == "Coordinator" %>
+    <% # ------------------------------------------------------------------------------------------ # %>
+
+    <%= form_with model: @project do |form| %>
+
+      <%= render "proj-details-summary" %>
+      <br>
+
+      <% # ------ Project Description ----- # %>
+      <div class="field">
+        <span class="req">* </span>
+        <span>Project Description:</span><br>
+        <%= form.text_area :project_description%>
+        <% @project.errors.full_messages_for(:project_description).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <% # ------ Project Objectives ----- # %>
+      <div class="field">
+        <span class="req">* </span>
+        <span>Project Objective:</span><br>
+        <%= form.text_area :project_objective%>
+        <% @project.errors.full_messages_for(:project_objective).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <% # ------ Project Scope ----- # %>
+      <div class="field">
+        <span class="req">* </span>
+        <span>Project Objective:</span><br>
+        <%= form.text_area :project_scope%>
+        <% @project.errors.full_messages_for(:project_scope).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <hr>
+      <div>
+        <%= form.submit @button_text %>
+      </div>
+
+    <% end %>
+    <% # ------------------------------------------------------------------------------------------ # %>
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+<% else %>
+  <p><%= errmsg_no_permission_to_access %></p>
+<% end %>

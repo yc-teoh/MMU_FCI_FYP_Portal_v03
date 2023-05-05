@@ -48,6 +48,33 @@
         <% end %>
       </div>
 
+      <% # ------ Student ONE ID ----- # %>
+      <div class="field">
+        <span>Student 1 ID:</span><br>
+        <%= form.text_field :student_one_user_id %>
+        <% @project.errors.full_messages_for(:student_one_user_id).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <% # ------ Student ONE Subtitle ----- # %>
+      <div class="field">
+        <span>Student 1 Subtitle:</span><br>
+        <%= form.text_field :student_one_subtitle %>
+        <% @project.errors.full_messages_for(:student_one_subtitle).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <% # ------ Student ONE Work Distribution ----- # %>
+      <div class="field">
+        <span>Student 1 Work Distribution:</span><br>
+        <%= form.text_field :student_one_work_distribution %>
+        <% @project.errors.full_messages_for(:student_one_work_distribution).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
       <hr>
       <div>
         <%= form.submit @button_text %>

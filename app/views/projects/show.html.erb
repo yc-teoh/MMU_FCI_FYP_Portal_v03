@@ -4,7 +4,7 @@
 </style>
 
 <div>
-  <p><%= link_to "<- Back", projects_path() %></p>
+  <p><%= link_to "<- Back", projects_path %></p>
 </div>
 
 <h1>Projects</h1>
@@ -31,6 +31,11 @@
       </tr>
 
       <tr>
+        <td class="thead_vertical">Project Batch</td>
+        <td><%= batch_options.each{|k,v| break k if v.include?(Project.find(params[:project_id]).batch_id) } %></td>
+      </tr>
+
+      <tr>
         <td class="thead_vertical">Project Type</td>
         <td><%= project_type_options.each{|k,v| break k if v.include?(Project.find(params[:project_id]).project_type) } %></td>
       </tr>
@@ -54,7 +59,18 @@
         <td class="thead_vertical">Other Specialisation</td>
         <td><%= @other_specialisation %></td>
       </tr>
+
+      <tr>
+        <td class="thead_vertical">Created On</td>
+        <td>
+          <%= @created_at %> <i><%= @last_updated %></i>
+        </td>
+      </tr>
     </table>
+
+    <% if current_user.user_role == "Coordinator" %>
+      <%= link_to "Edit", edit_project_path %>
+    <% end %>
 
     <br>
 
@@ -75,65 +91,6 @@
       <tr>
         <td class="thead_vertical">Moderator</td>
         <td><%= @moderator %></td>
-      </tr>
-    </table>
-
-    <% if current_user.user_role == "Coordinator" %>
-      <%= link_to "Edit", edit_personnel_path() %>
-    <% end %>
-
-    <br>
-
-    <% # ------------------------------------------------------------------------ # %>
-    <h3>Project Approval Details</h3>
-
-    <table>
-      <tr>
-        <td class="thead_vertical">Approval Status</td>
-        <td><%= @project.project_approval_status %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">Approved by</td>
-        <td><%= @reviewed_by %></td>
-      </tr>
-    </table>
-
-    <% if current_user.user_role == "Coordinator" %>
-      <%= link_to "Review", edit_review_path() %>
-    <% end %>
-
-    <br>
-
-    <% # ------------------------------------------------------------------------ # %>
-    <h3>Project Details</h3>
-
-    <table>
-      <tr>
-        <td class="thead_vertical">Project Description</td>
-        <td><%= @project.project_description.gsub(/\n/, '<br/>').html_safe %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">Project Objectives</td>
-        <td><%= @project.project_objective.gsub(/\n/, '<br/>').html_safe %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">Project Scope</td>
-        <td><%= @project.project_scope.gsub(/\n/, '<br/>').html_safe %></td>
-      </tr>
-    </table>
-
-    <br>
-
-    <% # ------------------------------------------------------------------------ # %>
-    <h3>Student List</h3>
-
-    <table>
-      <tr>
-        <td class="thead_vertical">Number of Students</td>
-        <td><%= "qwertyuiop" %></td>
       </tr>
 
       <tr>
@@ -167,6 +124,57 @@
       </tr>
     </table>
 
+    <% if current_user.user_role == "Coordinator" %>
+      <%= link_to "Edit", edit_personnel_path %>
+    <% end %>
+
+    <br>
+
+    <% # ------------------------------------------------------------------------ # %>
+    <h3>Project Approval Details</h3>
+
+    <table>
+      <tr>
+        <td class="thead_vertical">Approval Status</td>
+        <td><%= @project.project_approval_status %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Approved by</td>
+        <td><%= @reviewed_by %></td>
+      </tr>
+    </table>
+
+    <% if current_user.user_role == "Coordinator" %>
+      <%= link_to "Review", edit_review_path %>
+    <% end %>
+
+    <br>
+
+    <% # ------------------------------------------------------------------------ # %>
+    <h3>Project Details</h3>
+
+    <table>
+      <tr>
+        <td class="thead_vertical">Project Description</td>
+        <td><%= @project.project_description.gsub(/\n/, '<br/>').html_safe %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Project Objective</td>
+        <td><%= @project.project_objective.gsub(/\n/, '<br/>').html_safe %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Project Scope</td>
+        <td><%= @project.project_scope.gsub(/\n/, '<br/>').html_safe %></td>
+      </tr>
+    </table>
+
+    <% if current_user.user_role == "Coordinator" %>
+      <%= link_to "Edit", edit_details_path() %>
+    <% end %>
+
     <br>
 
     <% # ------------------------------------------------------------------------ # %>
@@ -193,6 +201,10 @@
         <td><%= @industry_collab_contact_number %></td>
       </tr>
     </table>
+
+    <% if current_user.user_role == "Coordinator" %>
+      <%= link_to "Edit", edit_industry_collab_path %>
+    <% end %>
 
 <!--    <p><%#= link_to "Edit", edit_announcement_path(@announcement) %></p>-->
 

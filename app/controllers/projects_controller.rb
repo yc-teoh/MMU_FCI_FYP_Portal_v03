@@ -48,6 +48,13 @@ class ProjectsController < ApplicationController
         @project = Project.find(params[:project_id])
         @supervisor = User.find(@project.supervisor_id)
 
+        @created_at = @project.created_at.strftime('%d/%m/%Y %H:%M')
+        if @project.created_at != @project.updated_at
+          @last_updated = "(Updated at: " + @project.updated_at.strftime('%d/%m/%Y %H:%M') + ")"
+        else
+          @last_updated = ""
+        end
+
         # ------ Co-supervisor's Name------
         if @project.co_supervisor_id.nil? || @project.co_supervisor_id == "-"
           @co_supervisor = "-"
@@ -76,28 +83,30 @@ class ProjectsController < ApplicationController
           @other_specialisation = @project.project_other_specialisations
         end
 
-        if @project.student_one_user_id.nil?
-          @student_one_user_name = "-"
-          @student_one_user_id = "-"
-          @student_one_subtitle = "-"
-          @student_one_work_distribution = "-"
-        else
+        # if @project.student_one_user_id.nil? || @project.student_one_user_id == ""
+        if User.where(:user_id => @project.student_one_user_id).exists?
           @student_one_user_name = User.find(@project.student_one_user_id).user_name
           @student_one_user_id = @project.student_one_user_id
           @student_one_subtitle = @project.student_one_subtitle
           @student_one_work_distribution = @project.student_one_work_distribution
+        else
+          @student_one_user_name = "-"
+          @student_one_user_id = "-"
+          @student_one_subtitle = "-"
+          @student_one_work_distribution = "-"
         end
 
-        if @project.student_two_user_id.nil?
-          @student_two_user_name = "-"
-          @student_two_user_id = "-"
-          @student_two_subtitle = "-"
-          @student_two_work_distribution = "-"
-        else
+        # if @project.student_two_user_id.nil? || @project.student_two_user_id == ""
+        if User.where(:user_id => @project.student_two_user_id).exists?
           @student_two_user_name = User.find(@project.student_two_user_id).user_name
           @student_two_user_id = @project.student_two_user_id
           @student_two_subtitle = @project.student_two_subtitle
           @student_two_work_distribution = @project.student_two_work_distribution
+        else
+          @student_two_user_name = "-"
+          @student_two_user_id = "-"
+          @student_two_subtitle = "-"
+          @student_two_work_distribution = "-"
         end
 
         if @project.is_industry_collab == "Y"
@@ -162,6 +171,14 @@ class ProjectsController < ApplicationController
   end
 
   def edit_personnel
+    @project = Project.find(params[:project_id])
+  end
+
+  def edit_details
+    @project = Project.find(params[:project_id])
+  end
+
+  def edit_industry_collab
     @project = Project.find(params[:project_id])
   end
 

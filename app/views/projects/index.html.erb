@@ -27,7 +27,7 @@
           <th>Lecturer</th>
           <th>Specialisation</th>
           <% if current_user.user_role == "Coordinator" %><th>Approval Status</th><% end %>
-          <th>Project Details</th>
+          <th>Actions</th>
         </tr>
 
         <% @projects.each do |project| %>
@@ -49,9 +49,9 @@
             <% if current_user.user_role == "Coordinator" %><td><%= project.project_approval_status %></td><% end %>
             <td>
               <%= link_to "View", project %>
-              <% if current_user.user_role == "Coordinator" %>
-                <span> | <a href="/projects/<%= project.project_id %>/edit">Edit</a></span>
-              <% end %>
+              <%# if current_user.user_role == "Coordinator" %>
+<!--                <span> | <a href="/projects/<%#= project.project_id %>/edit">Edit</a></span>-->
+              <%# end %>
             </td>
           </tr>
         <% end %>
