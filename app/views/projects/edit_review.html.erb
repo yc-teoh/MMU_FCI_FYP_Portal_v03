@@ -3,6 +3,10 @@
     .thead_vertical {font-weight: bold;}
 </style>
 
+<div>
+  <p><%= link_to "<- Back", project_path %></p>
+</div>
+
 <h1>Review Project</h1>
 
 <% if user_signed_in? %>
@@ -11,28 +15,21 @@
 
     <%= form_with model: @project do |form| %>
 
-      <div>
-        <table>
-          <tr>
-            <td class="thead_vertical">Project ID</td>
-            <td><%= @project.project_id %></td>
-          </tr>
-
-          <tr>
-            <td class="thead_vertical">Project Title</td>
-            <td><%= @project.project_title %></td>
-          </tr>
-        </table>
-      </div>
+      <%= render "proj-details-summary" %>
       <br>
 
       <% # ------ Project Status ----- # %>
       <div class="field">
-        <span>Project Status:</span>
-        <%= form.select :project_status, project_status_options %>
-        <% @project.errors.full_messages_for(:project_status).each do |message| %>
+        <span>Project Approval Status:</span>
+        <%= form.select :project_approval_status, project_approval_options %>
+        <% @project.errors.full_messages_for(:project_approval_status).each do |message| %>
           <div><%= message %></div>
         <% end %>
+      </div>
+
+      <% # ------ Reviewed By ----- # %>
+      <div class="field">
+        <%= form.hidden_field :reviewed_by, value: current_user.user_id, readonly: true %>
       </div>
 
       <hr>

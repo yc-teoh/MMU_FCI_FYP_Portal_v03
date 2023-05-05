@@ -7,11 +7,34 @@ class ProjectsController < ApplicationController
         @projects = Project.all.order(created_at: :asc)
         @users = User.all
 
+        # IF THE SEARCH BOX CONTAINS KEYWORDS
         if params[:search_keyword] && params[:search_keyword] != ""
           # @users = @users.where("user_id like ?", params[:search_by_id])
-
           # `ilike` is case-insensitive
           @projects = @projects.where('project_id ilike :search OR project_title ilike :search', search: "%#{params[:search_keyword]}%")
+
+          if params[:pending_projects] && params[:confirmed_projects]
+            @projects = @projects.where('project_approval_status=\'Pending\' OR project_approval_status=\'Confirmed\'')
+          end
+          if params[:confirmed_projects] && params[:pending_projects].nil?
+            @projects = @projects.where('project_approval_status=\'Confirmed\'')
+          end
+          if params[:pending_projects] && params[:confirmed_projects].nil?
+            @projects = @projects.where('project_approval_status=\'Pending\'')
+          end
+        end
+
+        # IF THE SEARCH BOX DOES NOT CONTAIN KEYWORDS
+        if params[:search_keyword] == ""
+          if params[:pending_projects] && params[:confirmed_projects]
+            @projects = @projects.where('project_approval_status=\'Pending\' OR project_approval_status=\'Confirmed\'')
+          end
+          if params[:confirmed_projects] && params[:pending_projects].nil?
+            @projects = @projects.where('project_approval_status=\'Confirmed\'')
+          end
+          if params[:pending_projects] && params[:confirmed_projects].nil?
+            @projects = @projects.where('project_approval_status=\'Pending\'')
+          end
         end
       end
     end
@@ -37,6 +60,13 @@ class ProjectsController < ApplicationController
           @moderator = "-"
         else
           @moderator = User.find(@project.moderator_id).user_name
+        end
+
+        # ------ Approval's Name ------
+        if @project.reviewed_by.nil?
+          @reviewed_by = "-"
+        else
+          @reviewed_by = User.find(@project.reviewed_by).user_name
         end
 
         # ------ List out other specialisations ------

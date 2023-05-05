@@ -12,7 +12,10 @@
         <%= form_tag "/projects", method: :get do %>
           <span>Search Keyword: </span>
           <%= text_field_tag :search_keyword, params[:search_keyword] %>
+          <%= check_box_tag :pending_projects %><%= label_tag(:pending_projects, "Pending Projects") %>
+          <%= check_box_tag :confirmed_projects %><%= label_tag(:confirmed_projects, "Confirmed Projects") %>
           <%= submit_tag "Search" %>
+          <%= link_to '<button type="button">Reset</button>'.html_safe, projects_path %>
         <% end %>
         <br>
       </div>
@@ -23,6 +26,7 @@
           <th>Project Title</th>
           <th>Lecturer</th>
           <th>Specialisation</th>
+          <% if current_user.user_role == "Coordinator" %><th>Approval Status</th><% end %>
           <th>Project Details</th>
         </tr>
 
@@ -42,6 +46,7 @@
             <% end %>
 
             <td><%= project.project_specialisation %></td>
+            <% if current_user.user_role == "Coordinator" %><td><%= project.project_approval_status %></td><% end %>
             <td>
               <%= link_to "View", project %>
               <% if current_user.user_role == "Coordinator" %>

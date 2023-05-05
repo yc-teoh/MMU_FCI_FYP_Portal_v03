@@ -14,9 +14,6 @@
 
     <h2><%= @project.project_title %></h2>
 
-    <%= render "proj-details-summary" %>
-    <%= link_to "REVIEW (TEST)", edit_review_path() %>
-
     <table>
       <tr>
         <td class="thead_vertical">Project ID</td>
@@ -76,6 +73,30 @@
 
     <br>
 
+    <% # ------------------------------------------------------------------------ # %>
+    <h3>Project Approval Details</h3>
+
+    <table>
+      <tr>
+        <td class="thead_vertical">Approval Status</td>
+        <td><%= @project.project_approval_status %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Approved by</td>
+        <td><%= @reviewed_by %></td>
+      </tr>
+    </table>
+
+    <% if current_user.user_role == "Coordinator" %>
+      <%= link_to "Review Project", edit_review_path() %>
+    <% end %>
+
+    <br>
+
+    <% # ------------------------------------------------------------------------ # %>
+    <h3>Project Details</h3>
+
     <table>
       <tr>
         <td class="thead_vertical">Project Description</td>
@@ -94,6 +115,9 @@
     </table>
 
     <br>
+
+    <% # ------------------------------------------------------------------------ # %>
+    <h3>Student List</h3>
 
     <table>
       <tr>
@@ -133,6 +157,9 @@
     </table>
 
     <br>
+
+    <% # ------------------------------------------------------------------------ # %>
+    <h3>Industry Collaboration Details</h3>
 
     <table>
       <tr>
