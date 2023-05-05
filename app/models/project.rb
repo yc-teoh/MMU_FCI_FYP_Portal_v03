@@ -1,4 +1,6 @@
 class Project < ApplicationRecord
+  scope :projects_confirmed, ->{ where(project_approval_status: "Confirmed") }
+
   validates :project_id, presence: true, uniqueness: true
   validates :project_title, presence: true, uniqueness: true
   validates :supervisor_id, presence: true
