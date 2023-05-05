@@ -161,6 +161,10 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:project_id])
   end
 
+  def edit_personnel
+    @project = Project.find(params[:project_id])
+  end
+
   private
   def project_params
     params.require(:project).permit(

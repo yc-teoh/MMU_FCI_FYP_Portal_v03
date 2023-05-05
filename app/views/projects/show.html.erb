@@ -31,21 +31,6 @@
       </tr>
 
       <tr>
-        <td class="thead_vertical">Supervisor</td>
-        <td><%= @supervisor.user_name %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">Co-supervisor</td>
-        <td><%= @co_supervisor %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">Moderator</td>
-        <td><%= @moderator %></td>
-      </tr>
-
-      <tr>
         <td class="thead_vertical">Project Type</td>
         <td><%= project_type_options.each{|k,v| break k if v.include?(Project.find(params[:project_id]).project_type) } %></td>
       </tr>
@@ -74,6 +59,32 @@
     <br>
 
     <% # ------------------------------------------------------------------------ # %>
+    <h3>Project Personnel Details</h3>
+
+    <table>
+      <tr>
+        <td class="thead_vertical">Supervisor</td>
+        <td><%= @supervisor.user_name %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Co-supervisor</td>
+        <td><%= @co_supervisor %></td>
+      </tr>
+
+      <tr>
+        <td class="thead_vertical">Moderator</td>
+        <td><%= @moderator %></td>
+      </tr>
+    </table>
+
+    <% if current_user.user_role == "Coordinator" %>
+      <%= link_to "Edit", edit_personnel_path() %>
+    <% end %>
+
+    <br>
+
+    <% # ------------------------------------------------------------------------ # %>
     <h3>Project Approval Details</h3>
 
     <table>
@@ -89,7 +100,7 @@
     </table>
 
     <% if current_user.user_role == "Coordinator" %>
-      <%= link_to "Review Project", edit_review_path() %>
+      <%= link_to "Review", edit_review_path() %>
     <% end %>
 
     <br>

@@ -166,6 +166,7 @@
         <%= form.hidden_field :project_approval_status, value: "Pending", readonly: true %>
         <%= form.hidden_field :supervisor_id, value: @current_uid, readonly: true %>
         <%= form.hidden_field :project_status, value: "Vacant", readonly: true %>
+        <%= form.hidden_field :moderator_id, value: "-", readonly: true %>
 
         <% # TEMP PARAMS # %>
         <%= form.hidden_field :is_industry_collab, value: "N", readonly: true %>

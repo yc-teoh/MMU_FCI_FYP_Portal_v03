@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "/projects/:project_id", to: "projects#show"
   get "/projects/:project_id/edit", to: "projects#edit"
   get "/projects/:project_id/edit_review", to: "projects#edit_review", as: :edit_review
+  get "/projects/:project_id/edit_personnel", to: "projects#edit_personnel", as: :edit_personnel
 
   get "/usermgmt", to: "users#index"
   get "/usermgmt/:user_id", to: "users#show"
