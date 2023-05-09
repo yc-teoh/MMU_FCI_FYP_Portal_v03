@@ -5,6 +5,9 @@ class UsersController < ApplicationController
     if curr_usr_role == "Manager" || curr_usr_role == "Coordinator"
       @users = User.all
 
+      @user_student = User.list_student
+      @user_supervisor = User.list_supervisor
+
       # # Temporary
       # @users_student = User.where(user_role: "Student")
       # @users_supervisor = User.where(user_role: "Supervisor")

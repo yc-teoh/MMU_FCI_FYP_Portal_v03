@@ -5,6 +5,17 @@
 <h1>User Management</h1>
 
 <div>
+  <table>
+    <tr>
+      <td>All</td>
+      <td>Student</td>
+      <td>Supervisor</td>
+    </tr>
+  </table>
+  <br>
+</div>
+
+<div>
   <%= form_tag "/usermgmt", method: :get do %>
     <span>Search Keyword: </span>
     <%= text_field_tag :search_keyword, params[:search_keyword] %>
