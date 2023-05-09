@@ -1,0 +1,42 @@
+<div>
+  <%= form_tag "/usermgmt", method: :get do %>
+    <span>Search Keyword: </span>
+    <%= text_field_tag :search_keyword, params[:search_keyword] %>
+    <%= submit_tag "Search" %>
+  <% end %>
+  <br>
+</div>
+
+<div>
+  <% if user_signed_in? %>
+    <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+      <table>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Specialisation</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Batch</th>
+          <th>Details</th>
+        </tr>
+
+        <% users.each do |user| %>
+          <tr>
+            <td><%= user.user_id %></td>
+            <td><%= user.user_name %></td>
+            <td><%= user.student_specialisation %></td>
+            <td><%= user.user_role %></td>
+            <td><%= user.user_status %></td>
+            <td><%= user.student_batch %></td>
+            <td><%= link_to "View", user %> | Edit</td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      <p><%= errmsg_no_permission_to_access %></p>
+    <% end %>
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+</div>

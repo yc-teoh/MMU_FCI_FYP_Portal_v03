@@ -1,61 +1,65 @@
 <style>
     table, td {border: 1px solid black;}
+    #all {visibility: visible; display: unset;}
+    #student {visibility: hidden; display: none;}
+    #supervisor {visibility: hidden; display: none;}
+    #moderator {visibility: hidden; display: none;}
 </style>
+
+<script type="text/javascript">
+  function showHide(elementId) {
+      let el = document.getElementById(elementId);
+
+      if (el.style.visibility === "hidden") {
+          el.style.visibility = "visible";
+      } else if (el.style.visibility === "visible") {
+          el.style.visibility = "hidden";
+      }
+  }
+
+  function toggle(elementId) {
+      const list = ["all", "student", "supervisor", "moderator"];
+
+      let el_tog = document.getElementById(elementId);
+      el_tog.style.visibility = "visible";
+      el_tog.style.display = "unset";
+      console.log(el_tog);
+
+      for (let i = 0; i < list.length; i++) {
+          if (list[i] !== elementId) {
+              let el_left = document.getElementById(list[i]);
+              el_left.style.visibility = "hidden";
+              el_left.style.display = "none";
+          }
+      }
+  }
+</script>
 
 <h1>User Management</h1>
 
 <div>
   <table>
     <tr>
-      <td>All</td>
-      <td>Student</td>
-      <td>Supervisor</td>
+      <td><input type=button onClick="toggle('all')" value="All" /></td>
+      <td><input type=button onClick="toggle('student')" value="Student" /></td>
+      <td><input type=button onClick="toggle('supervisor')" value="Supervisor" /></td>
+      <td><input type=button onClick="toggle('moderator')" value="Moderator" /></td>
     </tr>
   </table>
   <br>
 </div>
 
-<div>
-  <%= form_tag "/usermgmt", method: :get do %>
-    <span>Search Keyword: </span>
-    <%= text_field_tag :search_keyword, params[:search_keyword] %>
-    <%= submit_tag "Search" %>
-  <% end %>
-  <br>
-</div>
+<!--<div>-->
+  <%#= form_tag "/usermgmt", method: :get do %>
+<!--    <span>Search Keyword: </span>-->
+    <%#= text_field_tag :search_keyword, params[:search_keyword] %>
+    <%#= submit_tag "Search" %>
+  <%# end %>
+<!--  <br>-->
+<!--</div>-->
 
-<div>
+<div id="all"><%= render "user_list", users: @users %></div>
+<div id="student"><%= render "user_list", users: @user_student %></div>
+<div id="supervisor"><%= render "user_list", users: @user_supervisor %></div>
+<div id="moderator"><%= render "user_list", users: @user_moderator %></div>
 
-  <% if user_signed_in? %>
-    <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
-      <table>
-        <tr>
-          <th>User ID</th>
-          <th>Name</th>
-          <th>Specialisation</th>
-          <th>Role</th>
-          <th>Status</th>
-          <th>Batch</th>
-          <th>Details</th>
-        </tr>
-
-        <% @users.each do |user| %>
-          <tr>
-            <td><%= user.user_id %></td>
-            <td><%= user.user_name %></td>
-            <td><%= user.student_specialisation %></td>
-            <td><%= user.user_role %></td>
-            <td><%= user.user_status %></td>
-            <td><%= user.student_batch %></td>
-            <td><%= link_to "View", user %> | Edit</td>
-          </tr>
-        <% end %>
-
-      </table>
-    <% else %>
-      <p><%= errmsg_no_permission_to_access %></p>
-    <% end %>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-</div>

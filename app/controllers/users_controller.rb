@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
       @user_student = User.list_student
       @user_supervisor = User.list_supervisor
+      @user_moderator = User.list_moderator
 
       # # Temporary
       # @users_student = User.where(user_role: "Student")
