@@ -18,7 +18,7 @@
           <th>Role</th>
           <th>Status</th>
           <th>Batch</th>
-          <th>Details</th>
+          <th>Action</th>
         </tr>
 
         <% users.each do |user| %>
@@ -29,7 +29,7 @@
             <td><%= user.user_role %></td>
             <td><%= user.user_status %></td>
             <td><%= user.student_batch %></td>
-            <td><%= link_to "View", user %> | Edit</td>
+            <td><%= link_to "View", user %></td>
           </tr>
         <% end %>
       </table>

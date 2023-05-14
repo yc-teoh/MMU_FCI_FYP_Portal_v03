@@ -146,11 +146,12 @@ class ProjectsController < ApplicationController
       if curr_usr_role == "Manager" || curr_usr_role == "Coordinator"
         @project = Project.new(project_params)
 
+
         if @project.save
           redirect_to @project
         else
           @project.errors.each {|err| puts err }
-          puts "error is #{@project.errors}"
+          puts "[DEBUG] Error is #{@project.errors.to_s}"
           render :new, status: :unprocessable_entity
         end
       end

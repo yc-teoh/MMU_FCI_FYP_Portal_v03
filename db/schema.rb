@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_02_111155) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_14_081120) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -87,7 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_02_111155) do
     t.string "student_specialisation"
     t.string "student_status"
     t.integer "project_progress_id"
-    t.bigint "batch_id"
+    t.string "batch_id"
     t.string "user_remarks"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

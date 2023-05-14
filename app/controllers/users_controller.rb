@@ -29,6 +29,40 @@ class UsersController < ApplicationController
 
     if curr_usr_role == "Manager" || curr_usr_role == "Coordinator"
       @user = User.find(params[:user_id])
+
+      if @user.batch_id.nil? || @user.batch_id == "-"
+        @batch_name = "-"
+        @batch_status = "-"
+      else
+        @batch_name = Batch.find(@user.batch_id).batch_name
+        @batch_status = Batch.find(@user.batch_id).batch_status
+      end
     end
+  end
+
+  def edit
+    @user = User.find(params[:user_id])
+  end
+
+  def edit_stud_spec_batch
+    @user = User.find(params[:user_id])
+  end
+
+  def update
+    @user = User.find(params[:user_id])
+
+    if @user.update(user_params)
+      redirect_to @user
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  private
+  def user_params
+    params.require(:user).permit(
+      :email, :user_name, :user_gov_id, :user_gender, :user_role, :user_contact_no, :user_status,
+      :student_batch, :student_specialisation, :student_status, :project_progress_id, :batch_id, :user_remarks
+    )
   end
 end
