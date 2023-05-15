@@ -9,7 +9,7 @@
   <p><%= link_to "<- Back", user_path %></p>
 </div>
 
-<h1>Student Info</h1>
+<h1>Student Status</h1>
 
 <% if user_signed_in? %>
   <% if current_user.user_role == "Manager" %>
@@ -19,21 +19,21 @@
       <br>
 
       <div class="field">
-        <span>Batch:</span><br>
-        <%= form.select :batch_id, batch_options %>
-        <% @user.errors.full_messages_for(:batch_id).each do |message| %>
+        <span>User Status:</span><br>
+        <span><i>This affects the user access of Student in this portal - please choose accordingly.</i></span><br>
+        <%= form.select :user_status, user_status_options %>
+        <% @user.errors.full_messages_for(:user_status).each do |message| %>
           <div><%= message %></div>
         <% end %>
       </div>
 
       <div class="field">
-        <span>Specialisation:</span><br>
-        <%= form.select :student_specialisation, specialisation_options %>
-        <% @user.errors.full_messages_for(:student_specialisation).each do |message| %>
+        <span>Student Status:</span><br>
+        <%= form.select :student_status, student_status_options %>
+        <% @user.errors.full_messages_for(:student_status).each do |message| %>
           <div><%= message %></div>
         <% end %>
       </div>
-
 
       <hr>
       <div>

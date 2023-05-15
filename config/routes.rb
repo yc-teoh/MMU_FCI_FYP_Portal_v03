@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   get "/usermgmt/:user_id", to: "users#show"
   get "/usermgmt/:user_id/edit", to: "users#edit"
   get "/usermgmt/:user_id/edit_stud_spec_batch", to: "users#edit_stud_spec_batch", as: :edit_stud_spec_batch
+  get "/usermgmt/:user_id/edit_stud_status", to: "users#edit_stud_status", as: :edit_stud_status
 
   resources :announcements, param: :announcement_id
   resources :projects, param: :project_id
