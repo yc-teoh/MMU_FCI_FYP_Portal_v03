@@ -52,6 +52,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:user_id])
   end
 
+  def edit_moderator_assign
+    @user = User.find(params[:user_id])
+  end
+
   def update
     @user = User.find(params[:user_id])
 
@@ -66,7 +70,8 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
       :email, :user_name, :user_gov_id, :user_gender, :user_role, :user_contact_no, :user_status,
-      :student_batch, :student_specialisation, :student_status, :project_progress_id, :batch_id, :user_remarks
+      :student_batch, :student_specialisation, :student_status, :project_progress_id, :batch_id, :user_remarks,
+      :user_role_original
     )
   end
 end

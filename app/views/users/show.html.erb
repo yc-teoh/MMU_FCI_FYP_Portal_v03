@@ -61,6 +61,10 @@
 
     </table>
 
+    <% if current_user.user_role == "Coordinator" && current_user.user_id != @user.user_id %>
+      <div><%= link_to "Assign Moderator", edit_moderator_assign_path %></div>
+    <% end %>
+
     <% if @user.user_role == "Student" %>
       <h3>Student Info</h3>
       <table>
