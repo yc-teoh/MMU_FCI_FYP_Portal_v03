@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get "/batchmgmt", to: "batches#index"
   get "/batchmgmt/new", to: "batches#new"
   get "/batchmgmt/:batch_id", to: "batches#show"
+  get "/batchmgmt/:batch_id/edit", to: "batches#edit"
 
   resources :announcements, param: :announcement_id
   resources :projects, param: :project_id

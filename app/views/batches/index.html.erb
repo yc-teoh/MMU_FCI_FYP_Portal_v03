@@ -13,7 +13,6 @@
           <th>Batch ID</th>
           <th>Batch Name</th>
           <th>Batch Status</th>
-          <th>No. of Students</th>
           <th>Actions</th>
         </tr>
 
@@ -22,8 +21,7 @@
             <td><%= batch.batch_id %></td>
             <td><%= batch.batch_name %></td>
             <td><%= batch.batch_status %></td>
-            <td><%= "ABC" %></td>
-            <td><%= link_to "View", batch %> | Edit</td>
+            <td><%= link_to "View", batch %> | <%= link_to "Edit", edit_batch_path(batch) %></td>
           </tr>
         <% end %>
       </table>

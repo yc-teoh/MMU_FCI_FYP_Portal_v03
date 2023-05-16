@@ -3,7 +3,7 @@ class BatchesController < ApplicationController
     curr_usr_role = current_user.user_role    # The role of current user.
 
     if curr_usr_role == "Manager"
-      @batches = Batch.all
+      @batches = Batch.all.order(batch_id: :desc)
     end
   end
 
@@ -13,6 +13,7 @@ class BatchesController < ApplicationController
 
     if curr_usr_role == "Manager"
       @batch = Batch.find(params[:batch_id])
+      @batch_students = User.where(user_role: "Student", batch_id: @batch.batch_id)
     end
   end
 
@@ -33,6 +34,22 @@ class BatchesController < ApplicationController
       else
         render :new, status: :unprocessable_entity
       end
+    end
+  end
+
+  # ============================================================================================================== #
+  def edit
+    @batch = Batch.find(params[:batch_id])
+  end
+
+  # ============================================================================================================== #
+  def update
+    @batch = Batch.find(params[:project_id])
+
+    if @batch.update(batch_params)
+      redirect_to @batch
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 

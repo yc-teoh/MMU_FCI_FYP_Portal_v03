@@ -1,0 +1,38 @@
+<%= form_with model: batch do |form| %>
+
+  <% # ------ Batch ID ----- # %>
+  <div class="field">
+    <span class="req">* </span>
+    <span>Batch ID:</span><br>
+    <span><i>Format: YYYYMM (e.g. "202203")</i></span><br>
+    <%= form.text_field :batch_id %>
+    <% batch.errors.full_messages_for(:batch_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <% # ------ Batch Name ----- # %>
+  <div class="field">
+    <span class="req">* </span>
+    <span>Batch Name:</span><br>
+    <%= form.text_field :batch_name %>
+    <% batch.errors.full_messages_for(:batch_name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <% # ------ Batch Status ----- # %>
+  <div class="field">
+    <span class="req">* </span>
+    <span>Batch Status:</span><br>
+    <%= form.select :batch_status, batch_status_options %>
+    <% batch.errors.full_messages_for(:batch_status).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <hr>
+  <div>
+    <%= form.submit @button_text %>
+  </div>
+<% end %>

@@ -26,6 +26,12 @@
           <td><%= @batch.batch_name %></td>
         </tr>
 
+        <% # --------- Date Created --------- # %>
+        <tr>
+          <td class="thead_vertical">Date Created</td>
+          <td><%= @batch.created_at.strftime('%d/%m/%Y %H:%M') %></td>
+        </tr>
+
         <% # --------- Batch Status --------- # %>
         <tr>
           <td class="thead_vertical">Batch Status</td>
@@ -35,11 +41,33 @@
         <% # --------- Number of Students --------- # %>
         <tr>
           <td class="thead_vertical">Number of Students</td>
-          <td><%= "ABC" %></td>
+          <td><%= @batch_students.length %></td>
         </tr>
       </table>
 
-      <h3>WIP</h3>
+      <% # --------- Student List --------- # %>
+      <hr>
+      <div>
+        <table>
+          <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Specialisation</th>
+            <th>Project ID</th>
+            <th>Status</th>
+          </tr>
+
+          <% @batch_students.each do |stud| %>
+            <tr>
+              <td><%= stud.user_id %></td>
+              <td><%= stud.user_name %></td>
+              <td><%= stud.student_specialisation %></td>
+              <td><%= "abcdefg" %></td>
+              <td><%= stud.student_status %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
     </div>
   <% else %>
     <p><%= errmsg_no_permission_to_access %></p>
