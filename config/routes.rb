@@ -30,8 +30,13 @@ Rails.application.routes.draw do
   get "/usermgmt/:user_id/edit_stud_spec_batch", to: "users#edit_stud_spec_batch", as: :edit_stud_spec_batch
   get "/usermgmt/:user_id/edit_stud_status", to: "users#edit_stud_status", as: :edit_stud_status
 
+  get "/batchmgmt", to: "batches#index"
+  get "/batchmgmt/new", to: "batches#new"
+  get "/batchmgmt/:batch_id", to: "batches#show"
+
   resources :announcements, param: :announcement_id
   resources :projects, param: :project_id
   resources :users, param: :user_id
+  resources :batches, param: :batch_id
 
 end

@@ -1,0 +1,49 @@
+<style>
+    table, td {border: 1px solid black;}
+    .thead_vertical {font-weight: bold;}
+</style>
+
+<div>
+  <p><%= link_to "<- Back", batchmgmt_path %></p>
+</div>
+
+<h1>Batch</h1>
+
+<% if user_signed_in? %>
+  <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+    <% # ------------------------------------------ # %>
+    <div>
+      <table>
+        <% # --------- Batch ID --------- # %>
+        <tr>
+          <td class="thead_vertical">Batch ID</td>
+          <td><%= @batch.batch_id %></td>
+        </tr>
+
+        <% # --------- Batch Name --------- # %>
+        <tr>
+          <td class="thead_vertical">Batch Name</td>
+          <td><%= @batch.batch_name %></td>
+        </tr>
+
+        <% # --------- Batch Status --------- # %>
+        <tr>
+          <td class="thead_vertical">Batch Status</td>
+          <td><%= @batch.batch_status %></td>
+        </tr>
+
+        <% # --------- Number of Students --------- # %>
+        <tr>
+          <td class="thead_vertical">Number of Students</td>
+          <td><%= "ABC" %></td>
+        </tr>
+      </table>
+
+      <h3>WIP</h3>
+    </div>
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+<% else %>
+  <p><%= errmsg_no_permission_to_access %></p>
+<% end %>
