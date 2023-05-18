@@ -66,6 +66,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:user_id])
   end
 
+  def edit_user_role_status
+    @user = User.find(params[:user_id])
+  end
+
   def update
     @user = User.find(params[:user_id])
 

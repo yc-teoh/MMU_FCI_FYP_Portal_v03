@@ -13,4 +13,8 @@ module UsersHelper
     am = [original_role.user_role]
     return am
   end
+
+  def user_role_options
+    %w[Undefined Student Moderator Coordinator Manager Lecturer]
+  end
 end

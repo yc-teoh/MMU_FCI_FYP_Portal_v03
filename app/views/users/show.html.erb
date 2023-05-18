@@ -76,6 +76,12 @@
       <div><%= link_to "Assign Supervisor", edit_supervisor_assign_path %></div>
     <% end %>
 
+    <% if current_user.user_role == "Manager" && current_user.user_id != @user.user_id %>
+      <div><%= link_to "Edit Role/Status", edit_user_role_status_path %></div>
+    <% end %>
+
+
+
     <% if @user.user_role == "Student" %>
       <h3>Student Info</h3>
       <table>

@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   get "/usermgmt/:user_id/edit_stud_status", to: "users#edit_stud_status", as: :edit_stud_status
   get "/usermgmt/:user_id/edit_moderator_assign", to: "users#edit_moderator_assign", as: :edit_moderator_assign
   get "/usermgmt/:user_id/edit_supervisor_assign", to: "users#edit_supervisor_assign", as: :edit_supervisor_assign
+  get "/usermgmt/:user_id/edit_user_role_status", to: "users#edit_user_role_status", as: :edit_user_role_status
 
   get "/batchmgmt", to: "batches#index"
   get "/batchmgmt/new", to: "batches#new"
