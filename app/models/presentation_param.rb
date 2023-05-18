@@ -1,0 +1,2 @@
+class PresentationParam < ApplicationRecord
+end
