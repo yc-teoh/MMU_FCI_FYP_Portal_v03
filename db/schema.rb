@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_18_130639) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_18_140755) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -39,8 +39,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_130639) do
     t.string "batch_id"
     t.string "presentation_type"
     t.string "presentation_venue"
-    t.date "presentation_date_start"
-    t.date "presentation_date_end"
+    t.datetime "presentation_date_start", precision: nil
+    t.datetime "presentation_date_end", precision: nil
     t.string "presentation_time_slots"
   end
 
@@ -48,7 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_130639) do
     t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "presentation_date"
+    t.datetime "presentation_date", precision: nil
     t.string "presentation_location"
     t.string "supervisor_id"
     t.string "moderator_id"
