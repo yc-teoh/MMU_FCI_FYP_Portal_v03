@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_18_123317) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_18_130639) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_123317) do
     t.date "presentation_date_start"
     t.date "presentation_date_end"
     t.string "presentation_time_slots"
+  end
+
+  create_table "presentation_slots", primary_key: "presentation_id", id: :string, default: -> { "nextval('presentation_slots_id_seq'::regclass)" }, force: :cascade do |t|
+    t.string "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "presentation_date"
+    t.string "presentation_location"
+    t.string "supervisor_id"
+    t.string "moderator_id"
+    t.string "co_supervisor_id"
+    t.string "project_id"
+    t.string "other_attendees"
+    t.string "presentation_remarks"
+    t.decimal "presentation_score"
   end
 
   create_table "projects", primary_key: "project_id", id: :string, default: -> { "nextval('projects_id_seq'::regclass)" }, force: :cascade do |t|

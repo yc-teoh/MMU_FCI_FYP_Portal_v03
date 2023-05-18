@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # get 'presentation_slots/index'
   # get 'presentation_params/index'
   get 'users/index'
   devise_for :users, :skip => [:registrations], :controllers => { registrations: 'users/registrations', sessions: 'users/sessions' },
@@ -39,6 +40,8 @@ Rails.application.routes.draw do
   get "/batchmgmt/:batch_id", to: "batches#show"
   get "/batchmgmt/:batch_id/edit", to: "batches#edit"
 
+  get "/presentations", to: "presentation_slots#index"
+
   get "/presparams", to: "presentation_params#index"
 
   resources :announcements, param: :announcement_id
@@ -46,5 +49,6 @@ Rails.application.routes.draw do
   resources :users, param: :user_id
   resources :batches, param: :batch_id
   resources :presentation_params, param: :param_id
+  resources :presentation_slots, param: :presentation_id
 
 end
