@@ -26,4 +26,9 @@ module ApplicationHelper
   def project_approval_options
     ["Pending", "Confirmed", "Rejected"]
   end
+
+  def nyaoha
+    "<img src='https://archives.bulbagarden.net/media/upload/thumb/e/e2/0906Sprigatito.png/240px-0906Sprigatito.png'
+    alt='sprigatito' length='64px' width='64px' />"
+  end
 end

@@ -37,6 +37,12 @@ class UsersController < ApplicationController
         @batch_name = Batch.find(@user.batch_id).batch_name
         @batch_status = Batch.find(@user.batch_id).batch_status
       end
+
+      if @user.is_supervisor == "Y"
+        @user_is_supervisor = "Supervisor"
+      else
+        @user_is_supervisor = "-"
+      end
     end
   end
 
@@ -56,6 +62,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:user_id])
   end
 
+  def edit_supervisor_assign
+    @user = User.find(params[:user_id])
+  end
+
   def update
     @user = User.find(params[:user_id])
 
@@ -71,7 +81,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(
       :email, :user_name, :user_gov_id, :user_gender, :user_role, :user_contact_no, :user_status,
       :student_batch, :student_specialisation, :student_status, :project_progress_id, :batch_id, :user_remarks,
-      :user_role_original
+      :user_role_original, :is_supervisor
     )
   end
 end

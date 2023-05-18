@@ -4,7 +4,7 @@
 </style>
 
 <div>
-  <p><%= link_to "<- Back", usermgmt_path() %></p>
+  <p><%= link_to "<- Back", usermgmt_path %></p>
 </div>
 
 <h1>User Management</h1>
@@ -22,6 +22,13 @@
         <td class="thead_vertical">User Role</td>
         <td><%= @user.user_role %></td>
       </tr>
+
+      <% if @user.user_role != "Student" %>
+        <tr>
+          <td class="thead_vertical">Additional Role</td>
+          <td><%= @user_is_supervisor %></td>
+        </tr>
+      <% end %>
 
       <tr>
         <td class="thead_vertical">Name</td>
@@ -63,6 +70,10 @@
 
     <% if current_user.user_role == "Coordinator" && current_user.user_id != @user.user_id %>
       <div><%= link_to "Assign Moderator", edit_moderator_assign_path %></div>
+    <% end %>
+
+    <% if current_user.user_role == "Manager" && @user.user_role != "Student" %>
+      <div><%= link_to "Assign Supervisor", edit_supervisor_assign_path %></div>
     <% end %>
 
     <% if @user.user_role == "Student" %>

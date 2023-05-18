@@ -1,0 +1,40 @@
+<style>
+    table, td {border: 1px solid black;}
+    .thead_vertical {font-weight: bold;}
+    .field {padding-bottom: 1em;}
+    .req {color: red}
+</style>
+
+<div>
+  <p><%= link_to "<- Back", user_path %></p>
+</div>
+
+<h1>Assign Supervisor</h1>
+
+<% if user_signed_in? %>
+  <% if current_user.user_role == "Manager" %>
+    <% # ------------------------------------------------------------------------------------------ # %>
+    <%= form_with model: @user do |form| %>
+      <%= render "user-details-summary" %>
+      <br>
+
+      <div class="field">
+        <span>Is Supervisor:</span><br>
+        <%= form.select :is_supervisor, yes_no_options %>
+        <% @user.errors.full_messages_for(:is_supervisor).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <hr>
+      <div>
+        <%= form.submit @button_text %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+<% else %>
+  <p><%= errmsg_no_permission_to_access %></p>
+<% end %>
