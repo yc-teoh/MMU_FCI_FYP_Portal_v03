@@ -18,14 +18,14 @@
       <%= render "user-details-summary" %>
       <br>
 
-      <div class="field">
-        <span>User Status:</span><br>
-        <span><i>This affects the user access of Student in this portal - please choose accordingly.</i></span><br>
-        <%= form.select :user_status, user_status_options %>
-        <% @user.errors.full_messages_for(:user_status).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
+<!--      <div class="field">-->
+<!--        <span>User Status:</span><br>-->
+<!--        <span><i>This affects the user access of Student in this portal - please choose accordingly.</i></span><br>-->
+        <%#= form.select :user_status, user_status_options %>
+        <%# @user.errors.full_messages_for(:user_status).each do |message| %>
+<!--          <div><%#= message %></div>-->
+        <%# end %>
+<!--      </div>-->
 
       <div class="field">
         <span>Student Status:</span><br>

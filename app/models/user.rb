@@ -15,6 +15,7 @@ class User < ApplicationRecord
   validates :user_gov_id, length: { minimum: 2, maximum: 20 }, presence: true, uniqueness: true
   validates :user_contact_no, length: { minimum: 9, maximum: 20 }, numericality: { only_integer: true }, presence: true
   validates :email, length: { minimum: 5, maximum: 128}, presence: true, uniqueness: true
+  validates :is_supervisor, length: { is: 1 }
 
   has_many :announcements
   has_many :projects, class_name: "Project", foreign_key: :supervisor_id
