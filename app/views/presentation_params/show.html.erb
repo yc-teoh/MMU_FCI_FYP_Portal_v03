@@ -23,13 +23,13 @@
         <% # --------- Date Start --------- # %>
         <tr>
           <td class="thead_vertical">Date Start</td>
-          <td><%= @pres_param.presentation_date_start.strftime('%d/%m/%Y %H:%M') %></td>
+          <td><%= @pres_param.presentation_date_start.strftime('%d/%m/%Y') %></td>
         </tr>
 
         <% # --------- Date End --------- # %>
         <tr>
           <td class="thead_vertical">Date End</td>
-          <td><%= @pres_param.presentation_date_end.strftime('%d/%m/%Y %H:%M') %></td>
+          <td><%= @pres_param.presentation_date_end.strftime('%d/%m/%Y') %></td>
         </tr>
 
         <% # --------- Param Name --------- # %>
@@ -38,12 +38,36 @@
           <td><%= @pres_param.param_name %></td>
         </tr>
 
+        <% # --------- Param Status --------- # %>
+        <tr>
+          <td class="thead_vertical">Param Status</td>
+          <td><%= @pres_param.param_status %></td>
+        </tr>
+
         <% # --------- Location --------- # %>
         <tr>
           <td class="thead_vertical">Locations</td>
-          <td><%= @pres_param.presentation_venue %></td>
+          <td>
+            <% @pres_param_venues.each do |venue| %>
+              <%= venue %><br>
+            <% end %>
+          </td>
+        </tr>
+
+        <% # --------- Time Slots --------- # %>
+        <tr>
+          <td class="thead_vertical">Time Slots</td>
+          <td>
+            <% @pres_param_slots.each do |slot| %>
+              <%= slot %><br>
+            <% end %>
+          </td>
         </tr>
       </table>
+
+      <div>
+        <%= link_to "Edit", edit_presentation_param_path %>
+      </div>
 
     </div>
   <% else %>

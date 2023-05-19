@@ -1,0 +1,96 @@
+<%= form_with model: pres_param do |form| %>
+
+  <% # ------ Parameters ID ----- # %>
+  <div class="field">
+    <span class="req">* </span>
+    <span>Parameter ID:</span><br>
+    <%= form.text_field :param_id %>
+    <% pres_param.errors.full_messages_for(:param_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <% # ------ Parameters Status ----- # %>
+  <div class="field">
+    <span class="req">* </span>
+    <span>Parameter Status:</span><br>
+    <%= form.select :param_status, param_status_options %>
+    <% pres_param.errors.full_messages_for(:param_status).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <% # ------ Parameters Name ----- # %>
+  <div class="field">
+    <span class="req">* </span>
+    <span>Parameter Name:</span><br>
+    <%= form.text_field :param_name %>
+    <% pres_param.errors.full_messages_for(:param_name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <% # ------ Applicable Batch ----- # %>
+  <div class="field">
+    <span class="req">* </span>
+    <span>Applicable Batch:</span><br>
+    <%= form.select :batch_id, batch_options %>
+    <% pres_param.errors.full_messages_for(:batch_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <% # ------ Applicable Batch ----- # %>
+  <div class="field">
+    <span class="req">* </span>
+    <span>Presentation Type:</span><br>
+    <%= form.select :presentation_type, presentation_type_options %>
+    <% pres_param.errors.full_messages_for(:presentation_type).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <% # ------ Date Start ----- # %>
+  <div class="field">
+    <span class="req">* </span>
+    <span>Date Start:</span><br>
+    <%= form.date_field :presentation_date_start %>
+    <% pres_param.errors.full_messages_for(:presentation_date_start).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <% # ------ Date End ----- # %>
+  <div class="field">
+    <span class="req">* </span>
+    <span>Date End:</span><br>
+    <%= form.date_field :presentation_date_end %>
+    <% pres_param.errors.full_messages_for(:presentation_date_end).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <% # ------ Presentation Venue ----- # %>
+  <div class="field">
+    <span>Venue:</span><br>
+    <% presentation_venue_options.each do |venue| %>
+      <%= form.check_box :presentation_venue, { multiple: true }, venue, nil %>
+      <span><%= venue %></span>
+    <% end %>
+  </div>
+
+  <% # ------ Presentation Time Slots ----- # %>
+  <div class="field">
+    <span>Time Slots:</span><br>
+    <% presentation_time_slot_options.each do |slot| %>
+      <%= form.check_box :presentation_time_slots, { multiple: true }, slot, nil %>
+      <span><%= slot %></span>
+    <% end %>
+  </div>
+
+
+  <hr>
+  <div>
+    <%= form.submit @button_text %>
+  </div>
+<% end %>

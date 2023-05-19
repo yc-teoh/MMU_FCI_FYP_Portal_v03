@@ -2,6 +2,10 @@
     table, td {border: 1px solid black;}
 </style>
 
+<div>
+  <p><%= link_to "<- Back", presentation_slots_path %></p>
+</div>
+
 <h1>Presentation Parameters</h1>
 
 <div>
@@ -14,25 +18,25 @@
           <th>Date Start</th>
           <th>Date End</th>
           <th>Name</th>
-          <th>Locations</th>
+          <th>Status</th>
           <th>Action</th>
         </tr>
 
         <% @pres_params.each do |param| %>
           <tr>
             <td><%= param.param_id %></td>
-            <td><%= param.presentation_date_start.strftime('%d/%m/%Y %H:%M') %></td>
-            <td><%= param.presentation_date_end.strftime('%d/%m/%Y %H:%M') %></td>
+            <td><%= param.presentation_date_start.strftime('%d/%m/%Y') %></td>
+            <td><%= param.presentation_date_end.strftime('%d/%m/%Y') %></td>
             <td><%= param.param_name %></td>
-            <td><%= param.presentation_venue %></td>
+            <td><%= param.param_status %></td>
             <td><%= link_to "View", param %></td>
           </tr>
         <% end %>
       </table>
 
-<!--      <div>-->
-<!--        <span><%#= link_to "New", new_batch_path %></span>-->
-<!--      </div>-->
+      <div>
+        <span><%= link_to "New", new_presentation_param_path %></span>
+      </div>
 
     <% else %>
       <p><%= errmsg_no_permission_to_access %></p>

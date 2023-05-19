@@ -1,0 +1,22 @@
+<style>
+    .field {padding-bottom: 1em;}
+    .req {color: red}
+</style>
+
+<div>
+  <p><%= link_to "<- Back", presentation_params_path %></p>
+</div>
+
+<h1>New Presentation Parameters</h1>
+
+<% if user_signed_in? %>
+  <% if current_user.user_role == "Manager" %>
+    <div>
+      <%= render "form", pres_param: @pres_param %>
+    </div>
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+<% else %>
+  <p><%= errmsg_no_permission_to_access %></p>
+<% end %>
