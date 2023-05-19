@@ -1,6 +1,51 @@
-<h1>PresentationSlots#index</h1>
-<p>Find me in app/views/presentation_slots/index.html.erb</p>
+<style>
+    table, td {border: 1px solid black;}
+</style>
 
-<%= nyaoha.html_safe %>
+<h1>Presentation Slots</h1>
 
-<p><%= link_to "Presentation Params", presentation_params_path %></p>
+<div>
+  <% if user_signed_in? %>
+    <% if current_user.user_role == "Manager" || current_user.user_role == "Coordinator" %>
+
+      <table>
+        <tr>
+          <th>Presentation ID</th>
+          <th>Project ID</th>
+          <th>Date/Time</th>
+          <th>Student Name(s)</th>
+          <th>Supervisor(s)</th>
+          <th>Moderator</th>
+          <th>Location</th>
+          <th>Action</th>
+        </tr>
+
+        <% @pres_slots.each do |slot| %>
+          <tr>
+            <td><%= slot.presentation_id %></td>
+            <td><%= slot.project_id %></td>
+            <td><%= slot.presentation_date.strftime('%d/%m/%Y') + " " + slot.presentation_time %></td>
+            <td><%= "DUMMY_STUD" %></td>
+            <td><%= "DUMMY_SPRV" %></td>
+            <td><%= "DUMMY_MODR" %></td>
+            <td><%= slot.presentation_location %></td>
+            <td><%= "View" %></td>
+          </tr>
+        <% end %>
+      </table>
+
+      <div>
+        <span><%= link_to "Presentation Parameters Setup", presentation_params_path %></span>
+      </div>
+
+      <div>
+        <%= nyaoha.html_safe %>
+      </div>
+
+    <% else %>
+      <p><%= errmsg_no_permission_to_access %></p>
+    <% end %>
+  <% else %>
+    <p><%= errmsg_no_permission_to_access %></p>
+  <% end %>
+</div>

@@ -6,7 +6,7 @@ class PresentationSlot < ApplicationRecord
   validates :supervisor_id, length: { minimum: 6, maximum: 10 }
   validates :moderator_id, length: { minimum: 6, maximum: 10 }
   validates :co_supervisor_id, length: { minimum: 6, maximum: 10 }
-  validates :project_id
+  # validates :project_id
   validates :other_attendees, length: { maximum: 512 }
   validates :presentation_remarks, length: { maximum: 2048 }
   validates :presentation_score, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
