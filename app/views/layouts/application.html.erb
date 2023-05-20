@@ -7,38 +7,64 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
+  <style>
+    .navbar-custom { background-color: #274C77; }
+    .navbar-text-white { color: white; }
+  </style>
+
   <body>
-    <nav>
-      <ul>
-        <li><a href="/">INDEX</a></li>
-        <% if user_signed_in? %>
-          <li>Hello <b><%= current_user.user_name %> (<%= current_user.user_id %>)</b>. Your role is <b><%= current_user.user_role %></b>.</li>
+    <nav class="navbar navbar-expand-lg navbar-custom d-print">
+      <div class="container-fluid">
+        <a class="navbar-brand navbar-text-white" href="/"><b>MMU FCI FYP PORTAL</b></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-          <!--- SHARED (MANAGER & COORDINATOR) --->
-          <% if current_user.user_role == "Manager" || current_user.user_role == "Coordinator" %>
-            <li><%= link_to "User Management", usermgmt_path %></li>
-            <li><%= link_to "Projects", projects_path %></li>
-            <li><%= link_to "Presentations", presentations_path %></li>
-            <li><%= link_to "Announcements", announcements_path %></li>
-          <% end %>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-          <!--- EXCLUSIVELY FOR MANAGER --->
-          <% if current_user.user_role == "Manager" %>
-            <li><%= link_to "Batch Management", batchmgmt_path %></li>
-          <% end %>
+            <% if user_signed_in? %>
+              <%# # SHARED: MANAGER, COORDINATOR %>
+              <% if current_user.user_role == "Manager" || current_user.user_role == "Coordinator" %>
+                <li class="nav-item"><%= link_to "User Management", usermgmt_path, class: "nav-link navbar-text-white" %></li>
+                <li class="nav-item"><%= link_to "Projects", projects_path, class: "nav-link navbar-text-white" %></li>
+                <li class="nav-item"><%= link_to "Presentations", presentations_path, class: "nav-link navbar-text-white" %></li>
+                <li class="nav-item"><%= link_to "Announcements", announcements_path, class: "nav-link navbar-text-white" %></li>
+              <% end %>
 
-          <!--- SHARED (ALL) --->
-          <li>Settings</li>
-          <li><%= link_to "Sign Out", destroy_user_session_path, data: {turbo_method: :delete} %></li>
-        <% else %>
-<!--          <li><%#= link_to "Sign Up" , new_user_registration_path %></li>-->
-          <li><%= link_to "Log In", new_user_session_path %></li>
-        <% end %>
-      </ul>
-      <hr>
+              <%# # EXCLUSIVE: MANAGER %>
+              <% if current_user.user_role == "Manager" %>
+                <li class="nav-item"><%= link_to "Batch Management", batchmgmt_path, class: "nav-link navbar-text-white" %></li>
+              <% end %>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle navbar-text-white" href="#"
+                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <%= current_user.user_name %>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li class="dropdown-item disabled">
+                    <%= current_user.user_name %><br>
+                    <span style="font-size: small; font-style: italic;">
+                      <%= current_user.user_role %> (<%= current_user.user_id %>)
+                    </span>
+                  </li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete },
+                        class: "dropdown-item" %></li>
+                </ul>
+              </li>
+
+            <% else %>
+  <!--            <li><%##= link_to "Sign Up" , new_user_registration_path %></li>-->
+              <li><%= link_to "Log In", new_user_session_path, class: "nav-link navbar-text-white" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </nav>
 
     <p class="notice"><%= notice %></p>
