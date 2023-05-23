@@ -1,2 +1,27 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+.body-bg {
+  background-color: #E7ECEF;
+}
+
+.container-page {
+  max-width: 960px;
+  padding-top: 2em;
+}
+
+.container-contents {
+  border: 2px solid #A3CEF1;
+  background-color: white;
+  padding: 1em;
+}
+
+.nav-username-role {
+  font-size: small;
+  font-style: italic;
+}
+
+.h3-site {
+  color: #274C77;
+  font-weight: bold;
+}
