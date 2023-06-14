@@ -24,6 +24,8 @@
       </td>
     <% end %>
 
-    <td><a href="/announcements/<%= announcement.announcement_id %>/edit">Edit</a></td>
+    <td class="text-end col-2">
+      <a href="/announcements/<%= announcement.announcement_id %>/edit" class="btn btn-primary custom-btn custom-btn-edit">Edit</a>
+    </td>
   </tr>
 <% end %>

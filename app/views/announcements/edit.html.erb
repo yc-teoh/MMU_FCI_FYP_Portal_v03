@@ -1,21 +1,31 @@
-<style>
-    .field {padding-bottom: 1em;}
-</style>
+<div class="container container-page container-force">
 
-<div>
-  <p><%= link_to "<- Back", announcements_path() %></p>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Edit Announcement</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", announcements_path(), class: "btn btn-primary custom-btn" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+          <%= render "form", announcement: @announcement, new_announcement_id: @new_announcement_id,
+                     current_user_id: @current_user_id, button_text: @button_text
+          %>
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    </div>
+  </div>
+
 </div>
 
-<h1>Edit Announcements</h1>
-
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
-    <%= render "form", announcement: @announcement, new_announcement_id: @new_announcement_id,
-           current_user_id: @current_user_id, button_text: @button_text
-    %>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>

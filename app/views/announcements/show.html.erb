@@ -1,26 +1,58 @@
 <% created_date = @announcement.created_at %>
 <% updated_date = @announcement.updated_at %>
 
-<div>
-  <p><%= link_to "<- Back", announcements_path() %></p>
+<div class="container container-page">
+
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Announcements</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", announcements_path, class: "btn btn-primary custom-btn" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+
+      <div class="row">
+        <div class="col">
+          <h5 class="h3-site"><%= @announcement.announcement_title %></h5>
+        </div>
+        <div class="col txt-align-right">
+          <% if user_signed_in? %>
+            <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+              <%= link_to "Edit", edit_announcement_path(@announcement), class: "btn btn-primary custom-btn" %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+
+      <table class="table table-borderless table-sm">
+        <tbody>
+        <tr>
+          <th class="col-1" style="padding-left:0">Date/Time</th>
+          <td>
+            <%= created_date.strftime('%d/%m/%Y %H:%M')  %>
+            <% if updated_date != created_date %>
+              <i>(Updated at: <%= updated_date.strftime('%d/%m/%Y %H:%M') %>)</i>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th class="col-1" style="padding-left:0">Posted by</th>
+          <td><%= @user.user_name %></td>
+        </tr>
+        </tbody>
+      </table>
+
+      <hr>
+
+      <p><%= @announcement.announcement_body.gsub(/\n/, '<br/>').html_safe %></p>
+
+    </div>
+  </div>
 </div>
-
-<h1><%= @announcement.announcement_title %></h1>
-
-<p>Date/Time: <%= created_date.strftime('%d/%m/%Y %H:%M')  %>
-  <% if updated_date != created_date %>
-    <i>(Updated at: <%= updated_date.strftime('%d/%m/%Y %H:%M') %>)</i>
-  <% end %>
-</p>
-
-<p>Posted by: <%= @user.user_name %></p>
-
-<p>------------------------------------------------------------------------</p>
-
-<p><%= @announcement.announcement_body.gsub(/\n/, '<br/>').html_safe %></p>
-
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
-    <p><%= link_to "Edit", edit_announcement_path(@announcement) %></p>
-  <% end %>
-<% end %>
