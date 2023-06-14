@@ -1,20 +1,20 @@
 <% announcements.each do |announcement| %>
   <tr>
     <% if announcement.announcement_status == "INACT" %>
-      <td>
-        <b><strike><%= announcement.created_at.strftime('%d/%m/%Y %H:%M') %></strike></b>
+      <td style="width: 20%">
+        <b><s><%= announcement.created_at.strftime('%d/%m/%Y %H:%M') %></s></b>
       </td>
     <% else %>
-      <td>
+      <td style="width: 20%">
         <b><%= announcement.created_at.strftime('%d/%m/%Y %H:%M') %></b>
       </td>
     <% end %>
 
     <% if announcement.announcement_status == "INACT" %>
       <td>
-        <strike><a href="/announcements/<%= announcement.announcement_id %>">
+        <s><a href="/announcements/<%= announcement.announcement_id %>">
           <%= announcement.announcement_title %>
-        </a></strike>
+        </a></s>
       </td>
     <% else %>
       <td>

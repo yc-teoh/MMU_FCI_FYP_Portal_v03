@@ -1,21 +1,19 @@
-<style>
-    table, td {border: 1px solid black;}
-</style>
+<div class="container container-page">
+  <h3 class="h3-site">Announcements</h3>
 
-<h1>Announcements</h1>
-
-<div>
-  <table>
-    <% if user_signed_in? %>
-      <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
-        <%= render "announcement_list_crud", announcements: @announcements %>
+  <div class="container-contents">
+    <table class="table table-borderless">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+          <%= render "announcement_list_crud", announcements: @announcements %>
+        <% else %>
+          <%= render "announcement_list_guest", announcements_guest: @announcements_guest %>
+        <% end %>
       <% else %>
         <%= render "announcement_list_guest", announcements_guest: @announcements_guest %>
       <% end %>
-    <% else %>
-      <%= render "announcement_list_guest", announcements_guest: @announcements_guest %>
-    <% end %>
-  </table>
+    </table>
+  </div>
 </div>
 
 <% if user_signed_in? %>

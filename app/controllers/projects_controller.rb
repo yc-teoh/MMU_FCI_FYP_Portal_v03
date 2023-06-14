@@ -163,12 +163,17 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    @project = Project.find(params[:project_id])
+    if user_signed_in?
+      curr_usr_role = current_user.user_role
+      if curr_usr_role == "Manager" || curr_usr_role == "Coordinator"
+        @project = Project.find(params[:project_id])
 
-    if @project.update(project_params)
-      redirect_to @project
-    else
-      render :edit, status: :unprocessable_entity
+        if @project.update(project_params)
+          redirect_to @project
+        else
+          render :edit, status: :unprocessable_entity
+        end
+      end
     end
   end
 
