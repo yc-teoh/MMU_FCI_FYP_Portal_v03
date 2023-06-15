@@ -1,47 +1,60 @@
-<style>
-    table, td {border: 1px solid black;}
-    .thead_vertical {font-weight: bold;}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", project_path %></p>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Edit Project</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", project_path, class: "btn btn-primary custom-btn" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Coordinator" %>
+
+          <h5 class="h3-site">Project Approval Details</h5>
+          <%= form_with model: @project do |form| %>
+
+            <%= render "proj-details-summary" %>
+            <br>
+
+            <div class="row mb-3">
+              <% # ------ Project Status ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project Approval Status</label>
+                <%= form.select :project_approval_status, project_approval_options, {}, class: "form-select" %>
+                <% @project.errors.full_messages_for(:project_approval_status).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <% # ------ Reviewed By (HIDDEN) ----- # %>
+            <div>
+              <%= form.hidden_field :reviewed_by, value: current_user.user_id, readonly: true %>
+            </div>
+
+            <div class="row mb-3">
+              <div class="txt-align-right">
+                <%= form.submit "Update", class: "btn btn-primary custom-btn" %>
+              </div>
+            </div>
+
+          <% end %>
+          <% # ------------------------------------------------------------------------------------------ # %>
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+
+    </div>
+  </div>
 </div>
 
-<h1>Review Project</h1>
-
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Coordinator" %>
-    <% # ------------------------------------------------------------------------------------------ # %>
-
-    <%= form_with model: @project do |form| %>
-
-      <%= render "proj-details-summary" %>
-      <br>
-
-      <% # ------ Project Status ----- # %>
-      <div class="field">
-        <span>Project Approval Status:</span>
-        <%= form.select :project_approval_status, project_approval_options %>
-        <% @project.errors.full_messages_for(:project_approval_status).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Reviewed By ----- # %>
-      <div class="field">
-        <%= form.hidden_field :reviewed_by, value: current_user.user_id, readonly: true %>
-      </div>
-
-      <hr>
-      <div>
-        <%= form.submit @button_text %>
-      </div>
-
-    <% end %>
-    <% # ------------------------------------------------------------------------------------------ # %>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>

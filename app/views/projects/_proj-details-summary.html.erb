@@ -1,13 +1,11 @@
-<div>
-  <table>
-    <tr>
-      <td class="thead_vertical">Project ID</td>
-      <td><%= @project.project_id %></td>
-    </tr>
+<table class="table table-borderless table-sm">
+  <tr class="table-no-l-pad">
+    <th class="col-2 table-no-l-pad">Project ID</th>
+    <td><%= @project.project_id %></td>
+  </tr>
 
-    <tr>
-      <td class="thead_vertical">Project Title</td>
-      <td><%= @project.project_title %></td>
-    </tr>
-  </table>
-</div>
+  <tr>
+    <th class="table-no-l-pad">Project Title</th>
+    <td><%= @project.project_title %></td>
+  </tr>
+</table>

@@ -1,72 +1,86 @@
-<style>
-    table, td {border: 1px solid black;}
-    .thead_vertical {font-weight: bold;}
-    .field {padding-bottom: 1em;}
-    .req {color: red}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", project_path %></p>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Edit Project</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", project_path, class: "btn btn-primary custom-btn" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Coordinator" %>
+          <% # ------------------------------------------------------------------------------------------ # %>
+
+          <h5 class="h3-site">Industry Collaboration Details</h5>
+          <%= form_with model: @project do |form| %>
+
+            <%= render "proj-details-summary" %>
+
+            <div class="row mb-3">
+              <% # ------ Is Industry Collaboration? ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Is Industry Collaboration?</label>
+                <%= form.select :is_industry_collab, yes_no_options, {}, class: "form-select" %>
+                <% @project.errors.full_messages_for(:is_industry_collab).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+
+              <% # ------ Company Name ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Company Name</label>
+                <%= form.text_field :industry_collab_company, class: "form-control" %>
+                <% @project.errors.full_messages_for(:industry_collab_company).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# ----------------------------------------- %>
+
+            <div class="row mb-3">
+              <% # ------ Company PIC Name ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Contact Name</label>
+                <%= form.text_field :industry_collab_contact_name, class: "form-control" %>
+                <% @project.errors.full_messages_for(:industry_collab_contact_name).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+
+              <% # ------ Company PIC Phone Number ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Contact Number</label>
+                <%= form.text_field :industry_collab_contact_number, class: "form-control" %>
+                <% @project.errors.full_messages_for(:industry_collab_contact_number).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# ----------------------------------------- %>
+
+            <div class="row mb-3">
+              <div class="txt-align-right">
+                <%= form.submit "Update", class: "btn btn-primary custom-btn" %>
+              </div>
+            </div>
+
+          <% end %>
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+
+    </div>
+  </div>
 </div>
-
-<h1>Industry Collaboration Details</h1>
-
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Coordinator" %>
-    <% # ------------------------------------------------------------------------------------------ # %>
-
-    <%= form_with model: @project do |form| %>
-
-      <%= render "proj-details-summary" %>
-      <br>
-
-      <% # ------ Is Industry Collaboration? ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Is Industry Collaboration?:</span><br>
-        <%= form.select :is_industry_collab, yes_no_options %>
-        <% @project.errors.full_messages_for(:is_industry_collab).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Company Name ----- # %>
-      <div class="field">
-        <span>Company Name:</span><br>
-        <%= form.text_field :industry_collab_company %>
-        <% @project.errors.full_messages_for(:industry_collab_company).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Company PIC Name ----- # %>
-      <div class="field">
-        <span>Contact Name:</span><br>
-        <%= form.text_field :industry_collab_contact_name %>
-        <% @project.errors.full_messages_for(:industry_collab_contact_name).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Company PIC Phone Number ----- # %>
-      <div class="field">
-        <span>Contact Number:</span><br>
-        <%= form.text_field :industry_collab_contact_number %>
-        <% @project.errors.full_messages_for(:industry_collab_contact_number).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <hr>
-      <div>
-        <%= form.submit @button_text %>
-      </div>
-
-    <% end %>
-    <% # ------------------------------------------------------------------------------------------ # %>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>

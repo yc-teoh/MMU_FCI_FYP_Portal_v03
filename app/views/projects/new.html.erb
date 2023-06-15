@@ -1,206 +1,193 @@
-<style>
-      .field {padding-bottom: 1em;}
-      .req {color: red}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", projects_path() %></p>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">New Project</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", projects_path, class: "btn btn-primary custom-btn" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Coordinator" %>
+
+          <%= form_with model: @project do |form| %>
+
+            <div class="row mb-3">
+              <% # ------ Project ID ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project ID</label>
+                <%= form.text_field :project_id, class: "form-control" %>
+                <% @project.errors.full_messages_for(:project_id).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+
+              <% # ------ Specialisation ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Specialisation</label>
+                <%= form.select :project_specialisation, specialisation_options, {}, class: "form-select" %>
+                <% @project.errors.full_messages_for(:project_specialisation).each do |message| %>
+                  <div class="txt-red"<%= message %></div>
+                <% end %>
+                </div>
+            </div>
+
+            <%# --------------------------- %>
+
+            <div class="row mb-3">
+              <% # ------ Project Title ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project Title</label>
+                <%= form.text_field :project_title, class: "form-control" %>
+                <% @project.errors.full_messages_for(:project_title).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# --------------------------- %>
+
+            <div class="row mb-3">
+              <% # ------ Project Batch ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project Batch</label>
+                <%= form.select :batch_id, batch_options, {}, class: "form-select" %>
+                <% @project.errors.full_messages_for(:batch_id).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+
+              <% # ------ Project Type ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project Type</label>
+                <%= form.select :project_type, project_type_options, {}, class: "form-select" %>
+                <% @project.errors.full_messages_for(:project_type).each do |message| %>
+                  <div class="txt-red"<%= message %></div>
+                <% end %>
+                </div>
+            </div>
+
+            <%# --------------------------- %>
+
+            <div class="row mb-3">
+              <% # ------ Project Focus ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Focus</label>
+                <%= form.text_field :project_focus, class: "form-control" %>
+                <% @project.errors.full_messages_for(:project_focus).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+
+              <% # ------ Co-supervisor ID ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Co-supervisor ID</label>
+                <%= form.select :co_supervisor_id, co_supervisor_options, {}, class: "form-select" %>
+                <% @project.errors.full_messages_for(:co_supervisor_id).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# --------------------------- %>
+
+            <div class="row mb-3">
+              <% # ------ Project Category ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project Category</label>
+                <%= form.text_field :project_category, class: "form-control" %>
+                <% @project.errors.full_messages_for(:project_category).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+
+              <% # ------ Other Specialisation ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Other Specialisation</label>
+                <%= form.text_field :project_other_specialisations, class: "form-control" %>
+                <% @project.errors.full_messages_for(:project_other_specialisations).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# --------------------------- %>
+            <br><hr>
+
+            <div class="row mb-3">
+              <% # ------ Project Description ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project Description</label>
+                <%= form.text_area :project_description, class: "form-control", rows: 6 %>
+                <% @project.errors.full_messages_for(:project_description).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <% # ------ Project Objectives  ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project Objectives</label>
+                <%= form.text_area :project_objective, class: "form-control", rows: 6 %>
+                <% @project.errors.full_messages_for(:project_objective).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <% # ------ Project Scope ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project Scope</label>
+                <%= form.text_area :project_scope, class: "form-control", rows: 6 %>
+                <% @project.errors.full_messages_for(:project_scope).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# ARCHIVES %>
+            <%# # ------ Supervisor ID ----- # %>
+            <%# # ------ Project Status ----- # %>
+            <div>
+              <%= form.hidden_field :project_approval_status, value: "Pending", readonly: true %>
+              <%= form.hidden_field :supervisor_id, value: @current_uid, readonly: true %>
+              <%= form.hidden_field :project_status, value: "Vacant", readonly: true %>
+              <%= form.hidden_field :moderator_id, value: "-", readonly: true %>
+
+              <% # TEMP PARAMS # %>
+              <%= form.hidden_field :is_industry_collab, value: "N", readonly: true %>
+              <%#= form.hidden_field :student_one_user_id, value: nil, readonly: true %>
+              <%#= form.hidden_field :student_two_user_id, value: nil, readonly: true %>
+
+              <% # TEMP PARAMS - DISABLED! # %>
+              <%#= form.hidden_field :project_description, value: "N/A", readonly: true %>
+              <%#= form.hidden_field :project_objective, value: "N/A", readonly: true %>
+              <%#= form.hidden_field :project_scope, value: "N/A", readonly: true %>
+            </div>
+
+            <div class="row mb-3">
+              <div class="txt-align-right">
+                <%= form.submit @button_text, class: "btn btn-primary custom-btn" %>
+              </div>
+            </div>
+          <% end %>
+
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+      </div>
 </div>
 
-<h1>New Project</h1>
 
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Coordinator" %>
-  <% # ------------------------------------------------------------------------------------------ # %>
-
-    <%= form_with model: @project do |form| %>
-
-      <% # ------ Project ID ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Project ID:</span><br>
-        <%= form.text_field :project_id %>
-        <% @project.errors.full_messages_for(:project_id).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Project Title ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Project Title:</span><br>
-        <%= form.text_field :project_title %>
-        <% @project.errors.full_messages_for(:project_title).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <%# # ------ Supervisor ID ----- # %>
-<!--      <div class="field">-->
-<!--        <span class="req">* </span>-->
-<!--        <span>Supervisor ID:</span><br>-->
-        <%#= form.select :supervisor_id, @supervisors %>
-        <%# @project.errors.full_messages_for(:supervisor_id).each do |message| %>
-<!--          <div><%#= message %></div>-->
-        <%# end %>
-<!--      </div>-->
-
-      <% # ------ Co-supervisor ID ----- # %>
-      <div class="field">
-        <span>Co-supervisor ID:</span><br>
-        <%= form.select :co_supervisor_id, co_supervisor_options %>
-        <% @project.errors.full_messages_for(:co_supervisor_id).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <%# # ------ Project Status ----- # %>
-<!--      <div class="field">-->
-<!--        <span class="req">* </span>-->
-<!--        <span>Project Status:</span><br>-->
-        <%#= form.select :project_status, project_status_options %>
-        <%# @project.errors.full_messages_for(:project_status).each do |message| %>
-<!--          <div><%#= message %></div>-->
-        <%# end %>
-<!--      </div>-->
-
-      <% # ------ Project Batch ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Project Batch:</span><br>
-        <%= form.select :batch_id, batch_options %>
-        <% @project.errors.full_messages_for(:batch_id).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Project Type ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Project Type:</span><br>
-        <%= form.select :project_type, project_type_options %>
-        <% @project.errors.full_messages_for(:project_type).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Specialisation ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Specialisation:</span><br>
-        <%= form.select :project_specialisation, specialisation_options %>
-        <% @project.errors.full_messages_for(:project_specialisation).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Project Category ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Project Category:</span><br>
-        <%= form.text_field :project_category %>
-        <% @project.errors.full_messages_for(:project_category).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Project Focus ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Focus:</span><br>
-        <%= form.text_field :project_focus %>
-        <% @project.errors.full_messages_for(:project_focus).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Other Specialisation ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Other Specialisation:</span><br>
-        <%= form.text_field :project_other_specialisations %>
-        <% @project.errors.full_messages_for(:project_other_specialisations).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <hr>
-      <% # ================================================================================================== %>
-      <% # ================================================================================================== %>
-
-      <% # ------ Project Description ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Project Description:</span><br>
-        <%= form.text_area :project_description %>
-        <% @project.errors.full_messages_for(:project_description).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Project Objectives  ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Project Objectives:</span><br>
-        <%= form.text_area :project_objective %>
-        <% @project.errors.full_messages_for(:project_objective).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Project Scope ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Project Scope:</span><br>
-        <%= form.text_area :project_scope %>
-        <% @project.errors.full_messages_for(:project_scope).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <hr>
-      <% # ================================================================================================== %>
-      <% # ================================================================================================== %>
-
-      <div class="field">
-        <%= form.hidden_field :project_approval_status, value: "Pending", readonly: true %>
-        <%= form.hidden_field :supervisor_id, value: @current_uid, readonly: true %>
-        <%= form.hidden_field :project_status, value: "Vacant", readonly: true %>
-        <%= form.hidden_field :moderator_id, value: "-", readonly: true %>
-
-        <% # TEMP PARAMS # %>
-        <%= form.hidden_field :is_industry_collab, value: "N", readonly: true %>
-        <%#= form.hidden_field :student_one_user_id, value: nil, readonly: true %>
-        <%#= form.hidden_field :student_two_user_id, value: nil, readonly: true %>
-
-        <% # TEMP PARAMS - DISABLED! # %>
-        <%#= form.hidden_field :project_description, value: "N/A", readonly: true %>
-        <%#= form.hidden_field :project_objective, value: "N/A", readonly: true %>
-        <%#= form.hidden_field :project_scope, value: "N/A", readonly: true %>
-
-      </div>
-
-      <hr>
-      <div>
-        <%= form.submit @button_text %>
-      </div>
-    <% end %>
-
-
-    <% # specialisation | proj category | focus | other specialisation  %>
-    <% # proj desc | proj obj | proj scope  %>
-    <% # num of students | stud 1 name | stud 1 subtitle | stud 1 work dis | stud2++  %>
-    <% # is industry collab? | company | contact name | contact no  %>
-
-    <% # NOT NULL # %>
-    <% # [X] project_id | [X] project_title | [A] created_at | [A] updated_at | [V] project_approval_status | [X] project_type %>
-    <% # [X] project_category | [X] project_focus | [V] project_description | [V] project_objective | [V] project_scope %>
-    <% # [X] project_status | [X] project_specialisation | [X] SUPERVISOR_ID | is_industry_collab | [X] BATCH_ID %>
-
-  <% # ------------------------------------------------------------------------------------------ # %>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>
+</div>

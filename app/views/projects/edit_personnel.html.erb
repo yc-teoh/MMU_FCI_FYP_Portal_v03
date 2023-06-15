@@ -1,90 +1,150 @@
-<style>
-    table, td {border: 1px solid black;}
-    .thead_vertical {font-weight: bold;}
-    .field {padding-bottom: 1em;}
-    .req {color: red}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", project_path %></p>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Edit Project</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", project_path, class: "btn btn-primary custom-btn" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Coordinator"  %>
+          <h5 class="h3-site">Personnel Details</h5>
+          <%= form_with model: @project do |form| %>
+
+            <%= render "proj-details-summary" %>
+
+            <div class="row mb-3">
+              <% # ------ Supervisor ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Supervisor</label>
+                <%= form.select :supervisor_id, supervisor_options, {}, class: "form-select" %>
+                <% @project.errors.full_messages_for(:supervisor_id).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+
+              <% # ------ Co-supevisor ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Co-supervisor</label>
+                <%= form.select :co_supervisor_id, co_supervisor_options, {}, class: "form-select" %>
+                <% @project.errors.full_messages_for(:co_supervisor_id).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# ------------------------------------------- %>
+
+            <div class="row mb-3">
+              <% # ------ Moderator ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Moderator</label>
+                <%= form.select :moderator_id, co_supervisor_options, {}, class: "form-select"%>
+                <% @project.errors.full_messages_for(:moderator_id).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+
+              <% # ------ DUMMY ----- # %>
+              <div class="col"></div>
+            </div>
+
+            <%# ------------------------------------------- %>
+
+            <div class="row mb-3">
+              <% # ------ Student ONE ID ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Student 1 ID</label>
+                <%= form.text_field :student_one_user_id, class: "form-control" %>
+                <% @project.errors.full_messages_for(:student_one_user_id).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+
+              <% # ------ Student ONE Subtitle ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Student 1 Subtitle</label>
+                <%= form.text_field :student_one_subtitle, class: "form-control" %>
+                <% @project.errors.full_messages_for(:student_one_subtitle).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+                <div class="col">
+                </div>
+              </div>
+            </div>
+
+            <%# ------------------------------------------- %>
+
+            <div class="row mb-3">
+              <% # ------ Student ONE Work Distribution ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Student 1 Work Distribution</label>
+                <%= form.text_area :student_one_work_distribution, class: "form-control", rows: 3 %>
+                <% @project.errors.full_messages_for(:student_one_work_distribution).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# ------------------------------------------- %>
+
+            <div class="row mb-3">
+              <% # ------ Student TWO ID ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Student 2 ID</label>
+                <%= form.text_field :student_two_user_id, class: "form-control" %>
+                <% @project.errors.full_messages_for(:student_two_user_id).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+
+              <% # ------ Student TWO Subtitle ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Student 2 Subtitle</label>
+                <%= form.text_field :student_two_subtitle, class: "form-control" %>
+                <% @project.errors.full_messages_for(:student_two_subtitle).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+                <div class="col">
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="row mb-3">
+              <% # ------ Student TWO Work Distribution ----- # %>
+              <div class="col">
+                <label class="col col-form-label">Student 2 Work Distribution</label>
+                <%= form.text_area :student_two_work_distribution, class: "form-control", rows: 3 %>
+                <% @project.errors.full_messages_for(:student_two_work_distribution).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# ------------------------------------------- %>
+
+            <div class="row mb-3">
+              <div class="txt-align-right">
+                <%= form.submit "Update", class: "btn btn-primary custom-btn" %>
+              </div>
+            </div>
+
+          <% end %>
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<h1>Project Personnel Details</h1>
-
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Coordinator" %>
-    <% # ------------------------------------------------------------------------------------------ # %>
-
-    <%= form_with model: @project do |form| %>
-
-      <%= render "proj-details-summary" %>
-      <br>
-
-      <% # ------ Supervisor ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Supervisor:</span><br>
-        <%= form.select :supervisor_id, supervisor_options%>
-        <% @project.errors.full_messages_for(:supervisor_id).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Co-supevisor ----- # %>
-      <div class="field">
-        <span>Co-supervisor:</span><br>
-        <%= form.select :co_supervisor_id, co_supervisor_options%>
-        <% @project.errors.full_messages_for(:co_supervisor_id).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Moderator ----- # %>
-      <div class="field">
-        <span>Moderator:</span><br>
-        <%= form.select :moderator_id, co_supervisor_options%>
-        <% @project.errors.full_messages_for(:moderator_id).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Student ONE ID ----- # %>
-      <div class="field">
-        <span>Student 1 ID:</span><br>
-        <%= form.text_field :student_one_user_id %>
-        <% @project.errors.full_messages_for(:student_one_user_id).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Student ONE Subtitle ----- # %>
-      <div class="field">
-        <span>Student 1 Subtitle:</span><br>
-        <%= form.text_field :student_one_subtitle %>
-        <% @project.errors.full_messages_for(:student_one_subtitle).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Student ONE Work Distribution ----- # %>
-      <div class="field">
-        <span>Student 1 Work Distribution:</span><br>
-        <%= form.text_field :student_one_work_distribution %>
-        <% @project.errors.full_messages_for(:student_one_work_distribution).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <hr>
-      <div>
-        <%= form.submit @button_text %>
-      </div>
-
-    <% end %>
-    <% # ------------------------------------------------------------------------------------------ # %>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>

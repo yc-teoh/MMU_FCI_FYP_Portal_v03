@@ -1,65 +1,81 @@
-<style>
-    table, td {border: 1px solid black;}
-    .thead_vertical {font-weight: bold;}
-    .field {padding-bottom: 1em;}
-    .req {color: red}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", project_path %></p>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Edit Project</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", project_path, class: "btn btn-primary custom-btn" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Coordinator" %>
+
+          <h5 class="h3-site">Project Details</h5>
+          <%= form_with model: @project do |form| %>
+
+            <%= render "proj-details-summary" %>
+
+            <div class="row mb-3">
+              <% # ------ Project Description ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project Description</label>
+                <%= form.text_area :project_description, class: "form-control", rows: 6 %>
+                <% @project.errors.full_messages_for(:project_description).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# ----------------------------------------------------- %>
+
+            <div class="row mb-3">
+              <% # ------ Project Objectives ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project Objective</label>
+                <%= form.text_area :project_objective, class: "form-control", rows: 6 %>
+                <% @project.errors.full_messages_for(:project_objective).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# ----------------------------------------------------- %>
+
+            <div class="row mb-3">
+              <% # ------ Project Scope ----- # %>
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>Project Scope</label>
+                <%= form.text_area :project_scope, class: "form-control", rows: 6 %>
+                <% @project.errors.full_messages_for(:project_scope).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <%# ----------------------------------------------------- %>
+
+            <div class="row mb-3">
+              <div class="txt-align-right">
+                <%= form.submit "Update", class: "btn btn-primary custom-btn" %>
+              </div>
+            </div>
+
+          <% end %>
+          <% # ------------------------------------------------------------------------------------------ # %>
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+
+    </div>
+  </div>
 </div>
-
-<h1>Project Details</h1>
-
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Coordinator" %>
-    <% # ------------------------------------------------------------------------------------------ # %>
-
-    <%= form_with model: @project do |form| %>
-
-      <%= render "proj-details-summary" %>
-      <br>
-
-      <% # ------ Project Description ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Project Description:</span><br>
-        <%= form.text_area :project_description%>
-        <% @project.errors.full_messages_for(:project_description).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Project Objectives ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Project Objective:</span><br>
-        <%= form.text_area :project_objective%>
-        <% @project.errors.full_messages_for(:project_objective).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <% # ------ Project Scope ----- # %>
-      <div class="field">
-        <span class="req">* </span>
-        <span>Project Objective:</span><br>
-        <%= form.text_area :project_scope%>
-        <% @project.errors.full_messages_for(:project_scope).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <hr>
-      <div>
-        <%= form.submit @button_text %>
-      </div>
-
-    <% end %>
-    <% # ------------------------------------------------------------------------------------------ # %>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>

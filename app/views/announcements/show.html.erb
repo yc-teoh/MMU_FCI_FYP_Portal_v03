@@ -32,9 +32,8 @@
 
 
       <table class="table table-borderless table-sm">
-        <tbody>
         <tr>
-          <th class="col-1" style="padding-left:0">Date/Time</th>
+          <th class="col-2 table-no-l-pad">Date/Time</th>
           <td>
             <%= created_date.strftime('%d/%m/%Y %H:%M')  %>
             <% if updated_date != created_date %>
@@ -43,10 +42,9 @@
           </td>
         </tr>
         <tr>
-          <th class="col-1" style="padding-left:0">Posted by</th>
+          <th class="col-1 table-no-l-pad">Posted by</th>
           <td><%= @user.user_name %></td>
         </tr>
-        </tbody>
       </table>
 
       <hr>

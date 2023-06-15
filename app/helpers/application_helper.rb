@@ -26,4 +26,8 @@ module ApplicationHelper
   def project_approval_options
     ["Pending", "Confirmed", "Rejected"]
   end
+
+  def r_as
+    "<span class=\"txt-red\">* </span>".html_safe
+  end
 end

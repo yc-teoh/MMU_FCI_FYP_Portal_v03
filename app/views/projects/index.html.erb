@@ -1,71 +1,104 @@
-<style>
-    table, td {border: 1px solid black;}
-</style>
+<div class="container container-page">
 
-<h1>Projects</h1>
-
-<div>
-  <% if user_signed_in? %>
-    <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
-
-      <div>
-        <%= form_tag "/projects", method: :get do %>
-          <span>Search Keyword: </span>
-          <%= text_field_tag :search_keyword, params[:search_keyword] %>
-          <%= check_box_tag :pending_projects %><%= label_tag(:pending_projects, "Pending Projects") %>
-          <%= check_box_tag :confirmed_projects %><%= label_tag(:confirmed_projects, "Confirmed Projects") %>
-          <%= submit_tag "Search" %>
-          <%= link_to '<button type="button">Reset</button>'.html_safe, projects_path %>
-        <% end %>
-        <br>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Projects</h3>
       </div>
+      <div class="col col-padding-kill txt-align-right">
+        <% if user_signed_in? %>
+          <% if current_user.user_role == "Coordinator" %>
+            <%= link_to "New", new_project_path, class: "btn btn-primary custom-btn" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-      <table>
-        <tr>
-          <th>Project ID</th>
-          <th>Project Title</th>
-          <th>Lecturer</th>
-          <th>Specialisation</th>
-          <% if current_user.user_role == "Coordinator" %><th>Approval Status</th><% end %>
-          <th>Actions</th>
-        </tr>
+  <div class="container-contents">
+    <% if user_signed_in? %>
+      <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
 
-        <% @projects.each do |project| %>
-          <% # Find out the name of lecturer/supervisor. Temporary variable. %>
-          <% lecturer = @users.find(project.supervisor_id) %>
+        <div class="container">
+          <%= form_tag "/projects", method: :get do %>
+            <div class="row mb-3">
+              <div class="col">
+                <label class="col col-form-label">Search Keyword</label>
+                <%= text_field_tag :search_keyword, params[:search_keyword], class: "form-control" %>
+              </div>
+            </div>
 
-          <tr>
-            <td><%= project.project_id %></td>
-            <td><%= project.project_title %></td>
+            <div class="row mb-3">
+              <div class="col">
+                <div class="form-check">
+                  <%= check_box_tag :pending_projects, {}, false, class: "form-check-input" %>
+                  <%= label_tag(:pending_projects, "Pending Projects", class: "form-check-label") %>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <%= check_box_tag :confirmed_projects, {}, false, class: "form-check-input" %>
+                  <%= label_tag(:confirmed_projects, "Confirmed Projects", class: "form-check-label") %>
+                </div>
+              </div>
+            </div>
 
-            <% # Check if local variable `lecturer` is empty. %>
-            <% unless lecturer.nil? || lecturer == ""  %>
-              <td><%= lecturer.user_name %></td>
-            <% else %>
-              <td><%= project.supervisor_id %></td>
+            <div class="row mb-3">
+              <div class="col txt-align-right">
+                <%= link_to 'Reset', projects_path, class: "btn btn-primary custom-btn custom-btn-red" %>
+                <%= submit_tag "Search", class: "btn btn-primary custom-btn" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <hr>
+
+        <div class="container table-responsive">
+          <table class="table table-borderless table-hover">
+            <tr>
+              <th>Project ID</th>
+              <th>Project Title</th>
+              <th>Lecturer</th>
+              <th>Specialisation</th>
+              <% if current_user.user_role == "Coordinator" %><th>Approval Status</th><% end %>
+              <th>Actions</th>
+            </tr>
+
+            <% @projects.each do |project| %>
+              <% # Find out the name of lecturer/supervisor. Temporary variable. %>
+              <% lecturer = @users.find(project.supervisor_id) %>
+
+              <tr>
+                <td><%= project.project_id %></td>
+                <td><%= project.project_title %></td>
+
+                <% # Check if local variable `lecturer` is empty. %>
+                <% unless lecturer.nil? || lecturer == ""  %>
+                  <td><%= lecturer.user_name %></td>
+                <% else %>
+                  <td><%= project.supervisor_id %></td>
+                <% end %>
+
+                <td><%= project.project_specialisation %></td>
+                <% if current_user.user_role == "Coordinator" %><td><%= project.project_approval_status %></td><% end %>
+                <td>
+                  <%= link_to "View", project, class: "btn btn-primary custom-btn custom-btn-edit" %>
+                  <%# if current_user.user_role == "Coordinator" %>
+                  <!--                <span> | <a href="/projects/<%#= project.project_id %>/edit">Edit</a></span>-->
+                  <%# end %>
+                </td>
+              </tr>
             <% end %>
 
-            <td><%= project.project_specialisation %></td>
-            <% if current_user.user_role == "Coordinator" %><td><%= project.project_approval_status %></td><% end %>
-            <td>
-              <%= link_to "View", project %>
-              <%# if current_user.user_role == "Coordinator" %>
-<!--                <span> | <a href="/projects/<%#= project.project_id %>/edit">Edit</a></span>-->
-              <%# end %>
-            </td>
-          </tr>
-        <% end %>
+          </table>
+        </div>
 
-      </table>
-
-      <% if current_user.user_role == "Coordinator" %>
-        <%= link_to "New", new_project_path %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
       <% end %>
-
     <% else %>
       <p><%= errmsg_no_permission_to_access %></p>
     <% end %>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
+  </div>
 </div>
