@@ -1,127 +1,147 @@
-<style>
-    table, td {border: 1px solid black;}
-    .thead_vertical {font-weight: bold;}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", usermgmt_path %></p>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">View User</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", usermgmt_path, class: "btn btn-primary custom-btn" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+
+          <h5 class="h3-site">User Info</h5>
+          <table class="table table-borderless table-sm">
+
+            <tr>
+              <th class="col-3 table-no-l-pad">User ID</th>
+              <td><%= @user.user_id %></td>
+            </tr>
+
+            <tr>
+              <th class="table-no-l-pad">User Role</th>
+              <td><%= @user.user_role %></td>
+            </tr>
+
+            <% if @user.user_role != "Student" %>
+              <tr>
+                <th class="table-no-l-pad">Additional Role</th>
+                <td><%= @user_is_supervisor %></td>
+              </tr>
+            <% end %>
+
+            <tr>
+              <th class="table-no-l-pad">Name</th>
+              <td><%= @user.user_name %></td>
+            </tr>
+
+            <tr>
+              <th class="table-no-l-pad">User Status</th>
+              <td><%= @user.user_status %></td>
+            </tr>
+
+            <tr>
+              <th class="table-no-l-pad">Gender</th>
+              <td><%= user_gender_options.each{|k,v| break k if v.include?(User.find(params[:user_id]).user_gender) } %></td>
+            </tr>
+
+            <tr>
+              <th class="table-no-l-pad">Gov. ID No.</th>
+              <td><%= @user.user_gov_id %></td>
+            </tr>
+
+            <tr>
+              <th class="table-no-l-pad">Email Address</th>
+              <td><%= @user.email %></td>
+            </tr>
+
+            <tr>
+              <th class="table-no-l-pad">Contact Number</th>
+              <td><%= @user.user_contact_no %></td>
+            </tr>
+
+            <tr>
+              <th class="table-no-l-pad">User Remarks</th>
+              <td><%= "QWERTYUIOP" %></td>
+              <%# "gsub(/\n/, '<br/>').html_safe" %>
+            </tr>
+
+            <tr>
+              <td class="table-no-l-pad">
+                <% if current_user.user_role == "Coordinator" && current_user.user_id != @user.user_id %>
+                  <%= link_to "Assign Moderator", edit_moderator_assign_path %>
+                <% end %>
+
+                <% if current_user.user_role == "Manager" && @user.user_role != "Student" %>
+                  <%= link_to "Assign Supervisor", edit_supervisor_assign_path %>
+                <% end %>
+
+                <% if current_user.user_role == "Manager" && current_user.user_id != @user.user_id %>
+                  <%= link_to "Edit Role/Status", edit_user_role_status_path %>
+                <% end %>
+              </td>
+            </tr>
+          </table>
+
+          <% if @user.user_role == "Student" %>
+            <hr>
+            <%# ---------------------------------------------------- %>
+
+            <h5 class="h3-site">Student Info</h5>
+            <table class="table table-borderless table-sm">
+
+              <tr>
+                <th class="col-3 table-no-l-pad">Batch</th>
+                <td><%= @batch_name %></td>
+              </tr>
+
+              <tr>
+                <th class="table-no-l-pad">Batch Status</th>
+                <td><%= @batch_status %></td>
+              </tr>
+
+              <tr>
+                <th class="table-no-l-pad">Specialisation</th>
+                <td><%= @user.student_specialisation %></td>
+              </tr>
+
+              <tr>
+                <th class="table-no-l-pad">Student Status</th>
+                <td><%= @user.student_status %></td>
+              </tr>
+
+              <tr>
+                <th class="table-no-l-pad">Project Progress ID</th>
+                <td><%= "ASDFGHJKL" %></td>
+              </tr>
+
+              <% if current_user.user_role == "Manager" %>
+                <tr>
+                  <td class="table-no-l-pad">
+                    <%= link_to "Update Batch/Specialisation", edit_stud_spec_batch_path %>
+                    <%= link_to "Update Student Status", edit_stud_status_path %>
+                  </td>
+                </tr>
+              <% end %>
+
+            </table>
+          <% end %>
+
+
+
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<h1>User Management</h1>
-
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
-
-    <table>
-      <tr>
-        <td class="thead_vertical">User ID</td>
-        <td><%= @user.user_id %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">User Role</td>
-        <td><%= @user.user_role %></td>
-      </tr>
-
-      <% if @user.user_role != "Student" %>
-        <tr>
-          <td class="thead_vertical">Additional Role</td>
-          <td><%= @user_is_supervisor %></td>
-        </tr>
-      <% end %>
-
-      <tr>
-        <td class="thead_vertical">Name</td>
-        <td><%= @user.user_name %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">User Status</td>
-        <td><%= @user.user_status %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">Gender</td>
-        <td><%= user_gender_options.each{|k,v| break k if v.include?(User.find(params[:user_id]).user_gender) } %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">Gov. ID No.</td>
-        <td><%= @user.user_gov_id %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">Email Address</td>
-        <td><%= @user.email %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">Contact Number</td>
-        <td><%= @user.user_contact_no %></td>
-      </tr>
-
-      <tr>
-        <td class="thead_vertical">User Remarks</td>
-        <td><%= "QWERTYUIOP" %></td>
-        <%# "gsub(/\n/, '<br/>').html_safe" %>
-      </tr>
-
-    </table>
-
-    <% if current_user.user_role == "Coordinator" && current_user.user_id != @user.user_id %>
-      <div><%= link_to "Assign Moderator", edit_moderator_assign_path %></div>
-    <% end %>
-
-    <% if current_user.user_role == "Manager" && @user.user_role != "Student" %>
-      <div><%= link_to "Assign Supervisor", edit_supervisor_assign_path %></div>
-    <% end %>
-
-    <% if current_user.user_role == "Manager" && current_user.user_id != @user.user_id %>
-      <div><%= link_to "Edit Role/Status", edit_user_role_status_path %></div>
-    <% end %>
-
-
-
-    <% if @user.user_role == "Student" %>
-      <h3>Student Info</h3>
-      <table>
-        <tr>
-          <td class="thead_vertical">Batch</td>
-          <td><%= @batch_name %></td>
-        </tr>
-
-        <tr>
-          <td class="thead_vertical">Batch Status</td>
-          <td><%= @batch_status %></td>
-        </tr>
-
-        <tr>
-          <td class="thead_vertical">Specialisation</td>
-          <td><%= @user.student_specialisation %></td>
-        </tr>
-
-        <tr>
-          <td class="thead_vertical">Student Status</td>
-          <td><%= @user.student_status %></td>
-        </tr>
-
-        <tr>
-          <td class="thead_vertical">Project Progress ID</td>
-          <td><%= "ASDFGHJKL" %></td>
-        </tr>
-      </table>
-
-      <% if current_user.user_role == "Manager" %>
-        <%= link_to "Update Batch/Specialisation", edit_stud_spec_batch_path %>
-        <%= link_to "Update Student Status", edit_stud_status_path %>
-      <% end %>
-    <% end %>
-
-    <!--    <p><%#= link_to "Edit", edit_announcement_path(@announcement) %></p>-->
-
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>

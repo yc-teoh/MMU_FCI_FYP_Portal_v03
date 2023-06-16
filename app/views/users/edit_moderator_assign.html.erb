@@ -1,52 +1,50 @@
-<style>
-    table, td {border: 1px solid black;}
-    .thead_vertical {font-weight: bold;}
-    .field {padding-bottom: 1em;}
-    .req {color: red}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", user_path %></p>
-</div>
+  <%= render "user_edit_header_nav", title: "Edit User" %>
 
-<h1>Assign Moderator</h1>
+  <div class="container-contents">
+    <div class="container">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Coordinator" %>
+          <h5 class="h3-site">Assign Moderator</h5>
+          <%= form_with model: @user do |form| %>
+            <%= render "user-details-summary" %>
 
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Coordinator" %>
-    <% # ------------------------------------------------------------------------------------------ # %>
-    <%= form_with model: @user do |form| %>
-      <%= render "user-details-summary" %>
-      <br>
+            <% # Store the previous role into `user_role_original` column. %>
+            <% if @user.user_role != "Moderator" %>
+              <%= form.hidden_field :user_role_original, value: @user.user_role, readonly: true %>
+            <% else %>
+              <%= form.hidden_field :user_role_original, value: "-", readonly: true %>
+            <% end %>
 
-      <% # Store the previous role into `user_role_original` column. %>
-      <% if @user.user_role != "Moderator" %>
-        <%= form.hidden_field :user_role_original, value: @user.user_role, readonly: true %>
-      <% else %>
-        <%= form.hidden_field :user_role_original, value: "-", readonly: true %>
-      <% end %>
+            <div class="row mb-3">
+              <div class="col">
+                <label class="col col-form-label"><%= r_as %>User Role</label>
+                <% if @user.user_role != "Moderator" %>
+                  <%= form.select :user_role, [@user.user_role, "Moderator"], {}, class: "form-select" %>
+                <% else %>
+                  <%= form.select :user_role, [@user.user_role_original, "Moderator"], {}, class: "form-select" %>
+                <% end %>
+                <% @user.errors.full_messages_for(:user_role).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
 
-      <div class="field">
+            <div class="row mb-3">
+              <div class="col txt-align-right">
+                <%= form.submit "Update", class: "btn btn-primary custom-btn"%>
+              </div>
+            </div>
 
-        <span>User Role:</span><br>
-        <% if @user.user_role != "Moderator" %>
-          <%= form.select :user_role, [@user.user_role, "Moderator"] %>
+          <% end %>
+
         <% else %>
-          <%= form.select :user_role, [@user.user_role_original, "Moderator"] %>
+          <p><%= errmsg_no_permission_to_access %></p>
         <% end %>
-        <% @user.errors.full_messages_for(:user_role).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <hr>
-      <div>
-        <%= form.submit @button_text %>
-      </div>
-    <% end %>
-
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

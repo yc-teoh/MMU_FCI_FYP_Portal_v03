@@ -1,18 +1,16 @@
-<div>
-  <table>
-    <tr>
-      <td class="thead_vertical">User ID</td>
-      <td><%= @user.user_id %></td>
-    </tr>
+<table class="table table-borderless table-sm">
+  <tr class="table-no-l-pad">
+    <th class="col-2 table-no-l-pad">User ID</th>
+    <td><%= @user.user_id %></td>
+  </tr>
 
-    <tr>
-      <td class="thead_vertical">Name</td>
-      <td><%= @user.user_name %></td>
-    </tr>
+  <tr class="table-no-l-pad">
+    <th class="table-no-l-pad">Name</th>
+    <td><%= @user.user_name %></td>
+  </tr>
 
-    <tr>
-      <td class="thead_vertical">User Role</td>
-      <td><%= @user.user_role %></td>
-    </tr>
-  </table>
-</div>
+  <tr class="table-no-l-pad">
+    <th class="table-no-l-pad">User Role</th>
+    <td><%= @user.user_role %></td>
+  </tr>
+</table>

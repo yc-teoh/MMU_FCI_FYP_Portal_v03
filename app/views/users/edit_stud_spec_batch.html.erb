@@ -1,49 +1,46 @@
-<style>
-    table, td {border: 1px solid black;}
-    .thead_vertical {font-weight: bold;}
-    .field {padding-bottom: 1em;}
-    .req {color: red}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", user_path %></p>
+  <%= render "user_edit_header_nav", title: "Edit User" %>
+
+  <div class="container-contents">
+    <div class="container">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Manager" %>
+          <h5 class="h3-site">Update Batch/Specialisation</h5>
+          <%= form_with model: @user do |form| %>
+            <%= render "user-details-summary" %>
+
+            <div class="row mb-3">
+              <div class="col">
+                <label class="col col-form-label">Batch</label>
+                <%= form.select :batch_id, batch_options, {}, class: "form-select" %>
+                <% @user.errors.full_messages_for(:batch_id).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+
+              <div class="col">
+                <label class="col col-form-label">Specialisation</label>
+                <%= form.select :student_specialisation, specialisation_options, {}, class: "form-select" %>
+                <% @user.errors.full_messages_for(:student_specialisation).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col txt-align-right">
+                <%= form.submit "Update", class: "btn btn-primary custom-btn" %>
+              </div>
+            </div>
+          <% end %>
+
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<h1>Student Info</h1>
-
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Manager" %>
-    <% # ------------------------------------------------------------------------------------------ # %>
-    <%= form_with model: @user do |form| %>
-      <%= render "user-details-summary" %>
-      <br>
-
-      <div class="field">
-        <span>Batch:</span><br>
-        <%= form.select :batch_id, batch_options %>
-        <% @user.errors.full_messages_for(:batch_id).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <div class="field">
-        <span>Specialisation:</span><br>
-        <%= form.select :student_specialisation, specialisation_options %>
-        <% @user.errors.full_messages_for(:student_specialisation).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-
-      <hr>
-      <div>
-        <%= form.submit @button_text %>
-      </div>
-    <% end %>
-
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>
