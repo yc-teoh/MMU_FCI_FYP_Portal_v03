@@ -1,38 +1,40 @@
 <%= form_with model: batch do |form| %>
 
   <% # ------ Batch ID ----- # %>
-  <div class="field">
-    <span class="req">* </span>
-    <span>Batch ID:</span><br>
-    <span><i>Format: YYYYMM (e.g. "202203")</i></span><br>
-    <%= form.text_field :batch_id %>
-    <% batch.errors.full_messages_for(:batch_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+  <div class="row mb-3">
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Batch ID</label>
+      <div class="form-text">Format: YYYYMM (e.g. "202203")</div>
+      <%= form.text_field :batch_id, class: "form-control", maxlength: 6 %>
+      <% batch.errors.full_messages_for(:batch_id).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
   </div>
 
-  <% # ------ Batch Name ----- # %>
-  <div class="field">
-    <span class="req">* </span>
-    <span>Batch Name:</span><br>
-    <%= form.text_field :batch_name %>
-    <% batch.errors.full_messages_for(:batch_name).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+  <div class="row mb-3">
+    <% # ------ Batch Name ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Batch Name</label>
+      <%= form.text_field :batch_name, class: "form-control" %>
+      <% batch.errors.full_messages_for(:batch_name).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+
+    <% # ------ Batch Status ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Batch Status</label>
+      <%= form.select :batch_status, batch_status_options, {}, class: "form-select" %>
+      <% batch.errors.full_messages_for(:batch_status).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
   </div>
 
-  <% # ------ Batch Status ----- # %>
-  <div class="field">
-    <span class="req">* </span>
-    <span>Batch Status:</span><br>
-    <%= form.select :batch_status, batch_status_options %>
-    <% batch.errors.full_messages_for(:batch_status).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
-
-  <hr>
-  <div>
-    <%= form.submit @button_text %>
+  <div class="row mb-3">
+    <div class="col txt-align-right">
+      <%= form.submit txt_btn, class: "btn btn-primary custom-btn" %>
+    </div>
   </div>
 <% end %>

@@ -1,39 +1,45 @@
-<style>
-    table, td {border: 1px solid black;}
-</style>
+<div class="container container-page">
 
-<h1>Batch Management</h1>
-
-<div>
-  <% if user_signed_in? %>
-    <% if current_user.user_role == "Manager" %>
-
-      <table>
-        <tr>
-          <th>Batch ID</th>
-          <th>Batch Name</th>
-          <th>Batch Status</th>
-          <th>Actions</th>
-        </tr>
-
-        <% @batches.each do |batch| %>
-          <tr>
-            <td><%= batch.batch_id %></td>
-            <td><%= batch.batch_name %></td>
-            <td><%= batch.batch_status %></td>
-            <td><%= link_to "View", batch %> | <%= link_to "Edit", edit_batch_path(batch) %></td>
-          </tr>
-        <% end %>
-      </table>
-
-      <div>
-        <span><%= link_to "New", new_batch_path %></span>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Batch Management</h3>
       </div>
+      <div class="col col-padding-kill txt-align-right">
+        <% if user_signed_in? %>
+          <% if current_user.user_role == "Manager" %>
+            <%= link_to "New", new_batch_path, class: "btn btn-primary custom-btn" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
+  <div class="container-contents">
+    <% if user_signed_in? %>
+      <% if current_user.user_role == "Manager" %>
+        <table class="table table-borderless table-hover">
+          <tr>
+            <th>Batch ID</th>
+            <th>Batch Name</th>
+            <th>Batch Status</th>
+            <th>Action</th>
+          </tr>
+
+          <% @batches.each do |batch| %>
+            <tr>
+              <td><%= batch.batch_id %></td>
+              <td><%= batch.batch_name %></td>
+              <td><%= batch.batch_status %></td>
+              <td><%= link_to "View", batch, class: "btn btn-primary custom-btn custom-btn-edit" %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
     <% else %>
       <p><%= errmsg_no_permission_to_access %></p>
     <% end %>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
+  </div>
 </div>

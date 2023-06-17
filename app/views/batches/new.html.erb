@@ -1,22 +1,29 @@
-<style>
-    .field {padding-bottom: 1em;}
-    .req {color: red}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", batchmgmt_path %></p>
-</div>
-
-<h1>New Batch</h1>
-
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Manager" %>
-    <div>
-      <%= render "form", batch: @batch %>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">New Batch</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", batchmgmt_path, class: "btn btn-primary custom-btn" %>
+      </div>
     </div>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Manager" %>
+          <div>
+            <%= render "form", batch: @batch, txt_btn: "Create" %>
+          </div>
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

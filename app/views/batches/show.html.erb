@@ -1,77 +1,87 @@
-<style>
-    table, td {border: 1px solid black;}
-    .thead_vertical {font-weight: bold;}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", batchmgmt_path %></p>
-</div>
-
-<h1>Batch</h1>
-
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
-    <% # ------------------------------------------ # %>
-    <div>
-      <table>
-        <% # --------- Batch ID --------- # %>
-        <tr>
-          <td class="thead_vertical">Batch ID</td>
-          <td><%= @batch.batch_id %></td>
-        </tr>
-
-        <% # --------- Batch Name --------- # %>
-        <tr>
-          <td class="thead_vertical">Batch Name</td>
-          <td><%= @batch.batch_name %></td>
-        </tr>
-
-        <% # --------- Date Created --------- # %>
-        <tr>
-          <td class="thead_vertical">Date Created</td>
-          <td><%= @batch.created_at.strftime('%d/%m/%Y %H:%M') %></td>
-        </tr>
-
-        <% # --------- Batch Status --------- # %>
-        <tr>
-          <td class="thead_vertical">Batch Status</td>
-          <td><%= @batch.batch_status %></td>
-        </tr>
-
-        <% # --------- Number of Students --------- # %>
-        <tr>
-          <td class="thead_vertical">Number of Students</td>
-          <td><%= @batch_students.length %></td>
-        </tr>
-      </table>
-
-      <% # --------- Student List --------- # %>
-      <hr>
-      <div>
-        <table>
-          <tr>
-            <th>Student ID</th>
-            <th>Student Name</th>
-            <th>Specialisation</th>
-            <th>Project ID</th>
-            <th>Status</th>
-          </tr>
-
-          <% @batch_students.each do |stud| %>
-            <tr>
-              <td><%= stud.user_id %></td>
-              <td><%= stud.user_name %></td>
-              <td><%= stud.student_specialisation %></td>
-              <td><%= "abcdefg" %></td>
-              <td><%= stud.student_status %></td>
-            </tr>
-          <% end %>
-        </table>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">View Batch</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", batchmgmt_path, class: "btn btn-primary custom-btn" %>
       </div>
     </div>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
+          <% # ------------------------------------------ # %>
+            <table class="table table-borderless table-sm">
+              <% # --------- Batch ID --------- # %>
+              <tr>
+                <th class="col-3 table-no-l-pad">Batch ID</th>
+                <td><%= @batch.batch_id %></td>
+              </tr>
+
+              <% # --------- Batch Name --------- # %>
+              <tr>
+                <th class="table-no-l-pad">Batch Name</th>
+                <td><%= @batch.batch_name %></td>
+              </tr>
+
+              <% # --------- Date Created --------- # %>
+              <tr>
+                <th class="table-no-l-pad">Date Created</th>
+                <td><%= @batch.created_at.strftime('%d/%m/%Y %H:%M') %></td>
+              </tr>
+
+              <% # --------- Batch Status --------- # %>
+              <tr>
+                <th class="table-no-l-pad">Batch Status</th>
+                <td><%= @batch.batch_status %></td>
+              </tr>
+
+              <% # --------- Number of Students --------- # %>
+              <tr>
+                <th class="table-no-l-pad">Number of Students</th>
+                <td><%= @batch_students.length %></td>
+              </tr>
+
+              <% if current_user.user_role == "Manager" %>
+              <tr>
+                <td class="table-no-l-pad"><%= link_to "Edit", edit_batch_path %></td>
+              </tr>
+              <% end %>
+            </table>
+
+            <% # --------- Student List --------- # %>
+            <hr>
+
+              <table class="table table-borderless table-hover">
+                <tr>
+                  <th>Student ID</th>
+                  <th>Student Name</th>
+                  <th>Specialisation</th>
+                  <th>Project ID</th>
+                  <th>Status</th>
+                </tr>
+
+                <% @batch_students.each do |stud| %>
+                  <tr>
+                    <td><%= stud.user_id %></td>
+                    <td><%= stud.user_name %></td>
+                    <td><%= stud.student_specialisation %></td>
+                    <td><%= "abcdefg" %></td>
+                    <td><%= stud.student_status %></td>
+                  </tr>
+                <% end %>
+              </table>
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
