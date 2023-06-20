@@ -76,6 +76,8 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to @user
     else
+      @user.errors.each {|err| puts err }
+      puts "[DEBUG] Error is #{@user.errors.full_messages}"
       render :edit, status: :unprocessable_entity
     end
   end
