@@ -10,10 +10,29 @@
   padding-top: 2em;
 }
 
+.container-force  {
+  margin-left: 45px;
+  margin-right: 45px;
+}
+
+.container-login {
+  max-width: 768px;
+  padding-top: 2em;
+}
+
+.container-login-particulars {
+  padding: 2em 0;
+}
+
 .container-contents {
   border: 2px solid #A3CEF1;
   background-color: white;
   padding: 1em;
+  margin-bottom: 3em;
+}
+
+.container-login {
+  padding: 2em 3em;
 }
 
 .nav-username-role {
@@ -24,4 +43,64 @@
 .h3-site {
   color: #274C77;
   font-weight: bold;
+}
+
+.custom-btn {
+  background-color: #A3CEF1;
+  color: #274C77;
+  border: 0px;
+  border-radius: 4px;
+  width: 108px;
+  padding: 0;
+  line-height: 36px;
+}
+
+.custom-btn:hover {
+  background-color: #274C77;
+}
+
+.custom-btn-red {
+  background-color: #FF6D6D;
+  color: #FFFFFF;
+}
+
+.custom-btn-red:hover {
+  background-color: #c75757;
+}
+
+.custom-btn-edit {
+  width: 64px;
+  line-height: 28px;
+}
+
+.txt-red {
+  color: red;
+}
+
+.col-padding-kill {
+  padding: 1em 0;
+}
+
+.col-padding-kill-2 {
+  padding: 0;
+}
+
+.txt-align-right {
+  text-align: right;
+}
+
+.table-no-l-pad {
+  padding-left: 0 !important;
+}
+
+.tab-font {
+  color: #274C77;
+}
+
+.tab-bg {
+  background-color: #A3CEF1 !important;
+}
+
+.table-border-fix {
+  border: none !important;
 }
