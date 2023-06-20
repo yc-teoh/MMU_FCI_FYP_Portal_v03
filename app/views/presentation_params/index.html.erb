@@ -1,6 +1,55 @@
-<style>
-    table, td {border: 1px solid black;}
-</style>
+<div class="container container-page">
+
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Presentation Parameters</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", presentations_path, class: "btn btn-primary custom-btn" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-contents">
+    <div class="container table-responsive">
+    <% if user_signed_in? %>
+      <% if current_user.user_role == "Manager" %>
+
+        <table class="table table-borderless table-hover">
+          <tr>
+            <th>Param ID</th>
+            <th>Date Start</th>
+            <th>Date End</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+
+          <% @pres_params.each do |param| %>
+            <tr>
+              <td><%= param.param_id %></td>
+              <td><%= param.presentation_date_start.strftime('%d/%m/%Y') %></td>
+              <td><%= param.presentation_date_end.strftime('%d/%m/%Y') %></td>
+              <td><%= param.param_name %></td>
+              <td><%= param.param_status %></td>
+              <td><%= link_to "View", param %></td>
+            </tr>
+          <% end %>
+        </table>
+
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    <% else %>
+      <p><%= errmsg_no_permission_to_access %></p>
+    <% end %>
+
+    </div>
+  </div>
+</div>
+
+<%# ------------------ %>
 
 <div>
   <p><%= link_to "<- Back", presentation_slots_path %></p>

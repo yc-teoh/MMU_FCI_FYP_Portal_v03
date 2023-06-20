@@ -1,5 +1,4 @@
 <style>
-    table, td {border: 1px solid black;}
     #all {visibility: visible; display: unset;}
     #student {visibility: hidden; display: none;}
     #supervisor {visibility: hidden; display: none;}
@@ -52,6 +51,26 @@
   </div>
 
   <div class="container-contents">
+
+    <div class="container">
+      <%= form_tag "/usermgmt", method: :get do %>
+        <div class="row sm-3">
+          <div class="col">
+            <label for="colFormLabel" class="col-form-label">Search Keyword</label>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col">
+            <%= text_field_tag :search_keyword, params[:search_keyword], class: "form-control" %>
+          </div>
+          <div class="col">
+            <%= submit_tag "Search", class: "btn btn-primary custom-btn" %>
+          </div>
+        </div>
+      <% end %>
+      <hr>
+    </div>
 
     <div>
       <ul class="nav nav-tabs">

@@ -84,6 +84,7 @@
                 <% end %>
 
                 <% if current_user.user_role == "Manager" && current_user.user_id != @user.user_id %>
+                  <br>
                   <%= link_to "Edit Role/Status", edit_user_role_status_path %>
                 <% end %>
               </td>

@@ -1,28 +1,8 @@
-<div class="container">
-  <%= form_tag "/usermgmt", method: :get do %>
-    <div class="row sm-3">
-      <div class="col">
-        <label for="colFormLabel" class="col-form-label">Search Keyword</label>
-      </div>
-    </div>
-
-    <div class="row mb-4">
-      <div class="col">
-        <%= text_field_tag :search_keyword, params[:search_keyword], class: "form-control" %>
-      </div>
-      <div class="col">
-        <%= submit_tag "Search", class: "btn btn-primary custom-btn" %>
-      </div>
-    </div>
-  <% end %>
-  <hr>
-</div>
-
 <div class="container table-responsive">
   <% if user_signed_in? %>
     <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
-      <table class="table table-borderless table-hover table-border-fix">
-        <tbody  class="table-border-fix">
+      <table class="table table-borderless table-hover">
+        <tbody  class="">
         <tr>
           <th class="table-borderless">User ID</th>
           <th>Name</th>
@@ -35,13 +15,13 @@
 
         <% users.each do |user| %>
           <tr>
-            <td class="table-border-fix"><%= user.user_id %></td>
-            <td class="table-border-fix"><%= user.user_name %></td>
-            <td class="table-border-fix"><%= user.student_specialisation %></td>
-            <td class="table-border-fix"><%= user.user_role %></td>
-            <td class="table-border-fix"><%= user.user_status %></td>
-            <td class="table-border-fix"><%= user.student_batch %></td>
-            <td class="table-border-fix"><%= link_to "View", user, class: "btn btn-primary custom-btn custom-btn-edit" %></td>
+            <td><%= user.user_id %></td>
+            <td><%= user.user_name %></td>
+            <td><%= user.student_specialisation %></td>
+            <td><%= user.user_role %></td>
+            <td><%= user.user_status %></td>
+            <td><%= user.student_batch %></td>
+            <td><%= link_to "View", user, class: "btn btn-primary custom-btn custom-btn-edit" %></td>
           </tr>
         <% end %>
         </tbody>

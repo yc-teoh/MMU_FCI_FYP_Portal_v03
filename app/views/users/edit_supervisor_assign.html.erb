@@ -1,40 +1,41 @@
-<style>
-    table, td {border: 1px solid black;}
-    .thead_vertical {font-weight: bold;}
-    .field {padding-bottom: 1em;}
-    .req {color: red}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", user_path %></p>
-</div>
+  <%= render "user_edit_header_nav", title: "Edit User" %>
 
-<h1>Assign Supervisor</h1>
+  <div class="container-contents">
+    <div class="container">
 
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Manager" %>
-    <% # ------------------------------------------------------------------------------------------ # %>
-    <%= form_with model: @user do |form| %>
-      <%= render "user-details-summary" %>
-      <br>
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Manager" %>
+          <h5 class="h3-site">Assign Supervisor</h5>
+          <%= form_with model: @user do |form| %>
+            <%= render "user-details-summary" %>
+            <br>
 
-      <div class="field">
-        <span>Is Supervisor:</span><br>
-        <%= form.select :is_supervisor, yes_no_options %>
-        <% @user.errors.full_messages_for(:is_supervisor).each do |message| %>
-          <div><%= message %></div>
+            <div class="row mb-3">
+              <div class="col">
+                <label class="col col-form-label">Is Supervisor?</label>
+                <%= form.select :is_supervisor, yes_no_options, {}, class: "form-select" %>
+                <% @user.errors.full_messages_for(:is_supervisor).each do |message| %>
+                  <div class="txt-red"><%= message %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col txt-align-right">
+                <%= form.submit "Update", class: "btn btn-primary custom-btn" %>
+              </div>
+            </div>
+          <% end %>
+
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
         <% end %>
-      </div>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
 
-      <hr>
-      <div>
-        <%= form.submit @button_text %>
-      </div>
-    <% end %>
-
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>
+    </div>
+  </div>
+</div>
