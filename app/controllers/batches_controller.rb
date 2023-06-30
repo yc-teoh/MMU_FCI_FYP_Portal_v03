@@ -44,7 +44,7 @@ class BatchesController < ApplicationController
 
   # ============================================================================================================== #
   def update
-    @batch = Batch.find(params[:project_id])
+    @batch = Batch.find(params[:batch_id])
 
     if @batch.update(batch_params)
       redirect_to @batch
