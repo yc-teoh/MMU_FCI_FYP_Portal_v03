@@ -1,22 +1,30 @@
-<style>
-    .field {padding-bottom: 1em;}
-    .req {color: red}
-</style>
+<div class="container container-page">
 
-<div>
-  <p><%= link_to "<- Back", presentation_params_path %></p>
-</div>
-
-<h1>Edit Presentation Parameter</h1>
-
-<% if user_signed_in? %>
-  <% if current_user.user_role == "Manager" %>
-    <div>
-      <%= render "form", pres_param: @pres_param %>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Edit Presentation Parameter</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", presentation_param_path, class: "btn btn-primary custom-btn" %>
+      </div>
     </div>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
-<% else %>
-  <p><%= errmsg_no_permission_to_access %></p>
-<% end %>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Manager" %>
+          <div>
+            <%= render "form", pres_param: @pres_param, button_text: "Update" %>
+          </div>
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    </div>
+  </div>
+
+</div>

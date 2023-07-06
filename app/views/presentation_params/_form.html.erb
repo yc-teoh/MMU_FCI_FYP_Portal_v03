@@ -1,96 +1,111 @@
 <%= form_with model: pres_param do |form| %>
 
   <% # ------ Parameters ID ----- # %>
-  <div class="field">
-    <span class="req">* </span>
-    <span>Parameter ID:</span><br>
-    <%= form.text_field :param_id %>
-    <% pres_param.errors.full_messages_for(:param_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+  <div class="row mb-3">
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Parameter ID</label>
+      <div class="form-text">Format: YYMMx (e.g. "2203", "2205A"), suffix is optional.</div>
+      <%= form.text_field :param_id, class: "form-control", maxlength: 4 %>
+      <% pres_param.errors.full_messages_for(:param_id).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
   </div>
 
-  <% # ------ Parameters Status ----- # %>
-  <div class="field">
-    <span class="req">* </span>
-    <span>Parameter Status:</span><br>
-    <%= form.select :param_status, param_status_options %>
-    <% pres_param.errors.full_messages_for(:param_status).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+  <div class="row mb-3">
+    <% # ------ Parameters Name ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Parameter Name</label>
+      <%= form.text_field :param_name, class: "form-control" %>
+      <% pres_param.errors.full_messages_for(:param_name).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+
+    <% # ------ Parameters Status ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Parameter Status</label>
+      <%= form.select :param_status, param_status_options, {}, class: "form-select" %>
+      <% pres_param.errors.full_messages_for(:param_status).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
   </div>
 
-  <% # ------ Parameters Name ----- # %>
-  <div class="field">
-    <span class="req">* </span>
-    <span>Parameter Name:</span><br>
-    <%= form.text_field :param_name %>
-    <% pres_param.errors.full_messages_for(:param_name).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+  <div class="row mb-3">
+    <% # ------ Applicable Batch ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Applicable Batch</label>
+      <%= form.select :batch_id, batch_options, {}, class: "form-select" %>
+      <% pres_param.errors.full_messages_for(:batch_id).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+
+    <% # ------ Presentation Type ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Presentation Type</label>
+      <%= form.select :presentation_type, presentation_type_options, {}, class: "form-select" %>
+      <% pres_param.errors.full_messages_for(:presentation_type).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
   </div>
 
-  <% # ------ Applicable Batch ----- # %>
-  <div class="field">
-    <span class="req">* </span>
-    <span>Applicable Batch:</span><br>
-    <%= form.select :batch_id, batch_options %>
-    <% pres_param.errors.full_messages_for(:batch_id).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+  <div class="row mb-3">
+    <% # ------ Date Start ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Date Start</label>
+      <%= form.date_field :presentation_date_start, class: "form-control" %>
+      <% pres_param.errors.full_messages_for(:presentation_date_start).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+
+    <% # ------ Date End ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Date End</label>
+      <%= form.date_field :presentation_date_end, class: "form-control" %>
+    </div>
   </div>
 
-  <% # ------ Applicable Batch ----- # %>
-  <div class="field">
-    <span class="req">* </span>
-    <span>Presentation Type:</span><br>
-    <%= form.select :presentation_type, presentation_type_options %>
-    <% pres_param.errors.full_messages_for(:presentation_type).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+  <div class="row mb-3">
+    <% # ------ Presentation Venue ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Venue</label>
+      <div>
+        <% presentation_venue_options.each do |venue| %>
+          <div>
+            <%= form.check_box :presentation_venue, { multiple: true, class: "form-check-input" }, venue, nil %>
+            <label class="col"><%= venue %></label>
+          </div>
+        <% end %>
+      </div>
+      <% pres_param.errors.full_messages_for(:presentation_venue).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+
+    <% # ------ Presentation Time Slots ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Time Slots</label>
+      <div>
+        <% presentation_time_slot_options.each do |slot| %>
+          <div>
+            <%= form.check_box :presentation_time_slots, { multiple: true, class: "form-check-input" }, slot, nil %>
+            <label class="col"><%= slot %></label>
+          </div>
+        <% end %>
+      </div>
+      <% pres_param.errors.full_messages_for(:presentation_time_slots).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
   </div>
 
-  <% # ------ Date Start ----- # %>
-  <div class="field">
-    <span class="req">* </span>
-    <span>Date Start:</span><br>
-    <%= form.date_field :presentation_date_start %>
-    <% pres_param.errors.full_messages_for(:presentation_date_start).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
-
-  <% # ------ Date End ----- # %>
-  <div class="field">
-    <span class="req">* </span>
-    <span>Date End:</span><br>
-    <%= form.date_field :presentation_date_end %>
-    <% pres_param.errors.full_messages_for(:presentation_date_end).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
-
-  <% # ------ Presentation Venue ----- # %>
-  <div class="field">
-    <span>Venue:</span><br>
-    <% presentation_venue_options.each do |venue| %>
-      <%= form.check_box :presentation_venue, { multiple: true }, venue, nil %>
-      <span><%= venue %></span>
-    <% end %>
-  </div>
-
-  <% # ------ Presentation Time Slots ----- # %>
-  <div class="field">
-    <span>Time Slots:</span><br>
-    <% presentation_time_slot_options.each do |slot| %>
-      <%= form.check_box :presentation_time_slots, { multiple: true }, slot, nil %>
-      <span><%= slot %></span>
-    <% end %>
-  </div>
-
-
-  <hr>
-  <div>
-    <%= form.submit @button_text %>
+  <div class="row mb-3">
+    <div class="col txt-align-right">
+    <%= form.submit button_text, class: "btn btn-primary custom-btn" %>
+    </div>
   </div>
 <% end %>
