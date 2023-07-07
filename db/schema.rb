@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_19_125223) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_07_062443) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_19_125223) do
     t.string "presentation_remarks"
     t.decimal "presentation_score"
     t.string "presentation_time"
+    t.string "student_two_id"
   end
 
   create_table "projects", primary_key: "project_id", id: :string, default: -> { "nextval('projects_id_seq'::regclass)" }, force: :cascade do |t|

@@ -1,0 +1,89 @@
+<div class="container container-page">
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Presentation Slot</h3>
+      </div>
+      <div class="col col-adding-kill txt-align-right">
+        <p><%= link_to "Back", presentation_slots_path, class: "btn btn-primary custom-btn" %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Manager" || current_user.user_role == "Coordinator" %>
+
+          <table class="table table-borderless table-sm">
+            <tr>
+              <th class="col-3 table-no-l-pad">Presentation ID</th>
+              <td style="font-weight: bold"><%= @pres_slot.presentation_id %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Date/Time</th>
+              <td><%= @pres_slot.presentation_date.strftime('%d/%m/%Y') + " " + @pres_slot.presentation_time %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Location</th>
+              <td><%= @pres_slot.presentation_location %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Project ID</th>
+              <td><%= @pres_slot.project_id %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Project Title</th>
+              <td><%= @project_title %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Student 1</th>
+              <td><%= @stud1_name + " (" + @pres_slot.user_id + ")" %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Student 2</th>
+              <td><%= "temp4" %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Supervisor</th>
+              <td><%= @supervisor_name %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Co-Supervisor</th>
+              <td><%= @co_supervisor_name %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Moderator</th>
+              <td><%= @moderator_name %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Other Attendees</th>
+              <td><%= @pres_other_attendees %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Remarks</th>
+              <td><%= @pres_remarks %></td>
+            </tr>
+          </table>
+
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    </div>
+  </div>
+
+</div>

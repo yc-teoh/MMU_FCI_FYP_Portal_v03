@@ -13,43 +13,43 @@
 
   <div class="container-contents">
     <div class="container table-responsive">
-    <% if user_signed_in? %>
-      <% if current_user.user_role == "Manager" %>
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Manager" %>
 
           <div class="row">
-          <div class="col col-padding-kill txt-align-right">
-            <span><%= link_to "New", new_presentation_param_path, class: "btn btn-primary custom-btn" %></span>
-          </div>
+            <div class="col col-padding-kill txt-align-right">
+              <span><%= link_to "New", new_presentation_param_path, class: "btn btn-primary custom-btn" %></span>
+            </div>
           </div>
 
-        <table class="table table-borderless table-hover">
-          <tr>
-            <th>Param ID</th>
-            <th>Date Start</th>
-            <th>Date End</th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-
-          <% @pres_params.each do |param| %>
+          <table class="table table-borderless table-hover">
             <tr>
-              <td><%= param.param_id %></td>
-              <td><%= param.presentation_date_start.strftime('%d/%m/%Y') %></td>
-              <td><%= param.presentation_date_end.strftime('%d/%m/%Y') %></td>
-              <td><%= param.param_name %></td>
-              <td><%= param.param_status %></td>
-              <td><%= link_to "View", param, class: "btn btn-primary custom-btn custom-btn-edit" %></td>
+              <th>Param ID</th>
+              <th>Date Start</th>
+              <th>Date End</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
-          <% end %>
-        </table>
 
+            <% @pres_params.each do |param| %>
+              <tr>
+                <td><%= param.param_id %></td>
+                <td><%= param.presentation_date_start.strftime('%d/%m/%Y') %></td>
+                <td><%= param.presentation_date_end.strftime('%d/%m/%Y') %></td>
+                <td><%= param.param_name %></td>
+                <td><%= param.param_status %></td>
+                <td><%= link_to "View", param, class: "btn btn-primary custom-btn custom-btn-edit" %></td>
+              </tr>
+            <% end %>
+          </table>
+
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
       <% else %>
         <p><%= errmsg_no_permission_to_access %></p>
       <% end %>
-    <% else %>
-      <p><%= errmsg_no_permission_to_access %></p>
-    <% end %>
 
     </div>
   </div>

@@ -1,51 +1,66 @@
-<style>
-    table, td {border: 1px solid black;}
-</style>
+<div class="container container-page">
 
-<h1>Presentation Slots</h1>
-
-<div>
-  <% if user_signed_in? %>
-    <% if current_user.user_role == "Manager" || current_user.user_role == "Coordinator" %>
-
-      <table>
-        <tr>
-          <th>Presentation ID</th>
-          <th>Project ID</th>
-          <th>Date/Time</th>
-          <th>Student Name(s)</th>
-          <th>Supervisor(s)</th>
-          <th>Moderator</th>
-          <th>Location</th>
-          <th>Action</th>
-        </tr>
-
-        <% @pres_slots.each do |slot| %>
-          <tr>
-            <td><%= slot.presentation_id %></td>
-            <td><%= slot.project_id %></td>
-            <td><%= slot.presentation_date.strftime('%d/%m/%Y') + " " + slot.presentation_time %></td>
-            <td><%= "DUMMY_STUD" %></td>
-            <td><%= "DUMMY_SPRV" %></td>
-            <td><%= "DUMMY_MODR" %></td>
-            <td><%= slot.presentation_location %></td>
-            <td><%= "View" %></td>
-          </tr>
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">Presentation Slots</h3>
+      </div>
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Manager" %>
+          <div class="col col-padding-kill txt-align-right">
+            <%= link_to "New", new_presentation_slot_path, class: "btn btn-primary custom-btn" %>
+          </div>
         <% end %>
-      </table>
+      <% end %>
+    </div>
+  </div>
 
-      <div>
-        <span><%= link_to "Presentation Parameters Setup", presentation_params_path %></span>
-      </div>
+  <div class="container-contents">
+    <div class="container table-responsive">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Manager" || current_user.user_role == "Coordinator" %>
 
-      <div>
-        <%= image_tag('nyaoha.png', width: '64px', height: '64px', class: 'img-responsive') %>
-      </div>
+          <% if current_user.user_role == "Manager" %>
+            <div class="row">
+              <div class="col col-padding-kill txt-align-right">
+                <span><%= link_to "Presentation Parameters Setup", presentation_params_path %></span>
+              </div>
+            </div>
+          <% end %>
 
-    <% else %>
-      <p><%= errmsg_no_permission_to_access %></p>
-    <% end %>
-  <% else %>
-    <p><%= errmsg_no_permission_to_access %></p>
-  <% end %>
+          <table class="table table-borderless table-hover">
+            <tr>
+              <th>Presentation ID</th>
+              <th>Project ID</th>
+              <th>Date/Time</th>
+              <th>Student Name(s)</th>
+              <th>Supervisor(s)</th>
+              <th>Moderator</th>
+              <th>Location</th>
+              <th>Action</th>
+            </tr>
+
+            <% @pres_slots.each do |slot| %>
+              <% moderator = User.find_by(slot.moderator_id) %>
+              <tr>
+                <td><%= slot.presentation_id %></td>
+                <td><%= slot.project_id %></td>
+                <td><%= slot.presentation_date.strftime('%d/%m/%Y') + " " + slot.presentation_time %></td>
+                <td><%= "STUD" %></td>
+                <td><%= "SPRV" %></td>
+                <td><%= "MOD" %></td>
+                <td><%= slot.presentation_location %></td>
+                <td><%= link_to "View", slot, class: "btn btn-primary custom-btn custom-btn-edit" %></td>
+              </tr>
+            <% end %>
+          </table>
+
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    </div>
+  </div>
 </div>
