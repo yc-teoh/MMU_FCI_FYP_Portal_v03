@@ -67,12 +67,12 @@ class ProjectsController < ApplicationController
           @co_supervisor = User.find(@project.co_supervisor_id).user_name
         end
 
-        # ------ Moderator's Name ------
-        if @project.moderator_id.nil? || @project.moderator_id == "-"
-          @moderator = "-"
-        else
-          @moderator = User.find(@project.moderator_id).user_name
-        end
+        # # ------ Moderator's Name ------
+        # if @project.moderator_id.nil? || @project.moderator_id == "-"
+        #   @moderator = "-"
+        # else
+        #   @moderator = User.find(@project.moderator_id).user_name
+        # end
 
         # ------ Approval's Name ------
         if @project.reviewed_by.nil?
@@ -89,30 +89,59 @@ class ProjectsController < ApplicationController
         end
 
         # if @project.student_one_user_id.nil? || @project.student_one_user_id == ""
-        if User.where(:user_id => @project.student_one_user_id).exists?
-          @student_one_user_name = User.find(@project.student_one_user_id).user_name
-          @student_one_user_id = @project.student_one_user_id
-          @student_one_subtitle = @project.student_one_subtitle
-          @student_one_work_distribution = @project.student_one_work_distribution
-        else
+        # if User.where(:user_id => @project.student_one_user_id).exists?
+        #   @student_one_user_name = User.find(@project.student_one_user_id).user_name
+        #   @student_one_user_id = @project.student_one_user_id
+        #   @student_one_subtitle = @project.student_one_subtitle
+        #   @student_one_work_distribution = @project.student_one_work_distribution
+        # else
+        #   @student_one_user_name = "-"
+        #   @student_one_user_id = "-"
+        #   @student_one_subtitle = "-"
+        #   @student_one_work_distribution = "-"
+        # end
+
+        # ------ Student/Manager Info from `placement_id` ------
+        proj_placement = @project.placement_id
+        if proj_placement.nil? || proj_placement == ""
           @student_one_user_name = "-"
-          @student_one_user_id = "-"
           @student_one_subtitle = "-"
           @student_one_work_distribution = "-"
+          @student_two_user_name = "-"
+          @student_two_subtitle = "-"
+          @student_two_work_distribution = "-"
+          @moderator = "-"
+        else
+          placement_stud_raw = User.where(placement_id: proj_placement)
+          placement_stud_name = placement_stud_raw.pluck(:user_name)
+          placement_stud_uid = placement_stud_raw.pluck(:user_id)
+
+          @student_one_user_name = placement_stud_name[0] + " (" + placement_stud_uid[0] + ")"
+          if placement_stud_raw[1].nil? || placement_stud_raw[1] == ""
+            @student_two_user_name = "-"
+          else
+            @student_two_user_name = placement_stud_name[1] + " (" + placement_stud_uid[1] + ")"
+          end
+
+          @student_one_subtitle = "-"
+          @student_one_work_distribution = "-"
+          @student_two_subtitle = "-"
+          @student_two_work_distribution = "-"
+          @moderator = User.find(ProjectPlacement.find(proj_placement).moderator_id).user_name
         end
 
         # if @project.student_two_user_id.nil? || @project.student_two_user_id == ""
-        if User.where(:user_id => @project.student_two_user_id).exists?
-          @student_two_user_name = User.find(@project.student_two_user_id).user_name
-          @student_two_user_id = @project.student_two_user_id
-          @student_two_subtitle = @project.student_two_subtitle
-          @student_two_work_distribution = @project.student_two_work_distribution
-        else
-          @student_two_user_name = "-"
-          @student_two_user_id = "-"
-          @student_two_subtitle = "-"
-          @student_two_work_distribution = "-"
-        end
+        # if User.where(:user_id => @project.student_two_user_id).exists?
+        #   @student_two_user_name = User.find(@project.student_two_user_id).user_name
+        #   @student_two_user_id = @project.student_two_user_id
+        #   @student_two_subtitle = @project.student_two_subtitle
+        #   @student_two_work_distribution = @project.student_two_work_distribution
+        # else
+        #   @student_two_user_name = "-"
+        #   @student_two_user_id = "-"
+        #   @student_two_subtitle = "-"
+        #   @student_two_work_distribution = "-"
+        # end
 
         if @project.is_industry_collab == "Y"
           @industry_collab_company = @project.industry_collab_company

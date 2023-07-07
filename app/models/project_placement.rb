@@ -1,0 +1,2 @@
+class ProjectPlacement < ApplicationRecord
+end

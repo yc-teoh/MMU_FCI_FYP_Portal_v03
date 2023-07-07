@@ -1,0 +1,2 @@
+module ProjectPlacementsHelper
+end

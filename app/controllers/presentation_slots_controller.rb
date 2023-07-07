@@ -16,26 +16,45 @@ class PresentationSlotsController < ApplicationController
       # @pres_param_slots = @pres_param.presentation_time_slots.tr('[]\"', '').split(/,+/)
 
       @project_title = Project.find_by_project_id(@pres_slot.project_id).project_title
-      @stud1_name = User.find_by_user_id(@pres_slot.user_id).user_name
-      # @supervisor = User.find_by_user_id(@pres_slot.supervisor_id).user_name
-      # @co_supervisor = User.find_by_user_id(@pres_slot.co_supervisor_id).user_name
-      # @moderator = User.find_by_user_id(@pres_slot.moderator_id).user_name
+      # @stud1_name = User.find_by_user_id(@pres_slot.student_one_id).user_name
 
-      ctrl_pres_spvsr = User.find_by_user_id(@pres_slot.supervisor_id)
+      # STUDENT 2 NAME
+      # ctrl_std_two = User.find_by_user_id(@pres_slot.student_two_id)
+      # if ctrl_std_two == "-" || ctrl_std_two == nil
+      #   @stud2_name = "-"
+      # else
+      #   @stud2_name = ctrl_std_two.user_name
+      # end
+
+      placement_stud_raw = User.where(placement_id: @pres_slot.placement_id)
+      placement_stud_name = placement_stud_raw.pluck(:user_name)
+      placement_stud_uid = placement_stud_raw.pluck(:user_id)
+      @stud1_name = placement_stud_name[0]
+      if placement_stud_raw[1].nil? || placement_stud_raw[1] == ""
+        @stud2_name = "-"
+      else
+        @stud2_name = placement_stud_name[1]
+      end
+
+      # SUPERVISOR NAME
+      # ctrl_pres_spvsr = User.find_by_user_id(@pres_slot.supervisor_id)
+      ctrl_pres_spvsr = User.find_by_user_id(Project.find(@pres_slot.project_id).supervisor_id)
       if ctrl_pres_spvsr == "-" || ctrl_pres_spvsr == nil
         @supervisor_name = "-"
       else
         @supervisor_name = ctrl_pres_spvsr.user_name
       end
 
-      ctrl_pres_co_spvsr = User.find_by_user_id(@pres_slot.co_supervisor_id)
+      # CO-SUPERVISOR NAME
+      ctrl_pres_co_spvsr = User.find_by_user_id(Project.find(@pres_slot.project_id).co_supervisor_id)
       if ctrl_pres_co_spvsr == "-" || ctrl_pres_co_spvsr == nil
         @co_supervisor_name = "-"
       else
         @co_supervisor_name = ctrl_pres_co_spvsr.user_name
       end
 
-      ctrl_pres_moderator = User.find_by_user_id(@pres_slot.moderator_id)
+      # MODERATOR NAME
+      ctrl_pres_moderator = User.find_by_user_id(ProjectPlacement.find(@pres_slot.placement_id).moderator_id)
       if ctrl_pres_moderator == "-" || ctrl_pres_moderator == nil
         @moderator_name = "-"
       else

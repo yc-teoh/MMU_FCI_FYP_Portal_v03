@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_07_062443) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_07_084515) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_062443) do
   end
 
   create_table "presentation_slots", primary_key: "presentation_id", id: :string, default: -> { "nextval('presentation_slots_id_seq'::regclass)" }, force: :cascade do |t|
-    t.string "user_id"
+    t.string "student_one_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "presentation_date"
@@ -59,6 +59,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_062443) do
     t.decimal "presentation_score"
     t.string "presentation_time"
     t.string "student_two_id"
+    t.string "placement_id"
+  end
+
+  create_table "project_placements", primary_key: "placement_id", id: :string, default: -> { "nextval('project_placements_id_seq'::regclass)" }, force: :cascade do |t|
+    t.string "placement_status"
+    t.string "placement_batch"
+    t.string "project_id"
+    t.string "moderator_id"
+    t.string "presentation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "projects", primary_key: "project_id", id: :string, default: -> { "nextval('projects_id_seq'::regclass)" }, force: :cascade do |t|
@@ -97,6 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_062443) do
     t.string "remarks_supervisor"
     t.string "industry_collab_contact_name"
     t.string "industry_collab_contact_number"
+    t.string "placement_id"
   end
 
   create_table "users", primary_key: "user_id", id: :string, default: -> { "nextval('users_id_seq'::regclass)" }, force: :cascade do |t|
@@ -121,6 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_062443) do
     t.string "user_remarks"
     t.string "user_role_original"
     t.string "is_supervisor"
+    t.string "placement_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
