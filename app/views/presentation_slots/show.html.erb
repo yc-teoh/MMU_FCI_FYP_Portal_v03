@@ -33,7 +33,7 @@
 
             <tr>
               <th class="col-3 table-no-l-pad">Project ID</th>
-              <td><%= @pres_slot.project_id %></td>
+              <td><%= @project_id %></td>
             </tr>
 
             <tr>
@@ -43,12 +43,12 @@
 
             <tr>
               <th class="col-3 table-no-l-pad">Student 1</th>
-              <td><%= @stud1_name + " (" + @pres_slot.student_one_id + ")" %></td>
+              <td><%= @stud1_info %></td>
             </tr>
 
             <tr>
               <th class="col-3 table-no-l-pad">Student 2</th>
-              <td><%= @stud2_name %></td>
+              <td><%= @stud2_info %></td>
             </tr>
 
             <tr>
@@ -68,12 +68,16 @@
 
             <tr>
               <th class="col-3 table-no-l-pad">Other Attendees</th>
-              <td><%= @pres_other_attendees %></td>
+              <td><%= @pres_other_attendees.gsub(/\n/, '<br/>').html_safe %></td>
             </tr>
 
             <tr>
               <th class="col-3 table-no-l-pad">Remarks</th>
-              <td><%= @pres_remarks %></td>
+              <td><%= @pres_remarks.gsub(/\n/, '<br/>').html_safe %></td>
+            </tr>
+
+            <tr>
+              <td class="table-no-l-pad"><%= link_to "Edit", edit_presentation_slot_path(@pres_slot) %></td>
             </tr>
           </table>
 

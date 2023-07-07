@@ -41,14 +41,32 @@
             </tr>
 
             <% @pres_slots.each do |slot| %>
-              <% moderator = User.find_by(slot.moderator_id) %>
+              <% moderator = ProjectPlacement.where(placement_id: slot.placement_id) %>
+              <% placement_stud_raw = User.where(placement_id: slot.placement_id) %>
+              <% placement_stud_name = placement_stud_raw.pluck(:user_name) %>
+              <% stud1_name = placement_stud_name[0] %>
+              <% if placement_stud_raw[1].nil? || placement_stud_raw[1] == "" %>
+                <%  stud2_name = "" %>
+              <% else %>
+                <%  stud2_name = " & " + placement_stud_name[1] %>
+              <% end %>
+              <% placement_supervisor_raw = Project.where(placement_id: slot.placement_id) %>
+              <% placement_supervisor_name = placement_supervisor_raw.pluck(:supervisor_id)[0] %>
+              <% supervisor1_name = User.find_by_user_id(placement_supervisor_name).user_name %>
+              <% project_title_render = placement_supervisor_raw.pluck(:project_id)[0] %>
+              <% if placement_supervisor_raw.pluck(:supervisor_id)[1].nil? || placement_supervisor_raw.pluck(:supervisor_id)[1] == "-" %>
+                <% supervisor2_name = "" %>
+              <% else %>
+                <% supervisor2_name = " & " + User.find_by_user_id(placement_supervisor_raw.pluck(:supervisor_id)[1]).user_name %>
+              <% end %>
+
               <tr>
                 <td><%= slot.presentation_id %></td>
-                <td><%= slot.project_id %></td>
+                <td><%= project_title_render %></td>
                 <td><%= slot.presentation_date.strftime('%d/%m/%Y') + " " + slot.presentation_time %></td>
-                <td><%= "STUD" %></td>
-                <td><%= "SPRV" %></td>
-                <td><%= "MOD" %></td>
+                <td><%= stud1_name + stud2_name %></td>
+                <td><%= supervisor1_name + supervisor2_name %></td>
+                <td><%= User.find_by_user_id(moderator.pluck(:moderator_id)[0]).user_name %></td>
                 <td><%= slot.presentation_location %></td>
                 <td><%= link_to "View", slot, class: "btn btn-primary custom-btn custom-btn-edit" %></td>
               </tr>

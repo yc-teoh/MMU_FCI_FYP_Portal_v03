@@ -1,0 +1,83 @@
+<%= form_with model: pres_slot do |form| %>
+
+  <div class="row mb-3">
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Presentation ID</label>
+      <div class="form-text">Format: PSxxxx (e.g. "PS0004")</div>
+      <%= form.text_field :presentation_id, class: "form-control", maxlength: 6 %>
+
+    </div>
+
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Presentation Parameters</label>
+      <div class="form-text">Format: PSxxxx (e.g. "PS0004")</div>
+      <%= form.select :presentation_param, param_options, {}, class: "form-select" %>
+      <% pres_slot.errors.full_messages_for(:presentation_param).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Date</label>
+      <%= form.date_field :presentation_date, class: "form-control" %>
+      <% pres_slot.errors.full_messages_for(:presentation_date).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Time</label>
+      <%= form.select :presentation_time, presentation_time_slot_options, {}, class: "form-select" %>
+      <% pres_slot.errors.full_messages_for(:presentation_time).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Location</label>
+      <%= form.select :presentation_location, presentation_venue_options, {}, class: "form-select" %>
+      <% pres_slot.errors.full_messages_for(:presentation_location).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Project ID</label>
+      <!--      <div class="form-text">Format: PPxxxx (e.g. "PP0004")</div>-->
+      <%= form.select :placement_id, placement_options, {}, class: "form-select" %>
+      <% pres_slot.errors.full_messages_for(:placement_id).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <label class="col col-form-label">Other Attendees</label>
+      <%= form.text_area :other_attendees, class: "form-control", rows: 3 %>
+      <% pres_slot.errors.full_messages_for(:other_attendees).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <label class="col col-form-label">Presentation Remarks</label>
+      <%= form.text_area :presentation_remarks, class: "form-control", rows: 3 %>
+      <% pres_slot.errors.full_messages_for(:presentation_remarks).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col txt-align-right">
+      <%= form.submit button_text, class: "btn btn-primary custom-btn" %>
+    </div>
+  </div>
+<% end %>

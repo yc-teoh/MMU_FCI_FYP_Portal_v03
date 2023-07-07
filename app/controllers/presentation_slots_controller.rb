@@ -1,4 +1,8 @@
 class PresentationSlotsController < ApplicationController
+
+  # ------ TEMP ------
+  # before_action :pres_params_dropdown
+  #
   def index
     curr_usr_role = current_user.user_role    # The role of current user.
 
@@ -15,7 +19,10 @@ class PresentationSlotsController < ApplicationController
       # @pres_param_venues = @pres_param.presentation_venue.tr('[]\" ', '').split(/,+/)
       # @pres_param_slots = @pres_param.presentation_time_slots.tr('[]\"', '').split(/,+/)
 
-      @project_title = Project.find_by_project_id(@pres_slot.project_id).project_title
+      @project = Project.find_by_project_id(ProjectPlacement.find_by_placement_id(@pres_slot.placement_id).project_id)
+      @project_id = @project.project_id
+      @project_title = @project.project_title
+      # @project_title = Project.find_by_project_id(@pres_slot.project_id).project_title
       # @stud1_name = User.find_by_user_id(@pres_slot.student_one_id).user_name
 
       # STUDENT 2 NAME
@@ -29,16 +36,20 @@ class PresentationSlotsController < ApplicationController
       placement_stud_raw = User.where(placement_id: @pres_slot.placement_id)
       placement_stud_name = placement_stud_raw.pluck(:user_name)
       placement_stud_uid = placement_stud_raw.pluck(:user_id)
-      @stud1_name = placement_stud_name[0]
+      stud1_name = placement_stud_name[0]
+      stud1_id = placement_stud_uid[0]
+      @stud1_info = stud1_name + " (" + stud1_id + ")"
       if placement_stud_raw[1].nil? || placement_stud_raw[1] == ""
-        @stud2_name = "-"
+        @stud2_info = "-"
       else
-        @stud2_name = placement_stud_name[1]
+        stud2_name = placement_stud_name[1]
+        stud2_id = placement_stud_uid[1]
+        @stud2_info = stud2_name + " (" + stud2_id + ")"
       end
 
-      # SUPERVISOR NAME
+      # # SUPERVISOR NAME
       # ctrl_pres_spvsr = User.find_by_user_id(@pres_slot.supervisor_id)
-      ctrl_pres_spvsr = User.find_by_user_id(Project.find(@pres_slot.project_id).supervisor_id)
+      ctrl_pres_spvsr = User.find_by_user_id(@project.supervisor_id)
       if ctrl_pres_spvsr == "-" || ctrl_pres_spvsr == nil
         @supervisor_name = "-"
       else
@@ -46,7 +57,7 @@ class PresentationSlotsController < ApplicationController
       end
 
       # CO-SUPERVISOR NAME
-      ctrl_pres_co_spvsr = User.find_by_user_id(Project.find(@pres_slot.project_id).co_supervisor_id)
+      ctrl_pres_co_spvsr = User.find_by_user_id(@project.co_supervisor_id)
       if ctrl_pres_co_spvsr == "-" || ctrl_pres_co_spvsr == nil
         @co_supervisor_name = "-"
       else
@@ -79,6 +90,10 @@ class PresentationSlotsController < ApplicationController
 
   def new
     @pres_slot = PresentationSlot.new
+
+    # ------ TEMP ------
+    # @presparams = PresentationParam.all
+    # @presparams_timeslots = @presparam&.presentation_time_slots || []
   end
 
   def create
@@ -97,9 +112,37 @@ class PresentationSlotsController < ApplicationController
     end
   end
 
+  def edit
+    @pres_slot = PresentationSlot.find(params[:presentation_id])
+  end
+
+  def update
+    curr_usr_role = current_user.user_role    # The role of current user.
+
+    if curr_usr_role == "Manager"
+      @pres_slot = PresentationSlot.find(params[:presentation_id])
+
+      if @pres_slot.update(pres_slot_params)
+        redirect_to @pres_slot
+      else
+        @pres_slot.errors.each {|err| puts err }
+        puts "[DEBUG] Error is #{@pres_slot.errors.full_messages}"
+        render :edit, status: :unprocessable_entity
+      end
+    end
+  end
+
+  private
   def pres_slot_params
     params.require(:presentation_slot).permit(
-      :presentation_id, :user_id, :presentation_location, :supervisor_id, :co_supervisor_id, :moderator_id, :project_id, :other_attendees, :presentation_remarks, :presentation_score, :presentation_time
+      :presentation_id, :presentation_location, :supervisor_id, :co_supervisor_id, :moderator_id, :project_id, :other_attendees, :presentation_remarks, :presentation_score, :presentation_date, :presentation_time, :student_one_id, :student_two_id, :placement_id
     )
   end
+
+  # ------ TEMP ------
+  # private
+  # def pres_params_dropdown
+  #   @presparam = PresentationParam.find_by(param_id: params[:param_name].presence)
+  #   @presparams_timeslots = PresentationParam.find_by(param_id: params[:presentation_time_slots].presence)
+  # end
 end

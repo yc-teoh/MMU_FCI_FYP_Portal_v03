@@ -47,6 +47,11 @@ Rails.application.routes.draw do
   get "/presparams/:params_id", to: "presentation_params#show"
   get "/presparams/:params_id/edit", to: "presentation_params#edit"
 
+  get "/presslots", to: "presentation_slots#index"
+  get "/presslots/new", to: "presentation_slots#new"
+  get "/presslots/:presentation_id", to: "presentation_slots#show"
+  get "/presslots/:presentation_id/edit", to: "presentation_slots#edit"
+
   resources :announcements, param: :announcement_id
   resources :projects, param: :project_id
   resources :users, param: :user_id

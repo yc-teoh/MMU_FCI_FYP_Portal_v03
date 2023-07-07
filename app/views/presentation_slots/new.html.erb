@@ -1,0 +1,29 @@
+<div class="container container-page">
+
+  <div class="container">
+    <div class="row">
+      <div class="col col-padding-kill">
+        <h3 class="h3-site">New Presentation Slot</h3>
+      </div>
+      <div class="col col-padding-kill txt-align-right">
+        <%= link_to "Back", presentation_slots_path, class: "btn btn-primary custom-btn" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-contents">
+    <div class="container">
+      <% if user_signed_in? %>
+        <% if current_user.user_role == "Manager" %>
+          <div>
+            <%= render "form", pres_slot: @pres_slot, button_text: "Create" %>
+          </div>
+        <% else %>
+          <p><%= errmsg_no_permission_to_access %></p>
+        <% end %>
+      <% else %>
+        <p><%= errmsg_no_permission_to_access %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
