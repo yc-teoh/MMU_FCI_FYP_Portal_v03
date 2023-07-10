@@ -4,7 +4,7 @@ module PresentationParamsHelper
   end
 
   def presentation_type_options
-      [["Interim (FYP1)", "INT"], ["Poster (FYP 2)", "POS"]]
+      [["Interim (FYP1)", "INT"], ["Poster (FYP2)", "POS"]]
   end
 
   def presentation_venue_options

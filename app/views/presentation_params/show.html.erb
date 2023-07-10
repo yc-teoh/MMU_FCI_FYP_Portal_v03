@@ -17,20 +17,34 @@
 
           <table class="table table-borderless table-sm">
             <tr>
-              <th class="col-3 table-no-l-pad">Param ID</th>
-              <td><%= @pres_param.param_id %></td>
+              <th class="col-3 table-no-l-pad">Parameter ID</th>
+              <td style="font-weight: bold;"><%= @pres_param.param_id %></td>
             </tr>
 
             <tr>
-              <th class="col-3 table-no-l-pad">Param Name</th>
+              <th class="col-3 table-no-l-pad">Parameter Name</th>
               <td><%= @pres_param.param_name %></td>
             </tr>
 
             <tr>
-              <th class="col-3 table-no-l-pad">Param Status</th>
+              <th class="col-3 table-no-l-pad">Parameter Status</th>
               <td><%= @pres_param.param_status %></td>
             </tr>
 
+            <tr>
+              <th class="col-3 table-no-l-pad">Presentation Type</th>
+              <td><%= presentation_type_options.each{|k,v| break k if v.include?(@pres_param.presentation_type)} %></td>
+            </tr>
+
+            <tr>
+              <th class="col-3 table-no-l-pad">Batch</th>
+              <td><%= batch_options.each{|k,v| break k if v.include?(@pres_param.batch_id) } %></td>
+            </tr>
+          </table>
+
+          <hr>
+
+          <table class="table table-borderless table-sm">
             <tr>
               <th class="col-3 table-no-l-pad">Date Start</th>
               <td><%= @pres_param.presentation_date_start.strftime('%d/%m/%Y') %></td>
@@ -42,19 +56,19 @@
             </tr>
 
             <tr>
-              <th class="col-3 table-no-l-pad">Locations</th>
+              <th class="col-3 table-no-l-pad">Time Slot(s)</th>
               <td>
-                <% @pres_param_venues.each do |venue| %>
-                  <%= venue %><br>
+                <% @pres_param_slots.each do |slot| %>
+                  <%= slot %><br>
                 <% end %>
               </td>
             </tr>
 
             <tr>
-              <th class="col-3 table-no-l-pad">Time Slots</th>
+              <th class="col-3 table-no-l-pad">Location(s)</th>
               <td>
-                <% @pres_param_slots.each do |slot| %>
-                  <%= slot %><br>
+                <% @pres_param_venues.each do |venue| %>
+                  <%= venue %><br>
                 <% end %>
               </td>
             </tr>

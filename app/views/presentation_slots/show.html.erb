@@ -42,6 +42,15 @@
             </tr>
 
             <tr>
+              <th class="col-3 table-no-l-pad">Remarks</th>
+              <td><%= @pres_remarks.gsub(/\n/, '<br/>').html_safe %></td>
+            </tr>
+          </table>
+
+          <hr>
+
+          <table class="table table-borderless table-sm">
+            <tr>
               <th class="col-3 table-no-l-pad">Student 1</th>
               <td><%= @stud1_info %></td>
             </tr>
@@ -69,11 +78,6 @@
             <tr>
               <th class="col-3 table-no-l-pad">Other Attendees</th>
               <td><%= @pres_other_attendees.gsub(/\n/, '<br/>').html_safe %></td>
-            </tr>
-
-            <tr>
-              <th class="col-3 table-no-l-pad">Remarks</th>
-              <td><%= @pres_remarks.gsub(/\n/, '<br/>').html_safe %></td>
             </tr>
 
             <tr>
