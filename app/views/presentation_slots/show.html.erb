@@ -80,9 +80,11 @@
               <td><%= @pres_other_attendees.gsub(/\n/, '<br/>').html_safe %></td>
             </tr>
 
-            <tr>
-              <td class="table-no-l-pad"><%= link_to "Edit", edit_presentation_slot_path(@pres_slot) %></td>
-            </tr>
+            <% if current_user.user_role == "Manager" %>
+              <tr>
+                <td class="table-no-l-pad"><%= link_to "Edit", edit_presentation_slot_path(@pres_slot) %></td>
+              </tr>
+            <% end %>
           </table>
 
         <% else %>
