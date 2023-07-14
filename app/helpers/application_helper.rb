@@ -1,6 +1,10 @@
 module ApplicationHelper
   def errmsg_no_permission_to_access
-    return "Sorry but you do not have the permission to access this feature."
+    "Sorry but you do not have the permission to access this feature."
+  end
+
+  def errmsg_presentation_id_exists
+    "A presentation slot has been booked with this project title. Change of placement is no longer allowed at this point."
   end
 
   def user_gender_options

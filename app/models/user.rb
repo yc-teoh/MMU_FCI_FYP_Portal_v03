@@ -19,4 +19,7 @@ class User < ApplicationRecord
 
   has_many :announcements
   has_many :projects, class_name: "Project", foreign_key: :supervisor_id
+
+  has_one :project_placement
+  accepts_nested_attributes_for :project_placement
 end

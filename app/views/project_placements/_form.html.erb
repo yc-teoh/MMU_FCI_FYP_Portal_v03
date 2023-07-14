@@ -1,0 +1,51 @@
+<%= form_with model: project_placement do |form| %>
+
+  <div class="row mb-3">
+    <% # ------ Placement Status ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Placement Status</label>
+      <%= form.select :placement_status, placement_status_options, {}, class: "form-select" %>
+      <% project_placement.errors.full_messages_for(:placement_status).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+
+    <% # ------ Moderator ID ----- # %>
+    <div class="col">
+      <label class="col col-form-label">Moderator ID</label>
+      <%= form.select :moderator_id, co_supervisor_options, {}, class: "form-select"%>
+      <% project_placement.errors.full_messages_for(:moderator_id).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <% # ------ Student ONE ID ----- # %>
+    <div class="col">
+      <label class="col col-form-label"><%= r_as %>Student 1 ID</label>
+      <div class="form-text">Fill in "-" if there is none, do not leave blank.</div>
+      <%= form.text_field :stud1, class: "form-control" %>
+      <% project_placement.errors.full_messages_for(:stud1).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+
+    <% # ------ Student TWO ID ----- # %>
+    <div class="col">
+      <label class="col col-form-label">Student 2 ID</label>
+      <div class="form-text">Fill in "-" if there is none, do not leave blank.</div>
+      <%= form.text_field :stud2, class: "form-control" %>
+      <% project_placement.errors.full_messages_for(:stud2).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
+    </div>
+  </div>
+
+
+  <div class="row mb-3">
+    <div class="col txt-align-right">
+      <%= form.submit txt_btn, class: "btn btn-primary custom-btn" %>
+    </div>
+  </div>
+<% end %>

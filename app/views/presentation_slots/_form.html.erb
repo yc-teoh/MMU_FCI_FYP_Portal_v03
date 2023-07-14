@@ -9,10 +9,15 @@
     </div>
 
     <div class="col">
-      <label class="col col-form-label"><%= r_as %>Presentation Parameters</label>
-<!--      <div class="form-text">Format: PSxxxx (e.g. "PS0004")</div>-->
-      <%= form.select :presentation_param, param_options, {}, class: "form-select" %>
-      <% pres_slot.errors.full_messages_for(:presentation_param).each do |message| %>
+      <label class="col col-form-label"><%= r_as %>Project ID</label>
+      <div class="form-text">Change of Project is no longer allowed after slot creation.</div>
+      <% if action == "C" %>
+        <%= form.select :placement_id, placement_options, {}, class: "form-select" %>
+      <% else %>
+        <%= form.select :placement_id, placement_options, {}, class: "form-select", disabled: true %>
+        <%= form.hidden_field :placement_id, value: pres_slot.placement_id, readonly: true %>
+      <% end %>
+      <% pres_slot.errors.full_messages_for(:placement_id).each do |message| %>
         <div class="txt-red"><%= message %></div>
       <% end %>
     </div>
@@ -46,10 +51,10 @@
     </div>
 
     <div class="col">
-      <label class="col col-form-label"><%= r_as %>Project ID</label>
-      <!--      <div class="form-text">Format: PPxxxx (e.g. "PP0004")</div>-->
-      <%= form.select :placement_id, placement_options, {}, class: "form-select" %>
-      <% pres_slot.errors.full_messages_for(:placement_id).each do |message| %>
+      <label class="col col-form-label"><%= r_as %>Presentation Parameters</label>
+      <!--      <div class="form-text">Format: PSxxxx (e.g. "PS0004")</div>-->
+      <%= form.select :presentation_param, param_options, {}, class: "form-select" %>
+      <% pres_slot.errors.full_messages_for(:presentation_param).each do |message| %>
         <div class="txt-red"><%= message %></div>
       <% end %>
     </div>
@@ -63,6 +68,7 @@
         <div class="txt-red"><%= message %></div>
       <% end %>
     </div>
+
   </div>
 
   <div class="row mb-3">

@@ -102,6 +102,9 @@ class PresentationSlotsController < ApplicationController
     if curr_usr_role == "Manager"
       @pres_slot = PresentationSlot.new(pres_slot_params)
 
+      @proj_placement = ProjectPlacement.find_by_placement_id(pres_slot_params[:placement_id])
+      @proj_placement.update(:presentation_id => pres_slot_params[:presentation_id])
+
       if @pres_slot.save
         redirect_to @pres_slot
       else

@@ -45,7 +45,7 @@
               <% placement_stud_raw = User.where(placement_id: slot.placement_id) %>
               <% placement_stud_name = placement_stud_raw.pluck(:user_name) %>
               <% stud1_name = placement_stud_name[0] %>
-              <% if placement_stud_raw[1].nil? || placement_stud_raw[1] == "" %>
+              <% if placement_stud_raw[1].nil? || placement_stud_raw[1] == "" || placement_stud_raw[1] == "-" %>
                 <%  stud2_name = "" %>
               <% else %>
                 <%  stud2_name = " & " + placement_stud_name[1] %>
@@ -54,10 +54,16 @@
               <% placement_supervisor_name = placement_supervisor_raw.pluck(:supervisor_id)[0] %>
               <% supervisor1_name = User.find_by_user_id(placement_supervisor_name).user_name %>
               <% project_title_render = placement_supervisor_raw.pluck(:project_id)[0] %>
-              <% if placement_supervisor_raw.pluck(:supervisor_id)[1].nil? || placement_supervisor_raw.pluck(:supervisor_id)[1] == "-" %>
+              <% if placement_supervisor_raw.pluck(:supervisor_id)[1].nil? || placement_supervisor_raw.pluck(:supervisor_id)[1] == "-" || placement_supervisor_raw.pluck(:supervisor_id)[1] == "" %>
                 <% supervisor2_name = "" %>
               <% else %>
                 <% supervisor2_name = " & " + User.find_by_user_id(placement_supervisor_raw.pluck(:supervisor_id)[1]).user_name %>
+              <% end %>
+              <% moderator_raw = moderator.pluck(:moderator_id)[0] %>
+              <% if moderator_raw.nil? || moderator_raw == "" || moderator_raw == "-" %>
+                <% mod_name_display = "-" %>
+              <% else %>
+                <% mod_name_display = User.find_by_user_id(moderator_raw).user_name %>
               <% end %>
 
               <tr>
@@ -66,7 +72,7 @@
                 <td><%= slot.presentation_date.strftime('%d/%m/%Y') + " " + slot.presentation_time %></td>
                 <td><%= stud1_name + stud2_name %></td>
                 <td><%= supervisor1_name + supervisor2_name %></td>
-                <td><%= User.find_by_user_id(moderator.pluck(:moderator_id)[0]).user_name %></td>
+                <td><%= mod_name_display %></td>
                 <td><%= slot.presentation_location %></td>
                 <td><%= link_to "View", slot, class: "btn btn-primary custom-btn custom-btn-edit" %></td>
               </tr>

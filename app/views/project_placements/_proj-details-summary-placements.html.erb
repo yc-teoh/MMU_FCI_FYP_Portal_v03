@@ -1,0 +1,11 @@
+<table class="table table-borderless table-sm">
+  <tr class="table-no-l-pad">
+    <th class="col-2 table-no-l-pad">Project ID</th>
+    <td style="font-weight: bold;"><%= $project_id_pass %></td>
+  </tr>
+
+  <tr class="table-no-l-pad">
+    <th class="table-no-l-pad">Project Title</th>
+    <td><%= Project.find_by_project_id($project_id_pass).project_title %></td>
+  </tr>
+</table>

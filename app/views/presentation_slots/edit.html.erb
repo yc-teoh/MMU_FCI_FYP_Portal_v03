@@ -16,7 +16,7 @@
       <% if user_signed_in? %>
         <% if current_user.user_role == "Manager" %>
           <div>
-            <%= render "form", pres_slot: @pres_slot, button_text: "Update" %>
+            <%= render "form", pres_slot: @pres_slot, action: "U", button_text: "Update" %>
           </div>
         <% else %>
           <p><%= errmsg_no_permission_to_access %></p>

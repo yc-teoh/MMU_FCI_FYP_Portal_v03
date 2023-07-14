@@ -43,30 +43,6 @@
             <%# ------------------------------------------- %>
 
             <div class="row mb-3">
-              <% # ------ Moderator ----- # %>
-              <div class="col">
-                <label class="col col-form-label">Moderator</label>
-                <%= form.select :moderator_id, co_supervisor_options, {}, class: "form-select"%>
-                <% @project.errors.full_messages_for(:moderator_id).each do |message| %>
-                  <div class="txt-red"><%= message %></div>
-                <% end %>
-              </div>
-
-              <% # ------ DUMMY ----- # %>
-              <div class="col"></div>
-            </div>
-
-            <%# ------------------------------------------- %>
-
-            <div class="row mb-3">
-              <% # ------ Student ONE ID ----- # %>
-              <div class="col">
-                <label class="col col-form-label">Student 1 ID</label>
-                <%= form.text_field :student_one_user_id, class: "form-control" %>
-                <% @project.errors.full_messages_for(:student_one_user_id).each do |message| %>
-                  <div class="txt-red"><%= message %></div>
-                <% end %>
-              </div>
 
               <% # ------ Student ONE Subtitle ----- # %>
               <div class="col">
@@ -96,14 +72,6 @@
             <%# ------------------------------------------- %>
 
             <div class="row mb-3">
-              <% # ------ Student TWO ID ----- # %>
-              <div class="col">
-                <label class="col col-form-label">Student 2 ID</label>
-                <%= form.text_field :student_two_user_id, class: "form-control" %>
-                <% @project.errors.full_messages_for(:student_two_user_id).each do |message| %>
-                  <div class="txt-red"><%= message %></div>
-                <% end %>
-              </div>
 
               <% # ------ Student TWO Subtitle ----- # %>
               <div class="col">

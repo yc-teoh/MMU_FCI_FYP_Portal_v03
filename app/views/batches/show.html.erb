@@ -16,66 +16,78 @@
       <% if user_signed_in? %>
         <% if current_user.user_role == "Coordinator" || current_user.user_role == "Manager" %>
           <% # ------------------------------------------ # %>
-            <table class="table table-borderless table-sm">
-              <% # --------- Batch ID --------- # %>
-              <tr>
-                <th class="col-3 table-no-l-pad">Batch ID</th>
-                <td style="font-weight: bold;"><%= @batch.batch_id %></td>
-              </tr>
+          <table class="table table-borderless table-sm">
+            <% # --------- Batch ID --------- # %>
+            <tr>
+              <th class="col-3 table-no-l-pad">Batch ID</th>
+              <td style="font-weight: bold;"><%= @batch.batch_id %></td>
+            </tr>
 
-              <% # --------- Batch Name --------- # %>
-              <tr>
-                <th class="table-no-l-pad">Batch Name</th>
-                <td><%= @batch.batch_name %></td>
-              </tr>
+            <% # --------- Batch Name --------- # %>
+            <tr>
+              <th class="table-no-l-pad">Batch Name</th>
+              <td><%= @batch.batch_name %></td>
+            </tr>
 
-              <% # --------- Date Created --------- # %>
-              <tr>
-                <th class="table-no-l-pad">Date Created</th>
-                <td><%= @batch.created_at.strftime('%d/%m/%Y %H:%M') %></td>
-              </tr>
+            <% # --------- Date Created --------- # %>
+            <tr>
+              <th class="table-no-l-pad">Date Created</th>
+              <td><%= @batch.created_at.strftime('%d/%m/%Y %H:%M') %></td>
+            </tr>
 
-              <% # --------- Batch Status --------- # %>
-              <tr>
-                <th class="table-no-l-pad">Batch Status</th>
-                <td><%= @batch.batch_status %></td>
-              </tr>
+            <% # --------- Batch Status --------- # %>
+            <tr>
+              <th class="table-no-l-pad">Batch Status</th>
+              <td><%= @batch.batch_status %></td>
+            </tr>
 
-              <% # --------- Number of Students --------- # %>
-              <tr>
-                <th class="table-no-l-pad">Number of Students</th>
-                <td><%= @batch_students.length %></td>
-              </tr>
+            <% # --------- Number of Students --------- # %>
+            <tr>
+              <th class="table-no-l-pad">Number of Students</th>
+              <td><%= @batch_students.length %></td>
+            </tr>
 
-              <% if current_user.user_role == "Manager" %>
+            <% if current_user.user_role == "Manager" %>
               <tr>
                 <td class="table-no-l-pad"><%= link_to "Edit", edit_batch_path %></td>
               </tr>
-              <% end %>
-            </table>
+            <% end %>
+          </table>
 
-            <% # --------- Student List --------- # %>
-            <hr>
+          <% # --------- Student List --------- # %>
+          <hr>
 
-              <table class="table table-borderless table-hover">
-                <tr>
-                  <th>Student ID</th>
-                  <th>Student Name</th>
-                  <th>Specialisation</th>
-                  <th>Project ID</th>
-                  <th>Status</th>
-                </tr>
+          <table class="table table-borderless table-hover">
+            <tr>
+              <th>Student ID</th>
+              <th>Student Name</th>
+              <th>Specialisation</th>
+              <th>Project ID</th>
+              <th>Status</th>
+            </tr>
 
-                <% @batch_students.each do |stud| %>
-                  <tr>
-                    <td><%= stud.user_id %></td>
-                    <td><%= stud.user_name %></td>
-                    <td><%= stud.student_specialisation %></td>
-                    <td><%= "-" %></td>
-                    <td><%= stud.student_status %></td>
-                  </tr>
+            <% @batch_students.each do |stud| %>
+              <% def check_empty(target) %>
+                <% if target.nil? || target == "" || target == "-" %>
+                  <% "-" %>
+                <% else %>
+                  <% target %>
                 <% end %>
-              </table>
+              <% end %>
+
+              <% spec = check_empty(stud.student_specialisation) %>
+              <% proj_id = check_empty(stud.placement_id) %>
+              <% stud_stat = check_empty(stud.student_status) %>
+
+              <tr>
+                <td><%= stud.user_id %></td>
+                <td><%= stud.user_name %></td>
+                <td><%= spec %></td>
+                <td><%= proj_id %></td>
+                <td><%= stud_stat %></td>
+              </tr>
+            <% end %>
+          </table>
         <% else %>
           <p><%= errmsg_no_permission_to_access %></p>
         <% end %>

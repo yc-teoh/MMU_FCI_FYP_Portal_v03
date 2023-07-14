@@ -52,11 +52,14 @@ Rails.application.routes.draw do
   get "/presslots/:presentation_id", to: "presentation_slots#show"
   get "/presslots/:presentation_id/edit", to: "presentation_slots#edit"
 
+  get "/projplacements/:placement_id/edit", to: "project_placements#edit"
+
   resources :announcements, param: :announcement_id
   resources :projects, param: :project_id
   resources :users, param: :user_id
   resources :batches, param: :batch_id
   resources :presentation_params, param: :param_id
   resources :presentation_slots, param: :presentation_id
+  resources :project_placements, param: :placement_id
 
 end

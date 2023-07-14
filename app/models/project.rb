@@ -6,6 +6,7 @@ class Project < ApplicationRecord
   validates :supervisor_id, presence: true
   # validates :co_supervisor_id
   validates :project_type, presence: true
+  validates :placement_id, presence: true
 
   # stud-info
   # TEMPORARILY HIDDEN DUE TO THE NO STUDENT VALIDATION CONSTRAINT.
@@ -29,4 +30,6 @@ class Project < ApplicationRecord
   end
 
   belongs_to :user, class_name: "User", foreign_key: :supervisor_id, optional: true
+
+  has_one :project_placement
 end

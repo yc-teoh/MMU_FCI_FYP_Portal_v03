@@ -138,10 +138,17 @@
               <td><%= @student_two_work_distribution %></td>
             </tr>
 
+            <tr>
+              <th class="table-no-l-pad">Placement Status</th>
+              <td><%= @placement_stat %></td>
+            </tr>
+
             <% if current_user.user_role == "Coordinator" %>
               <tr>
                 <td class="table-no-l-pad">
-                  <%= link_to "Edit", edit_personnel_path %>
+                  <%=link_to "Edit Placement", edit_project_placement_path(@project.placement_id) %>
+                  <br>
+                  <%= link_to "Edit Details", edit_personnel_path %>
                 </td>
               </tr>
             <% end %>

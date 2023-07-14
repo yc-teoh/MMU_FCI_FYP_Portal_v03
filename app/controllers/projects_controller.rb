@@ -53,6 +53,9 @@ class ProjectsController < ApplicationController
         @project = Project.find(params[:project_id])
         @supervisor = User.find(@project.supervisor_id)
 
+        # Pass the Project ID for project placement module.
+        $project_id_pass = @project.project_id
+
         @created_at = @project.created_at.strftime('%d/%m/%Y %H:%M')
         if @project.created_at != @project.updated_at
           @last_updated = "(Updated at: " + @project.updated_at.strftime('%d/%m/%Y %H:%M') + ")"
@@ -67,12 +70,6 @@ class ProjectsController < ApplicationController
           @co_supervisor = User.find(@project.co_supervisor_id).user_name
         end
 
-        # # ------ Moderator's Name ------
-        # if @project.moderator_id.nil? || @project.moderator_id == "-"
-        #   @moderator = "-"
-        # else
-        #   @moderator = User.find(@project.moderator_id).user_name
-        # end
 
         # ------ Approval's Name ------
         if @project.reviewed_by.nil?
@@ -88,22 +85,10 @@ class ProjectsController < ApplicationController
           @other_specialisation = @project.project_other_specialisations
         end
 
-        # if @project.student_one_user_id.nil? || @project.student_one_user_id == ""
-        # if User.where(:user_id => @project.student_one_user_id).exists?
-        #   @student_one_user_name = User.find(@project.student_one_user_id).user_name
-        #   @student_one_user_id = @project.student_one_user_id
-        #   @student_one_subtitle = @project.student_one_subtitle
-        #   @student_one_work_distribution = @project.student_one_work_distribution
-        # else
-        #   @student_one_user_name = "-"
-        #   @student_one_user_id = "-"
-        #   @student_one_subtitle = "-"
-        #   @student_one_work_distribution = "-"
-        # end
 
         # ------ Student/Manager Info from `placement_id` ------
         proj_placement = @project.placement_id
-        if proj_placement.nil? || proj_placement == ""
+        if proj_placement.nil? || proj_placement == "" || proj_placement == "-"
           @student_one_user_name = "-"
           @student_one_subtitle = "-"
           @student_one_work_distribution = "-"
@@ -116,32 +101,33 @@ class ProjectsController < ApplicationController
           placement_stud_name = placement_stud_raw.pluck(:user_name)
           placement_stud_uid = placement_stud_raw.pluck(:user_id)
 
-          @student_one_user_name = placement_stud_name[0] + " (" + placement_stud_uid[0] + ")"
-          if placement_stud_raw[1].nil? || placement_stud_raw[1] == ""
+          if placement_stud_raw[0].nil? || placement_stud_raw[0] == "" || placement_stud_raw[0] == "-"
+            @student_one_user_name = "-"
+          else
+            @student_one_user_name = placement_stud_name[0] + " (" + placement_stud_uid[0] + ")"
+          end
+
+
+          if placement_stud_raw[1].nil? || placement_stud_raw[1] == "" || placement_stud_raw[1] == "-"
             @student_two_user_name = "-"
           else
             @student_two_user_name = placement_stud_name[1] + " (" + placement_stud_uid[1] + ")"
           end
 
-          @student_one_subtitle = "-"
-          @student_one_work_distribution = "-"
-          @student_two_subtitle = "-"
-          @student_two_work_distribution = "-"
-          @moderator = User.find(ProjectPlacement.find(proj_placement).moderator_id).user_name
-        end
+          @student_one_subtitle = check_empty_value(@project.student_one_subtitle)
+          @student_one_work_distribution = check_empty_value(@project.student_one_work_distribution)
+          @student_two_subtitle = check_empty_value(@project.student_two_subtitle)
+          @student_two_work_distribution = check_empty_value(@project.student_two_work_distribution)
 
-        # if @project.student_two_user_id.nil? || @project.student_two_user_id == ""
-        # if User.where(:user_id => @project.student_two_user_id).exists?
-        #   @student_two_user_name = User.find(@project.student_two_user_id).user_name
-        #   @student_two_user_id = @project.student_two_user_id
-        #   @student_two_subtitle = @project.student_two_subtitle
-        #   @student_two_work_distribution = @project.student_two_work_distribution
-        # else
-        #   @student_two_user_name = "-"
-        #   @student_two_user_id = "-"
-        #   @student_two_subtitle = "-"
-        #   @student_two_work_distribution = "-"
-        # end
+          moderator_raw = ProjectPlacement.find_by_placement_id(proj_placement).moderator_id
+          if moderator_raw.nil? || moderator_raw == "-" || moderator_raw == ""
+            @moderator = "-"
+          else
+            @moderator = User.find_by_user_id(moderator_raw).user_name
+          end
+
+          @placement_stat = ProjectPlacement.find_by_placement_id(proj_placement).placement_status
+        end
 
         if @project.is_industry_collab == "Y"
           @industry_collab_company = @project.industry_collab_company
@@ -175,8 +161,17 @@ class ProjectsController < ApplicationController
       if curr_usr_role == "Manager" || curr_usr_role == "Coordinator"
         @project = Project.new(project_params)
 
+        @passed_project_id = @project.project_id.to_s
+        @passed_batch_id = @project.batch_id.to_s
+        @project.placement_id = @passed_project_id
 
-        if @project.save
+        @project_placement = ProjectPlacement.new(
+          :placement_id => @passed_project_id, :project_id => @passed_project_id,
+          :placement_batch => @passed_batch_id, :placement_status => "Inactive",
+          :moderator_id => "-", :presentation_id => "-"
+        )
+
+        if @project.save && @project_placement.save
           redirect_to @project
         else
           @project.errors.each {|err| puts err }
@@ -222,6 +217,16 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:project_id])
   end
 
+  # Return dash if column is empty (only applicable for direct data retrieval)
+  private
+  def check_empty_value(target)
+    if target == "" || target.nil? || target == "-"
+      "-"
+    else
+      target
+    end
+  end
+
   private
   def project_params
     params.require(:project).permit(
@@ -231,7 +236,9 @@ class ProjectsController < ApplicationController
       :project_background, :project_outcomes, :project_doc_id, :supervisor_id, :co_supervisor_id, :moderator_id,    #6
       :reviewed_by, :student_one_user_id, :student_one_subtitle, :student_one_work_distribution, :student_two_user_id,    #5
       :student_two_subtitle, :student_two_work_distribution, :is_industry_collab, :industry_collab_company,    #4
-      :batch_id, :remarks_project, :remarks_supervisor, :industry_collab_contact_name, :industry_collab_contact_number    #5
+      :batch_id, :remarks_project, :remarks_supervisor, :industry_collab_contact_name, :industry_collab_contact_number,    #5
+      :placement_id, :passed_project_id
     )
   end
+
 end

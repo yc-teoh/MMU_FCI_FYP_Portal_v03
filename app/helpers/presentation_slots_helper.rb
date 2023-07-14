@@ -4,6 +4,6 @@ module PresentationSlotsHelper
   end
 
   def placement_options
-    p = ProjectPlacement.pluck(:project_id, :placement_id)
+    p = ProjectPlacement.where(:placement_status => "Active").pluck(:project_id, :placement_id)
   end
 end
