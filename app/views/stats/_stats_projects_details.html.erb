@@ -1,12 +1,14 @@
 <table class="table table-borderless table-sm">
   <tr>
-    <th class="col-4 table-no-l-pad">Number of Project Titles (All)</th>
+    <th class="col-4 table-no-l-pad">No. of Project Titles (All)</th>
     <td><%= all.count %></td>
   </tr>
+
   <tr>
-    <th class="col-4 table-no-l-pad">Number of Project Titles (Active)</th>
-    <td><%= active.count %></td>
+    <th class="col-4 table-no-l-pad">No. of Project Titles (Confirmed)</th>
+    <td><%= confirmed.count %></td>
   </tr>
+
   <tr>
     <th class="col-4 table-no-l-pad">Active Project Titles</th>
     <td>
@@ -14,6 +16,19 @@
         -
       <% else %>
         <% active.each do |proj| %>
+          [<%= proj.project_id %>] <%= proj.project_title %><br>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="col-4 table-no-l-pad">Vacant Project Titles</th>
+    <td>
+      <% if vacant.count == 0 %>
+        -
+      <% else %>
+        <% vacant.each do |proj| %>
           [<%= proj.project_id %>] <%= proj.project_title %><br>
         <% end %>
       <% end %>
