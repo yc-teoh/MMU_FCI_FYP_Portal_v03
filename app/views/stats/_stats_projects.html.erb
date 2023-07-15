@@ -1,0 +1,56 @@
+<div class="accordion-item">
+  <h2 class="accordion-header" id="headingProject">
+    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProject" aria-expanded="true" aria-controls="collapseProject">
+      Projects
+    </button>
+  </h2>
+  <div id="collapseProject" class="accordion-collapse collapse show" aria-labelledby="headingProject" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+      <%# ------------ SUMMARY ------------ %>
+      <h5 class="h3-site">Summary</h5>
+      <table class="table table-borderless table-sm">
+        <tr>
+          <th class="col-4 table-no-l-pad">Number of Project Titles (All)</th><td><%= @projects.count %></td>
+        </tr>
+        <tr>
+          <th class="col-4 table-no-l-pad">Number of Project Titles (Active)</th><td><%= @projects_active.count %></td>
+        </tr>
+      </table>
+      <hr>
+
+      <%# ------------ BCS-SE ------------ %>
+      <h5 class="h3-site">BCS (Software Engineering)</h5>
+      <%= render "stats_projects_details", all: @projects_bcsse, active: @projects_bcsse_active %>
+      <hr>
+
+      <%# ------------ BCS-DS ------------ %>
+      <h5 class="h3-site">BCS (Data Science)</h5>
+      <%= render "stats_projects_details", all: @projects_bcsds, active: @projects_bcsds_active %>
+      <hr>
+
+      <%# ------------ BCS-GD ------------ %>
+      <h5 class="h3-site">BCS (Game Development)</h5>
+      <%= render "stats_projects_details", all: @projects_bcsgd, active: @projects_bcsgd_active %>
+      <hr>
+
+      <%# ------------ BCS-AI ------------ %>
+      <h5 class="h3-site">BCS (Artificial Intelligence)</h5>
+      <%= render "stats_projects_details", all: @projects_bcsai, active: @projects_bcsai_active %>
+      <hr>
+
+      <%# ------------ BCS-CY ------------ %>
+      <h5 class="h3-site">BCS (Cybersecurity)</h5>
+      <%= render "stats_projects_details", all: @projects_bcscy, active: @projects_bcscy_active %>
+      <hr>
+
+      <%# ------------ BIT ------------ %>
+      <h5 class="h3-site">BIT</h5>
+      <%= render "stats_projects_details", all: @projects_bit, active: @projects_bit_active %>
+      <hr>
+
+      <%# ------------ DIP-IT ------------ %>
+      <h5 class="h3-site">Diploma in IT</h5>
+      <%= render "stats_projects_details", all: @projects_dipit, active: @projects_dipit_active %>
+    </div>
+  </div>
+</div>

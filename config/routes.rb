@@ -54,6 +54,8 @@ Rails.application.routes.draw do
 
   get "/projplacements/:placement_id/edit", to: "project_placements#edit"
 
+  get "/stats", to: "stats#index"
+
   resources :announcements, param: :announcement_id
   resources :projects, param: :project_id
   resources :users, param: :user_id

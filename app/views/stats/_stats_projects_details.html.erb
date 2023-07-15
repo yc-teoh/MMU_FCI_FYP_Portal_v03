@@ -1,0 +1,22 @@
+<table class="table table-borderless table-sm">
+  <tr>
+    <th class="col-4 table-no-l-pad">Number of Project Titles (All)</th>
+    <td><%= all.count %></td>
+  </tr>
+  <tr>
+    <th class="col-4 table-no-l-pad">Number of Project Titles (Active)</th>
+    <td><%= active.count %></td>
+  </tr>
+  <tr>
+    <th class="col-4 table-no-l-pad">Active Project Titles</th>
+    <td>
+      <% if active.count == 0 %>
+        -
+      <% else %>
+        <% active.each do |proj| %>
+          [<%= proj.project_id %>] <%= proj.project_title %><br>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+</table>
