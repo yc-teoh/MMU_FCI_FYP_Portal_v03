@@ -43,6 +43,8 @@ class UsersController < ApplicationController
       else
         @user_is_supervisor = "-"
       end
+
+      @user_user_remarks = check_empty_value(@user.user_remarks)
     end
   end
 
@@ -79,6 +81,15 @@ class UsersController < ApplicationController
       @user.errors.each {|err| puts err }
       puts "[DEBUG] Error is #{@user.errors.full_messages}"
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  private
+  def check_empty_value(target)
+    if target == "" || target.nil? || target == "-"
+      "-"
+    else
+      target
     end
   end
 

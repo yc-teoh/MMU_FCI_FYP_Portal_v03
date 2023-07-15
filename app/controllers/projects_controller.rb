@@ -79,11 +79,7 @@ class ProjectsController < ApplicationController
         end
 
         # ------ List out other specialisations ------
-        if @project.project_other_specialisations.nil?
-          @other_specialisation = "-"
-        else
-          @other_specialisation = @project.project_other_specialisations
-        end
+        @other_specialisation = check_empty_value(@project.project_other_specialisations)
 
 
         # ------ Student/Manager Info from `placement_id` ------
