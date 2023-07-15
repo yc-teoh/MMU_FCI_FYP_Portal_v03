@@ -5,7 +5,11 @@
     <div class="col">
       <label class="col col-form-label"><%= r_as %>Parameter ID</label>
       <div class="form-text">Format: YYMMx (e.g. "2203", "2205A"), suffix is optional.</div>
-      <%= form.text_field :param_id, class: "form-control", maxlength: 5 %>
+      <% if action == "C" %>
+        <%= form.text_field :param_id, class: "form-control", maxlength: 5 %>
+      <% else %>
+        <%= form.text_field :param_id, class: "form-control", maxlength: 5, readonly: true, style: "background-color:#EEEEEE" %>
+      <% end %>
       <% pres_param.errors.full_messages_for(:param_id).each do |message| %>
         <div class="txt-red"><%= message %></div>
       <% end %>
@@ -105,7 +109,7 @@
 
   <div class="row mb-3">
     <div class="col txt-align-right">
-    <%= form.submit button_text, class: "btn btn-primary custom-btn" %>
+      <%= form.submit button_text, class: "btn btn-primary custom-btn" %>
     </div>
   </div>
 <% end %>

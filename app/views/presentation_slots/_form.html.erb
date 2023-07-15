@@ -4,8 +4,14 @@
     <div class="col">
       <label class="col col-form-label"><%= r_as %>Presentation ID</label>
       <div class="form-text">Format: PSxxxx (e.g. "PS0004")</div>
-      <%= form.text_field :presentation_id, class: "form-control", maxlength: 6 %>
-
+      <% if action == "C" %>
+        <%= form.text_field :presentation_id, class: "form-control", maxlength: 6 %>
+      <% else %>
+        <%= form.text_field :presentation_id, class: "form-control", maxlength: 6, readonly: true, style: "background-color:#EEEEEE" %>
+      <% end %>
+      <% pres_slot.errors.full_messages_for(:presentation_id).each do |message| %>
+        <div class="txt-red"><%= message %></div>
+      <% end %>
     </div>
 
     <div class="col">
