@@ -34,4 +34,30 @@
       <% end %>
     </td>
   </tr>
+
+  <tr>
+    <th class="col-4 table-no-l-pad">Completed Project Titles</th>
+    <td>
+      <% if completed.count == 0 %>
+        -
+      <% else %>
+        <% completed.each do |proj| %>
+          [<%= proj.project_id %>] <%= proj.project_title %><br>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="col-4 table-no-l-pad">Cancelled Project Titles</th>
+    <td>
+      <% if cancelled.count == 0 %>
+        -
+      <% else %>
+        <% cancelled.each do |proj| %>
+          [<%= proj.project_id %>] <%= proj.project_title %><br>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
 </table>
