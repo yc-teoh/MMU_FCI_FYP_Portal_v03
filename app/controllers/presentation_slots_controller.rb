@@ -85,6 +85,17 @@ class PresentationSlotsController < ApplicationController
       else
         @pres_remarks = ctrl_pres_remarks
       end
+
+      param_raw = PresentationParam.find_by_param_id(@pres_slot.param_id)
+      @param_name = param_raw.param_name
+
+      if param_raw.presentation_type == "INT"
+        @param_type = "Interim"
+      elsif param_raw.presentation_type == "POS"
+        @param_type = "Poster"
+      else
+        @param_type = "-"
+      end
     end
   end
 
@@ -138,7 +149,9 @@ class PresentationSlotsController < ApplicationController
   private
   def pres_slot_params
     params.require(:presentation_slot).permit(
-      :presentation_id, :presentation_location, :supervisor_id, :co_supervisor_id, :moderator_id, :project_id, :other_attendees, :presentation_remarks, :presentation_score, :presentation_date, :presentation_time, :student_one_id, :student_two_id, :placement_id
+      :presentation_id, :presentation_location, :supervisor_id, :co_supervisor_id, :moderator_id,
+      :project_id, :other_attendees, :presentation_remarks, :presentation_score, :presentation_date,
+      :presentation_time, :student_one_id, :param_id, :placement_id
     )
   end
 

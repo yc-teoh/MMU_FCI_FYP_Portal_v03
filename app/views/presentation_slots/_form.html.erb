@@ -59,8 +59,8 @@
     <div class="col">
       <label class="col col-form-label"><%= r_as %>Presentation Parameters</label>
       <!--      <div class="form-text">Format: PSxxxx (e.g. "PS0004")</div>-->
-      <%= form.select :presentation_param, param_options, {}, class: "form-select" %>
-      <% pres_slot.errors.full_messages_for(:presentation_param).each do |message| %>
+      <%= form.select :param_id, param_options, {}, class: "form-select" %>
+      <% pres_slot.errors.full_messages_for(:param_id).each do |message| %>
         <div class="txt-red"><%= message %></div>
       <% end %>
     </div>
