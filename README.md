@@ -7,7 +7,12 @@ This project is a student's FYP and is intended for educational purposes only. T
 ---
 
 ### If you are looking for a demo...
-Cloning the project and run in your own machine is NOT recommended as strange behaviours, or even errors, might occur due to incomplete database entries in your local environment. Please visit [here](http://104.248.148.182/) for a live demo instead.
+Cloning the project and run in your own machine is NOT recommended as strange behaviours, or even errors, might occur due to incomplete database entries in your local environment.
+
+**The live version of the project was no longer accessible as of March 2024.** I no longer have any control over the IP address of `104.248.148.182`, where the project was hosted prior. Accessing the address above now will bring you to either nowhere or a random website.
+
+You may watch [this video on YouTube](https://youtu.be/OS7e2fpfESI?si=l4vl372eC1U_bDpY&t=324) for a quick demonstration of certain features, as well as some technical background of the project.
+[![P2205: Cloud-based FYP System - Poster Presentation Demo Video](app/assets/images/yt_demo_thumb.webp)](https://youtu.be/OS7e2fpfESI?si=l4vl372eC1U_bDpY&t=324 "P2205: Cloud-based FYP System - Poster Presentation Demo Video")
 
 ---
 
